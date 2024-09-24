@@ -1,82 +1,64 @@
 // import { useState } from 'react';
 import './App.css';
-// import { Clock } from './components/Clock/Clock';
-// import { Form } from './components/Form/Form';
-// import { IAppState } from './modal/modal';
+import { PopupLogin } from './components/PopupLogin/PopupLogin';
 
 function App() {
-  // const [formValue, setFormValue] = useState<IAppState>({
-  //   title: '',
-  //   zone: '',
-  //   arrayClock: [],
-  // })
-
-  // const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
-  //   // Нажали кнопку добавить в нашей форме
-  //   event.preventDefault();
-  //   const obj = {
-  //     title: formValue.title,
-  //     zone: formValue.zone,
-  //   };
-
-  //   setFormValue({
-  //     ...formValue,
-  //     title: '',
-  //     zone: '',
-  //     arrayClock: [...formValue.arrayClock, obj],
-  //   });
-  // }
-
-  // const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   // Обрабатываем изменение в поле input
-  //   const {name, value} = event.target;
-
-  //   if (name === 'zone') {
-  //     setFormValue({
-  //       ...formValue,
-  //       [name]: value.trim(),
-  //     });
-  //   }
-
-  //   if (name === 'title') {
-  //     setFormValue({
-  //       ...formValue,
-  //       [name]: value,
-  //     });
-  //   }
-  // }
-
-  // const clickCross = (event: React.ChangeEvent<HTMLDivElement>) => {
-  //   // Нажали кнопку удаления часов
-  //   const parent = event.target.closest('.clock__item');
-  //   if (parent) {
-  //     const clockTitle = parent.querySelector('.clock__title');
-  //     if (clockTitle) {
-  //       const valueTitle = clockTitle.textContent;
-  //       let array = [...formValue.arrayClock];
-  //       array = array.filter((item) => item.title != valueTitle);
-  //       setFormValue({
-  //         ...formValue,
-  //         arrayClock: [...array],
-  //       });
-  //     }
-  //   }
-  // }
 
   return (
-    <></>
-    // <div className="conteiner">
+    <div className="conteiner">
 
-    //   <div className="conteiner__form">
-    //     <Form title={formValue.title} zone={formValue.zone} submit={handleSubmit} change={changeInput} ></Form>
-    //   </div>
+      <header>
+        <div className="header_baner">
+          <div className="navigation header_navigation">
+            <button className="navigation_button login">Вход</button>
+            <button className="navigation_button logout">Выход</button>
+            <button className="navigation_button registration">Регистрация</button>
+          </div>
+        </div>
+      </header>
+
+      <main className="page_content">
+
+        <div className="content_block">
+          <div className="block_discription">
+            <h1 className="block_discription_title">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+          </div>
+          <div className="block_img">
+            <img src="./15.jpg" alt="Изображение облачного хранилища" />
+          </div>
+        </div>
+
+        <div className="content_block">
+          <div className="block_discription">
+            <h1 className="block_discription_title">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+          </div>
+          <div className="block_img">
+            <img src="./15.jpg" alt="Изображение облачного хранилища" />
+          </div>
+        </div>
+
+        <div className="content_block">
+          <div className="block_discription">
+            <h1 className="block_discription_title">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+          </div>
+          <div className="block_img">
+            <img src="./15.jpg" alt="Изображение облачного хранилища" />
+          </div>
+        </div>
+
+      </main>
+
+      <footer>
+        <div className="navigation footer_navigation">
+          <button className="navigation_button login">Вход</button>
+          <button className="navigation_button logout hidden">Выход</button>
+          <button className="navigation_button registration">Регистрация</button>
+        </div>
+      </footer>
+
+      {/* <PopupLogin></PopupLogin> */}
       
-
-    //   <div className="conteiner__clock">
-    //     <Clock list={formValue.arrayClock} callback={clickCross} />
-    //   </div>
-
-    // </div>
+    </div>
   )
 }
 
