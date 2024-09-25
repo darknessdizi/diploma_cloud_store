@@ -1,3 +1,13 @@
+export interface UsersState {
+  login: string | null,
+  name: string | null,
+  password: string | null,
+  email: string | null,
+}
+
+
+
+
 // export interface IAppState {
 //   title: string,
 //   zone: string,
