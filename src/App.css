@@ -2,148 +2,16 @@
   box-sizing: border-box;
 }
 
+:root {
+  --height-baner: 200px;
+  --color-btn: lightgreen;
+  --color-btn-hover: rgb(212, 231, 128);
+}
+
 .conteiner {
   width: 100%;
   padding: 0px 0px 30px;
 }
-
-/* ---------- popup login ------------ */
-/* ------------- begin --------------- */
-.conteiner_popup_login {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.popup__login {
-  width: 400px;
-  /* background-color: pink; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 10px;
-}
-
-.popup__login__label {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-
-.popup__label__title {
-  margin-left: 10px;
-}
-
-.popup__login__input {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.popup__form__btn {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-/* ------------- end --------------- */
-/* ---------- popup login ---------- */
-
-/* ---------------- header/footer ------------------ */
-/* ---------------- begin ------------------- */
-.header_baner {
-  width: initial;
-  height: 200px;
-  /* background-color: chocolate; */
-  background-image: url('./img/4.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding-top: 10px;
-}
-
-.header_navigation {
-  text-align: right;
-}
-
-.footer_navigation {
-  text-align: center;
-}
-
-.navigation_button {
-  margin-right: 10px;
-  width: 150px;
-  font-size: 1em;
-  border-radius: 10px;
-  border: 1px solid black;
-  background-color: lightgreen;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
-.navigation_button:hover {
-  background-color: rgb(202, 238, 144);
-}
-
-/* ------------- end --------------- */
-/* ------------ header/footer ------------ */
-
-/* ---------------- body ------------------ */
-/* ---------------- begin ----------------- */
-.page_content {
-  /* background-color: cornflowerblue; */
-  max-width: 1296px;
-  margin: 30px auto;
-  padding: 20px;
-}
-
-.content_block:nth-child(n+2) {
-  margin-top: 20px;
-}
-
-.content_block {
-  display: flex;
-  justify-content: space-between;
-}
-
-.block_discription {
-  width: 60%;
-}
-
-.block_img {
-  width: 40%;
-}
-
-.block_discription {
-  padding: 20px;
-}
-
-.block_discription_title {
-  color: green;
-  font-size: 4em;
-}
-
-.block_discription_title > span {
-  color: black;
-  font-size: 0.8em;
-}
-
-.block_img {
-  overflow: hidden;
-} 
-
-.block_img img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* -------------- end --------------- */
-/* -------------- body -------------- */
 
 .hidden {
   display: none;

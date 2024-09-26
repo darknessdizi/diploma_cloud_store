@@ -1,10 +1,15 @@
-export interface UsersState {
+export interface IUserState {
   login: string | null,
   name: string | null,
-  password: string | null,
   email: string | null,
 }
 
+export interface IIdentification {
+  status: boolean,
+  loading: boolean,
+  error: string,
+  user: IUserState,
+}
 
 
 

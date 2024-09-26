@@ -1,0 +1,29 @@
+.item_link {
+  margin-right: 10px;
+  width: 150px;
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: var(--color-btn);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  list-style-type: none;
+}
+
+.item_link > a {
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+  font-size: 1em;
+  display: block;
+  user-select: none;
+}
+
+.item_link > a.active {
+  color: rgb(54, 54, 250);
+  font-weight: 700;
+}
+
+.item_link:hover {
+  background-color: var(--color-btn-hover);
+}
