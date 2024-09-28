@@ -2,6 +2,9 @@ import { useAppSelector, useAppDispatch } from "../../../hooks/index"; // пол
 // import { login, logout } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import './homePage.css';
 import { ItemLink } from "../../Items/ItemLink/ItemLink";
+import { ItemContentBlock } from "../../Items/ItemContentBlock/ItemContentBlock";
+import { ItemImgBlock } from "../../Items/ItemImgBlock/ItemImgBlock";
+import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescriptionBlock";
 
 export const HomePage = () => {
   // const value = useAppSelector((state) => state.identification.status); // хук useAppSelector принимает callback
@@ -18,32 +21,23 @@ export const HomePage = () => {
     <>
       <main className="page_content">
 
-        <div className="content_block">
-          <div className="block_discription">
-            <h1 className="block_discription_title">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
-          </div>
-          <div className="block_img">
-            <img src="./15.jpg" alt="Изображение облачного хранилища" />
-          </div>
-        </div>
+        <ItemContentBlock>
+            <h1 className="block_discription_title text_left">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+        </ItemContentBlock>
 
-        <div className="content_block">
-          <div className="block_discription">
+        <ItemContentBlock>
+          <ItemImgBlock imgPath="./15.jpg" />
+          <ItemDescriptionBlock>
             <h1 className="block_discription_title">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
-          </div>
-          <div className="block_img">
-            <img src="./15.jpg" alt="Изображение облачного хранилища" />
-          </div>
-        </div>
+          </ItemDescriptionBlock>
+        </ItemContentBlock>
 
-        <div className="content_block">
-          <div className="block_discription">
-            <h1 className="block_discription_title">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
-          </div>
-          <div className="block_img">
-            <img src="./15.jpg" alt="Изображение облачного хранилища" />
-          </div>
-        </div>
+        <ItemContentBlock>
+          <ItemDescriptionBlock>
+            <h1 className="block_discription_title text_left">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+          </ItemDescriptionBlock>
+          <ItemImgBlock imgPath="./9.jpg" />
+        </ItemContentBlock>
 
       </main>
 

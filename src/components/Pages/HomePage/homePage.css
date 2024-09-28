@@ -18,7 +18,7 @@
 .footer_navigation {
   display: flex;
   justify-content: center;
-  margin: 0px;
+  margin-bottom: 30px;
 }
 
 .page_content {
@@ -28,43 +28,17 @@
   padding: 20px;
 }
 
-.content_block:nth-child(n+2) {
-  margin-top: 20px;
-}
-
-.content_block {
-  display: flex;
-  justify-content: space-between;
-}
-
-.block_discription {
-  width: 60%;
-}
-
-.block_img {
-  width: 40%;
-}
-
-.block_discription {
-  padding: 20px;
-}
-
 .block_discription_title {
   color: green;
   font-size: 4em;
+  text-align: center;
+}
+
+.text_left {
+  text-align: start;
 }
 
 .block_discription_title > span {
   color: black;
   font-size: 0.8em;
-}
-
-.block_img {
-  overflow: hidden;
-} 
-
-.block_img img {
-  max-width: 100%;
-  height: auto;
-  display: block;
 }

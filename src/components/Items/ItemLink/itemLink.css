@@ -19,7 +19,7 @@
   user-select: none;
 }
 
-.item_link > a.active {
+.item_link > a.item_link-active {
   color: rgb(54, 54, 250);
   font-weight: 700;
 }

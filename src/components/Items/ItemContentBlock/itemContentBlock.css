@@ -1,0 +1,9 @@
+.content_block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content_block:nth-child(n+2) {
+  margin-top: 20px;
+}

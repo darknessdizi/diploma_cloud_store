@@ -1,6 +1,5 @@
-.conteiner__login {
+.conteiner__form {
   position: absolute;
-  /* top: calc(var(--height-baner) - 200px); */
   top: var(--height-baner);
   bottom: 0;
   right: 0;
@@ -10,7 +9,7 @@
   align-items: center;
 }
 
-.form__login {
+.form__body {
   width: 400px;
   background-color: lightblue;
   display: flex;

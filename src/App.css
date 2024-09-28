@@ -3,7 +3,7 @@
 }
 
 :root {
-  --height-baner: 200px;
+  --height-baner: 180px;
   --color-btn: lightgreen;
   --color-btn-hover: rgb(212, 231, 128);
 }
@@ -11,6 +11,11 @@
 .conteiner {
   width: 100%;
   padding: 0px 0px 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .hidden {

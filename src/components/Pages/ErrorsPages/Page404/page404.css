@@ -1,0 +1,21 @@
+/* h1 {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+.conteiner__error {
+  position: absolute;
+  top: var(--height-baner);
+  bottom: 0;
+  right: 0;
+  left: 0;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  background-image: url('../../../../img/i.webp');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
