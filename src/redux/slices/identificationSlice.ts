@@ -13,8 +13,9 @@ const initialState = {
   error: "",
   user: {
     login: null,
-    name: null,
+    fullName: null,
     email: null,
+    password: null,
   },
 } as IIdentification; // создаем наш state и типизируем его
 
@@ -26,26 +27,44 @@ export const identificationSlice = createSliceWithThunk({ // при создан
   // при работе с асинхронностью, меняется способ задания редьюсеров
   name: "identification", // имя
   initialState, // начальное состояние
-  reducers: (create) => ({ // редьюсер принимает callback, он возвращает объект с именем инструкции
-    // которая создается вызовом create.reducer(callback) которая получает новый callback
+  reducers: (create) => ({ // редьюсер принимает callback, он возвращает объект с именами инструкций
+    // каждая инструкция создается вызовом create.reducer(callback) которая получает новый callback
+
+    changeUserParams: create.reducer((state, action) => { // сохраняет значение полей в форме регистрации
+      state.user[action.payload.name] = action.payload.value.trim();
+    }),
+
     login: create.reducer((state) => { // login - первая инструкция (передаем в него callback)
       state.status = true;
     }),
+
     logout: create.reducer((state) => {// logout - вторая инструкция (передаем в него callback)
       state.status = false;
     }),
-    fetchUser: create.asyncThunk<IUserState>( // вызывается новый метод fetchUsers (название метода любое)
-    // fetchUsers принимает два параметра (асинхронную функцию и описание состояния)
-      async (_, { rejectWithValue }) => { // асинхронная функция
+
+    registrationUser: create.asyncThunk<IUserState>( // вызывается новый метод registrationUser (название метода любое)
+      // create.asyncThunk принимает три параметра: type значение строкового действия, payloadCreator обратный вызов и options объект.
+      async (data, { rejectWithValue }) => { // асинхронная функция
         try {
-          const response = await fetch(`${URL_SERVER}/login/`);
+          const response = await fetch(`${URL_SERVER}/registration/`, {
+            method: "POST",
+            body: JSON.stringify({ ...data }),
+          });
 
-          if (!response.ok) {
-            return rejectWithValue("Loading users error!");
-          }
+          // const jsonResponse = await response.json();
+          return await response.json();
 
-          return await response.json(); // это будет - action.payload
+          // if (!response.ok) {
+          //   return rejectWithValue(await response.json());
+          // }
+
+          // console.log('response.status', response.status)
+          // if (response.status === 201) {
+          //   return await response.json(); // это будет - action.payload
+          // }
+          
         } catch (e) {
+          console.log('пришла ошибка', e)
           return rejectWithValue(e);
         }
       },
@@ -54,14 +73,15 @@ export const identificationSlice = createSliceWithThunk({ // при создан
           state.loading = true;
           state.error = "";
         },
-        fulfilled: (state, action) => {
+        fulfilled: (state, action: { payload: any; }) => {
           console.log(action.payload)
           state.user = action.payload;
           state.error = "";
           state.status = false;
         },
-        rejected: (state, action) => {
-          state.error = action.payload as string;
+        rejected: (state: { error: string; }, action: { payload: string; }) => {
+          console.log('пришла ошибка в payload', action.payload.error)
+          state.error = action.payload.error as string;
         },
         settled: (state) => { // данное состояние происходит всегда при любом ответе
           state.loading = false;
@@ -71,19 +91,6 @@ export const identificationSlice = createSliceWithThunk({ // при создан
   }),
 });
 
-// export const identificationSlice = createSlice({ // для создания slice передаем в него объект
-//   name: "identification", // имя slice (нужно для обращения в store к нужному slice, например state.identification.status здесь слово identification)
-//   initialState, // создаем начальное значение для slice
-//   reducers: { // reducers - обязательное поле для slice
-//     login: (state) => { // login - первая инструкция (передаем в него callback)
-//       state.status = true;
-//     },
-//     logout: (state) => { // logout - вторая инструкция (передаем в него callback)
-//       state.status = false;
-//     },
-//   },
-// });
-
 // экспортируем наши действия для slice (наши инструкции)
-export const { login, logout, fetchUser } = identificationSlice.actions;
+export const { login, logout, registrationUser, changeUserParams } = identificationSlice.actions;
 export default identificationSlice.reducer; // дефолтное поведение (возвращает редьюсер)

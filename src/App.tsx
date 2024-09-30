@@ -16,7 +16,7 @@ function App() {
       <header>
         <div className="header_baner">
           <ul className="navigation header_navigation">
-            <ItemLink link={"/"} label={"Home"} />
+            <ItemLink link={"/"} label={"Главная"} />
             { identification ?
               <ItemLink link={"/logout"} label={"Выход"} /> :
               <ItemLink link={"/login"} label={"Вход"} />

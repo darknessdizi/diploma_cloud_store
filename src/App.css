@@ -3,9 +3,10 @@
 }
 
 :root {
-  --height-baner: 180px;
+  --height-baner: 80px;
   --color-btn: lightgreen;
   --color-btn-hover: rgb(212, 231, 128);
+  --color-form: lightblue;
 }
 
 .conteiner {
@@ -16,6 +17,28 @@
   align-items: stretch;
   flex-direction: column;
   height: 100vh;
+  /* overflow: hidden; */
+}
+
+.header_baner {
+  width: initial;
+  height: var(--height-baner);
+  /* background-color: chocolate; */
+  background-image: url('./img/4.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 20px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+}
+
+.header_navigation {
+  justify-content: flex-end;
+  margin: 0px;
 }
 
 .hidden {

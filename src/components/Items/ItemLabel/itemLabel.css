@@ -1,7 +1,31 @@
 .form__label {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
-  align-items: stretch;
   width: 100%;
+}
+
+.login__input__label:nth-child(n+2) {
+  margin-top: 10px;
+}
+
+.input__label__title {
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.form__input {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: inherit;
+}
+
+.input__message__error {
+  text-align: center;
+  color: var(--color-form);
+  line-height: 1;
+  font-weight: 500;
+}
+
+.message__active {
+  color: red;
 }

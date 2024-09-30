@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-import { fetchUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
+// import { fetchUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 
@@ -8,13 +8,15 @@ export const LoginPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(fetchUser());
+    // dispatch(fetchUser());
   }
 
   return (
-    <ItemForm submit={handleSubmit}>
-      <ItemLabel title={"Login"} type={"text"} />
-      <ItemLabel title={"Password"} type={"password"} />
-    </ItemForm>
+    <div className="conteiner__form__background">
+      <ItemForm submit={handleSubmit}>
+        <ItemLabel title={"Login"} type={"text"} />
+        <ItemLabel title={"Password"} type={"password"} />
+      </ItemForm>
+    </div>
   )
 }

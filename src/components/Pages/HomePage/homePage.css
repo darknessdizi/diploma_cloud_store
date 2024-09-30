@@ -1,31 +1,13 @@
-.header_baner {
-  width: initial;
-  height: var(--height-baner);
-  /* background-color: chocolate; */
-  background-image: url('../../../img/4.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding-top: 10px;
-}
-
-.header_navigation {
-  display: flex;
-  justify-content: flex-end;
-  margin: 0px;
-}
-
-.footer_navigation {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
 .page_content {
   /* background-color: cornflowerblue; */
   max-width: 1296px;
   margin: 30px auto;
   padding: 20px;
+}
+
+.content_block h1 {
+  margin: 0;
+  line-height: 1.1;
 }
 
 .block_discription_title {
@@ -41,4 +23,8 @@
 .block_discription_title > span {
   color: black;
   font-size: 0.8em;
+}
+
+.footer_navigation {
+  margin-bottom: 30px;
 }

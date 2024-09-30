@@ -1,0 +1,15 @@
+.form__background__long {
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.conteiner__form__description {
+  max-width: 800px;
+  padding-bottom: 30px;
+}
+
+.conteiner__form__description > ul {
+  margin-bottom: 0;
+  font-weight: 700;
+}

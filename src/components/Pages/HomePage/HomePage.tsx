@@ -22,19 +22,19 @@ export const HomePage = () => {
       <main className="page_content">
 
         <ItemContentBlock>
-            <h1 className="block_discription_title text_left">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+            <h1 className="block_discription_title text_left">Cloud Store <span> - лучшее решение для работы с вашими файлами</span></h1>
         </ItemContentBlock>
 
         <ItemContentBlock>
           <ItemImgBlock imgPath="./15.jpg" />
           <ItemDescriptionBlock>
-            <h1 className="block_discription_title">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+            <h1 className="block_discription_title">Cloud Store <span> - загружайте, просматривайте, редактируйте и скачивайте ваши файлы с любых устройств</span></h1>
           </ItemDescriptionBlock>
         </ItemContentBlock>
 
         <ItemContentBlock>
           <ItemDescriptionBlock>
-            <h1 className="block_discription_title text_left">Cloud Store <span> - лучшее решение для работы с Вашими файлами</span></h1>
+            <h1 className="block_discription_title text_left">Cloud Store <span> - вы всегда будете иметь доступ к вашим файлам будь вы дома, на работе или в движении</span></h1>
           </ItemDescriptionBlock>
           <ItemImgBlock imgPath="./9.jpg" />
         </ItemContentBlock>

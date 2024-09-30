@@ -1,7 +1,8 @@
 export interface IUserState {
   login: string | null,
-  name: string | null,
+  fullName: string | null,
   email: string | null,
+  password: string | null,
 }
 
 export interface IIdentification {

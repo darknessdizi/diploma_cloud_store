@@ -1,4 +1,4 @@
-.conteiner__form {
+.conteiner__form__background {
   position: absolute;
   top: var(--height-baner);
   bottom: 0;
@@ -9,9 +9,13 @@
   align-items: center;
 }
 
+.form__body__title {
+  margin: 0;
+}
+
 .form__body {
   width: 400px;
-  background-color: lightblue;
+  background-color: var(--color-form);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,33 +23,18 @@
   border-radius: 10px;
   border: 1px solid black;
   padding: 30px;
-  font-size: 1.5em;
-}
-
-.login__input__label:nth-child(n+2) {
-  margin-top: 10px;
-}
-
-.input__label__title {
-  margin-left: 10px;
-}
-
-.form__input {
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: inherit;
-  margin-top: 10px;
+  font-size: 1.2em;
 }
 
 .form__btn {
   margin-top: 20px;
-  margin-bottom: 10px;
   font-size: inherit;
   width: 50%;
   background-color: var(--color-btn);
   border: 1px solid black;
   border-radius: 10px;
   padding: 5px;
+  font-weight: 700;
 }
 
 .form__btn:hover {
