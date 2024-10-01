@@ -24,6 +24,7 @@
   color: var(--color-form);
   line-height: 1;
   font-weight: 500;
+  height: 1em;
 }
 
 .message__active {

@@ -16,6 +16,7 @@ const initialState = {
     fullName: null,
     email: null,
     password: null,
+    repeat: null,
   },
 } as IIdentification; // создаем наш state и типизируем его
 
@@ -31,7 +32,7 @@ export const identificationSlice = createSliceWithThunk({ // при создан
     // каждая инструкция создается вызовом create.reducer(callback) которая получает новый callback
 
     changeUserParams: create.reducer((state, action) => { // сохраняет значение полей в форме регистрации
-      state.user[action.payload.name] = action.payload.value.trim();
+      state.user[action.payload.name] = action.payload.value;
     }),
 
     login: create.reducer((state) => { // login - первая инструкция (передаем в него callback)
