@@ -1,5 +1,5 @@
-import { useAppDispatch } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-import { registrationUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
+import { useAppDispatch, useAppSelector } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
+import { clearOccupied, registrationUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import "./registrationPage.css";
@@ -20,12 +20,14 @@ const initialState = {
 }
 
 export const RegistrationPage = () => {
-  const [statePage, setStatePage] = useState(initialState);
+  const { loginOccupied } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  const [statePage, setStatePage] = useState(initialState); // создание локального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
-  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     // Обрабатываем отправку формы регистрации
     event.preventDefault();
+    dispatch(clearOccupied());
     const { login, password, repeat, email } = event.target;
     const errors = {
       errorLogin: checkLogin(login.value),
@@ -34,10 +36,7 @@ export const RegistrationPage = () => {
       errorEmail: checkEmail(email.value),
     }
 
-    setStatePage({ 
-      ...statePage,
-      ...errors
-    });
+    setStatePage({ ...statePage, ...errors });
 
     if ((!errors.errorLogin.status) && (!errors.errorPassword.status) && (!errors.errorRepeat.status) && (!errors.errorEmail.status)) {
       const user = {
@@ -54,28 +53,31 @@ export const RegistrationPage = () => {
     // Обрабатываем изменение в поле input
     const { name, value } = event.target;
     const statusSearch = ['fullName', 'login', 'password', 'email', 'repeat'].includes(name);
-
     if (statusSearch) {
-      setStatePage({ 
-        ...statePage,
-        [name]: value,
-      });
+      setStatePage({ ...statePage, [name]: value });
     }
+  }
+
+  const propsLogin = {
+    title: "Логин", 
+    type: "text",
+    name: "login",
+    value: statePage.login,
+    changeInput: changeInput,
+    message: statePage.errorLogin.message,
+    error: statePage.errorLogin.status,
   }
 
   return (
     <div className="conteiner__form__background form__background__long">
       <ItemForm submit={handleSubmit}>
         <h1 className="form__body__title">Регистрация</h1>
-        <ItemLabel 
-          title={"Логин"} 
-          type={"text"} 
-          name={"login"} 
-          value={statePage.login} 
-          changeInput={changeInput} 
-          message={statePage.errorLogin.message} 
-          error={statePage.errorLogin.status} 
-        />
+
+        { loginOccupied ?
+          <ItemLabel {...propsLogin} message={'Логин уже существует'} error={true} /> :
+          <ItemLabel {...propsLogin} />
+        }
+
         <ItemLabel 
           title={"Пароль"} 
           type={"password"} 

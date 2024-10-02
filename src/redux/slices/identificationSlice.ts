@@ -12,6 +12,7 @@ const initialState = {
   loading: false,
   error: { status: false, message: '' },
   modal: false,
+  loginOccupied: false,
   user: {
     id: null,
     login: null,
@@ -33,6 +34,10 @@ export const identificationSlice = createSliceWithThunk({ // при создан
 
     login: create.reducer((state: IIdentification) => { // успешная авторизация
       state.auth = true;
+    }),
+
+    clearOccupied: create.reducer((state: IIdentification) => { // очистка флага наличия ошибки
+      state.loginOccupied = false;
     }),
 
     clearError: create.reducer((state: IIdentification) => { // очистка флага наличия ошибки
@@ -65,6 +70,10 @@ export const identificationSlice = createSliceWithThunk({ // при создан
           if (response.status === 201) {
             return await response.json(); // это будет - action.payload
           }
+
+          if (response.status === 204) {
+            return { error: 'Логин занят' }; // это будет - action.payload
+          }
           
         } catch (e) {
           return rejectWithValue(e);
@@ -76,10 +85,16 @@ export const identificationSlice = createSliceWithThunk({ // при создан
           state.error.status = false;
         },
         fulfilled: (state: IIdentification, action: { payload: IUserState }) => {
-          console.log(action.payload)
-          state.user = action.payload;
-          state.error.status = false;
-          state.modal = true;
+          console.log('Успешный запрос, тело:', action.payload)
+          if (action.payload.error) {
+            state.loginOccupied = true;
+            console.log('Успех:', state.loginOccupied)
+          } else {
+            state.user = action.payload;
+            state.error.status = false;
+            state.modal = true;
+            state.loginOccupied = false;
+          }
         },
         rejected: (state: IIdentification, action: { payload: { error: string } }) => {
           console.log('пришла ошибка в payload', action.payload);
@@ -95,5 +110,5 @@ export const identificationSlice = createSliceWithThunk({ // при создан
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { registrationUser, clearError, clearModal } = identificationSlice.actions;
+export const { registrationUser, clearError, clearModal, clearOccupied } = identificationSlice.actions;
 export default identificationSlice.reducer; // дефолтное поведение (возвращает редьюсер)
