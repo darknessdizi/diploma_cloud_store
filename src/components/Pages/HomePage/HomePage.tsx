@@ -44,7 +44,7 @@ export const HomePage = () => {
       <footer>
         <div className="navigation footer_navigation">
           <ul className="navigation header_navigation">
-            <ItemLink link={"/"} label={"Home"} />
+            <ItemLink link={"/"} label={"Главная"} />
             { identification ?
               <ItemLink link={"/logout"} label={"Выход"} /> :
               <ItemLink link={"/login"} label={"Вход"} />

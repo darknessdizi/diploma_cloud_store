@@ -1,14 +1,21 @@
 export interface IUserState {
+  id: number | null,
   login: string | null,
   fullName: string | null,
   email: string | null,
-  password: string | null,
+}
+
+export interface IFetchUser {
+  login: string,
+  fullName: string,
+  email: string,
+  password: string,
 }
 
 export interface IIdentification {
-  status: boolean,
+  auth: boolean,
   loading: boolean,
-  error: string,
+  error: { status: boolean, message: string },
   user: IUserState,
 }
 

@@ -4,19 +4,18 @@ import {
   asyncThunkCreator,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { IIdentification, IUserState } from "../../models/index";
-import { URL_SERVER } from "../../const/index"; 
+import { IFetchUser, IIdentification, IUserState } from "../../models/index";
+import { URL_SERVER } from "../../const/index";
 
 const initialState = { 
-  status: false,
+  auth: false,
   loading: false,
-  error: "",
+  error: { status: false, message: '' },
   user: {
+    id: null,
     login: null,
     fullName: null,
     email: null,
-    password: null,
-    repeat: null,
   },
 } as IIdentification; // создаем наш state и типизируем его
 
@@ -31,60 +30,61 @@ export const identificationSlice = createSliceWithThunk({ // при создан
   reducers: (create) => ({ // редьюсер принимает callback, он возвращает объект с именами инструкций
     // каждая инструкция создается вызовом create.reducer(callback) которая получает новый callback
 
-    changeUserParams: create.reducer((state, action) => { // сохраняет значение полей в форме регистрации
-      state.user[action.payload.name] = action.payload.value;
+    // changeUserParams: create.reducer((state: IIdentification, action: { payload: { name: string | number; value: string; }; }) => { // сохраняет значение полей в форме регистрации
+    //   state.user[action.payload.name] = action.payload.value;
+    // }),
+
+    login: create.reducer((state: IIdentification) => { // успешная авторизация
+      state.auth = true;
     }),
 
-    login: create.reducer((state) => { // login - первая инструкция (передаем в него callback)
-      state.status = true;
+    clearError: create.reducer((state: IIdentification) => { // очистка флага наличия ошибки
+      state.error.status = false;
+      state.error.message = '';
     }),
 
-    logout: create.reducer((state) => {// logout - вторая инструкция (передаем в него callback)
-      state.status = false;
+    logout: create.reducer((state: IIdentification) => {// logout - вторая инструкция (передаем в него callback)
+      state.auth = false;
     }),
 
-    registrationUser: create.asyncThunk<IUserState>( // вызывается новый метод registrationUser (название метода любое)
+    registrationUser: create.asyncThunk( // вызывается новый метод registrationUser (название метода любое)
       // create.asyncThunk принимает три параметра: type значение строкового действия, payloadCreator обратный вызов и options объект.
-      async (data, { rejectWithValue }) => { // асинхронная функция
+      async (data: IFetchUser, { rejectWithValue }) => { // асинхронная функция
         try {
           const response = await fetch(`${URL_SERVER}/registration/`, {
             method: "POST",
             body: JSON.stringify({ ...data }),
           });
 
-          // const jsonResponse = await response.json();
-          return await response.json();
+          if (!response.ok) {
+            return rejectWithValue(await response.json());
+          }
 
-          // if (!response.ok) {
-          //   return rejectWithValue(await response.json());
-          // }
-
-          // console.log('response.status', response.status)
-          // if (response.status === 201) {
-          //   return await response.json(); // это будет - action.payload
-          // }
+          if (response.status === 201) {
+            return await response.json(); // это будет - action.payload
+          }
           
         } catch (e) {
-          console.log('пришла ошибка', e)
           return rejectWithValue(e);
         }
       },
       { // описание состояния
-        pending: (state) => {
+        pending: (state: IIdentification) => {
           state.loading = true;
-          state.error = "";
+          state.error.status = false;
         },
-        fulfilled: (state, action: { payload: any; }) => {
+        fulfilled: (state: IIdentification, action: { payload: IUserState }) => {
           console.log(action.payload)
           state.user = action.payload;
-          state.error = "";
-          state.status = false;
+          state.error.status = false;
+          state.auth = false;
         },
-        rejected: (state: { error: string; }, action: { payload: string; }) => {
-          console.log('пришла ошибка в payload', action.payload.error)
-          state.error = action.payload.error as string;
+        rejected: (state: IIdentification, action: { payload: { error: string } }) => {
+          console.log('пришла ошибка в payload', action.payload);
+          state.error.status = true;
+          state.error.message = action.payload.error as string;
         },
-        settled: (state) => { // данное состояние происходит всегда при любом ответе
+        settled: (state: IIdentification) => { // данное состояние происходит всегда при любом ответе
           state.loading = false;
         },
       }
@@ -93,5 +93,5 @@ export const identificationSlice = createSliceWithThunk({ // при создан
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { login, logout, registrationUser, changeUserParams } = identificationSlice.actions;
+export const { registrationUser, clearError } = identificationSlice.actions;
 export default identificationSlice.reducer; // дефолтное поведение (возвращает редьюсер)

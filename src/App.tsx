@@ -2,13 +2,14 @@ import './App.css';
 import { LoginPage } from './components/Pages/LoginPage/LoginPage';
 import { useAppSelector } from "./hooks/index"; // получаем хуки для работы с глобальным store
 import { Page404 } from './components/Pages/ErrorsPages/Page404/Page404';
-import { Routes, Route, Switch} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './components/Pages/HomePage/HomePage';
 import { ItemLink } from './components/Items/ItemLink/ItemLink';
 import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
+import { ModalPage } from './components/Pages/ModalPage/ModalPage';
 
 function App() {
-  const identification = useAppSelector((state) => state.identification.status); // хук useAppSelector принимает callback
+  const { error, auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
 
   return (
     <div className="conteiner">
@@ -17,7 +18,7 @@ function App() {
         <div className="header_baner">
           <ul className="navigation header_navigation">
             <ItemLink link={"/"} label={"Главная"} />
-            { identification ?
+            { auth ?
               <ItemLink link={"/logout"} label={"Выход"} /> :
               <ItemLink link={"/login"} label={"Вход"} />
             }
@@ -32,6 +33,8 @@ function App() {
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
+
+      { error.status ? <ModalPage message={error.message} /> : '' }
 
     </div>
   )

@@ -1,29 +1,29 @@
-import { useAppSelector, useAppDispatch } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-import { registrationUser, changeUserParams } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
+import { useAppDispatch } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
+import { registrationUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import "./registrationPage.css";
 import { useState } from 'react';
 import { checkEmail, checkLogin, checkPassword } from "./utils";
 
+// начальное состояние локального хранилища компонента
 const initialState = {
   errorLogin: { status: false, message: '' },
   errorPassword: { status: false, message: '' },
   errorRepeat: { status: false, message: '' },
   errorEmail: { status: false, message: '' },
-  login: '',
-  password: '',
-  repeat: '',
-  email: '',
-  fullName: '',
+  login: 'lizochka',
+  password: '12QWer+',
+  repeat: '12QWer+',
+  email: 'lizka@mail.ru ',
+  fullName: 'Лизочка Клевая',
 }
 
 export const RegistrationPage = () => {
   const [statePage, setStatePage] = useState(initialState);
-  const { user } = useAppSelector((state) => state.identification); // хук useAppSelector принимает callback
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
-  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     // Обрабатываем отправку формы регистрации
     event.preventDefault();
     const { login, password, repeat, email } = event.target;
@@ -40,6 +40,12 @@ export const RegistrationPage = () => {
     });
 
     if ((!errors.errorLogin.status) && (!errors.errorPassword.status) && (!errors.errorRepeat.status) && (!errors.errorEmail.status)) {
+      const user = {
+        login: statePage.login,
+        fullName: statePage.fullName,
+        email: statePage.email,
+        password: statePage.password,
+      }
       dispatch(registrationUser(user));
     }
   }
@@ -50,7 +56,6 @@ export const RegistrationPage = () => {
     const statusSearch = ['fullName', 'login', 'password', 'email', 'repeat'].includes(name);
 
     if (statusSearch) {
-      // dispatch(changeUserParams({name, value}));
       setStatePage({ 
         ...statePage,
         [name]: value,
