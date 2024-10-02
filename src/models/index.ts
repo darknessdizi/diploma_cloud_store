@@ -15,6 +15,7 @@ export interface IFetchUser {
 export interface IIdentification {
   auth: boolean,
   loading: boolean,
+  modal: boolean,
   error: { status: boolean, message: string },
   user: IUserState,
 }

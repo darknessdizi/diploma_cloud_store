@@ -15,7 +15,7 @@ export const HomePage = () => {
   //   dispatch(login()); // при данном событии активируем инструкцию для редьюсера
   // };
 
-  const identification = useAppSelector((state) => state.identification.status); // хук useAppSelector принимает callback
+  const { auth } = useAppSelector((state) => state.identification); // хук useAppSelector принимает callback
 
   return (
     <>
@@ -45,11 +45,16 @@ export const HomePage = () => {
         <div className="navigation footer_navigation">
           <ul className="navigation header_navigation">
             <ItemLink link={"/"} label={"Главная"} />
-            { identification ?
-              <ItemLink link={"/logout"} label={"Выход"} /> :
-              <ItemLink link={"/login"} label={"Вход"} />
+            { auth ?
+              <>
+                <ItemLink link={"/disk"} label={"Диск"} />
+                <ItemLink link={"/logout"} label={"Выход"} />
+              </> :
+              <>
+                <ItemLink link={"/login"} label={"Вход"} />
+                <ItemLink link={"/registration"} label={"Регистрация"} />
+              </>
             }
-            <ItemLink link={"/registration"} label={"Регистрация"} />
           </ul>
         </div>
       </footer>

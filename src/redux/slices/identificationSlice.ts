@@ -11,6 +11,7 @@ const initialState = {
   auth: false,
   loading: false,
   error: { status: false, message: '' },
+  modal: false,
   user: {
     id: null,
     login: null,
@@ -30,10 +31,6 @@ export const identificationSlice = createSliceWithThunk({ // при создан
   reducers: (create) => ({ // редьюсер принимает callback, он возвращает объект с именами инструкций
     // каждая инструкция создается вызовом create.reducer(callback) которая получает новый callback
 
-    // changeUserParams: create.reducer((state: IIdentification, action: { payload: { name: string | number; value: string; }; }) => { // сохраняет значение полей в форме регистрации
-    //   state.user[action.payload.name] = action.payload.value;
-    // }),
-
     login: create.reducer((state: IIdentification) => { // успешная авторизация
       state.auth = true;
     }),
@@ -41,6 +38,11 @@ export const identificationSlice = createSliceWithThunk({ // при создан
     clearError: create.reducer((state: IIdentification) => { // очистка флага наличия ошибки
       state.error.status = false;
       state.error.message = '';
+    }),
+
+    clearModal: create.reducer((state: IIdentification) => { // очистка флага наличия ошибки
+      state.modal = false;
+      state.auth = true;
     }),
 
     logout: create.reducer((state: IIdentification) => {// logout - вторая инструкция (передаем в него callback)
@@ -77,7 +79,7 @@ export const identificationSlice = createSliceWithThunk({ // при создан
           console.log(action.payload)
           state.user = action.payload;
           state.error.status = false;
-          state.auth = false;
+          state.modal = true;
         },
         rejected: (state: IIdentification, action: { payload: { error: string } }) => {
           console.log('пришла ошибка в payload', action.payload);
@@ -93,5 +95,5 @@ export const identificationSlice = createSliceWithThunk({ // при создан
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { registrationUser, clearError } = identificationSlice.actions;
+export const { registrationUser, clearError, clearModal } = identificationSlice.actions;
 export default identificationSlice.reducer; // дефолтное поведение (возвращает редьюсер)

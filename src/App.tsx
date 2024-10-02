@@ -7,9 +7,10 @@ import { HomePage } from './components/Pages/HomePage/HomePage';
 import { ItemLink } from './components/Items/ItemLink/ItemLink';
 import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
 import { ModalPage } from './components/Pages/ModalPage/ModalPage';
+import { DiskPage } from './components/Pages/DiskPage/DiskPage';
 
 function App() {
-  const { error, auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  const { error, auth, modal } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
 
   return (
     <div className="conteiner">
@@ -19,10 +20,15 @@ function App() {
           <ul className="navigation header_navigation">
             <ItemLink link={"/"} label={"Главная"} />
             { auth ?
-              <ItemLink link={"/logout"} label={"Выход"} /> :
-              <ItemLink link={"/login"} label={"Вход"} />
+              <>
+                <ItemLink link={"/disk"} label={"Диск"} />
+                <ItemLink link={"/logout"} label={"Выход"} />
+              </> :
+              <>
+                <ItemLink link={"/login"} label={"Вход"} />
+                <ItemLink link={"/registration"} label={"Регистрация"} />
+              </>
             }
-            <ItemLink link={"/registration"} label={"Регистрация"} />
           </ul>
         </div>
       </header>
@@ -31,10 +37,12 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/disk" element={<DiskPage />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
 
       { error.status ? <ModalPage message={error.message} /> : '' }
+      { modal ? <ModalPage /> : '' }
 
     </div>
   )
