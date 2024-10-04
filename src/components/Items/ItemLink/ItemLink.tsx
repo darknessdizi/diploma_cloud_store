@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import "./itemLink.css"
+import "./itemLink.css";
 
 export const ItemLink = ({link, label}) => {
   const active = ({ isActive }: { isActive: boolean }) => isActive ? "item_link-active" : "";

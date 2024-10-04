@@ -4,7 +4,7 @@ import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import "./registrationPage.css";
 import { useState } from 'react';
-import { checkEmail, checkLogin, checkPassword } from "./utils";
+import { checkEmail, checkLogin, checkPassword, checkValueInput } from "./utils";
 
 // начальное состояние локального хранилища компонента
 const initialState = {
@@ -51,11 +51,8 @@ export const RegistrationPage = () => {
 
   const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     // Обрабатываем изменение в поле input
-    const { name, value } = event.target;
-    const statusSearch = ['fullName', 'login', 'password', 'email', 'repeat'].includes(name);
-    if (statusSearch) {
-      setStatePage({ ...statePage, [name]: value });
-    }
+    const value = checkValueInput(event, ['fullName', 'login', 'password', 'email', 'repeat']);
+    setStatePage({ ...statePage, ...value });
   }
 
   const propsLogin = {

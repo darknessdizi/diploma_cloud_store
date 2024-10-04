@@ -33,3 +33,12 @@ export function checkEmail(text: string) {
   }
   return { status: false, message: '' };
 } 
+
+export function checkValueInput (event: React.ChangeEvent<HTMLInputElement>, array: string[]) {
+  // Обрабатываем изменение в поле input
+  const { name, value } = event.target;
+  const statusSearch = array.includes(name);
+  if (statusSearch) {
+    return { [name]: value };
+  }
+}

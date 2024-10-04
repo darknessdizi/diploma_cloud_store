@@ -1,0 +1,27 @@
+.conteiner__disk {
+  background-color: red;
+  display: flex;
+  /* align-items: stretch; */
+  height: 100vh;
+}
+
+.disk__controll {
+  width: 30%;
+  background-color: coral;
+  /* height: 500px; */
+  text-align: center;
+}
+
+.disk__controll__statistika {
+  text-align: start;
+}
+
+.disk__field__files {
+  background-color: chocolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  /* height: 500px; */
+  
+}
