@@ -8,9 +8,13 @@ import { ItemLink } from './components/Items/ItemLink/ItemLink';
 import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
 import { ModalPage } from './components/Pages/ModalPage/ModalPage';
 import { DiskPage } from './components/Pages/DiskPage/DiskPage';
+import { useEffect } from 'react';
 
 function App() {
   const { error, auth, modal } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/csrf/')
+  }, []);
 
   return (
     <div className="conteiner">
