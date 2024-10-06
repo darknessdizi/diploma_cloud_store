@@ -10,12 +10,12 @@ export const DiskPage = () => {
   useEffect(() => { // срабатывает после первой отрисовки компонента
     if (!auth) {
       navigate('/login', { replace: true }); // перевод на другую страницу без перезапуска страницы
-    }
-  }, []);
+    } 
+  }, [auth]);
 
   return (
     <>
-      { auth ? <ItemFieldDisk avatar={user.avatar} /> : '' }
+      { auth ? <ItemFieldDisk user={user} /> : '' }
     </>
   )
 }
