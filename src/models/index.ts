@@ -33,5 +33,5 @@ export interface IFile {
 }
 
 export interface IDiskState {
-  files: IFile[]
+  cloudFiles: IFile[]
 }

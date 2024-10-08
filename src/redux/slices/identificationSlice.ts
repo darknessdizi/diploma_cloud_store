@@ -62,9 +62,8 @@ export const identificationSlice = createSliceWithThunk({ // при создан
           return rejectWithValue({error: e.message});
         }
       },
-      { // описание состояния
+      { // описание состояний для асинхронной функции
         fulfilled: (state: IIdentification, action: { payload: IUserState }) => {
-          console.log('Успешный запрос, тело:', action.payload)
           if (action.payload.error) {
             state.error.status = true;
             state.error.message = action.payload.error as string;

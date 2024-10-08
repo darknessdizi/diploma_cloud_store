@@ -1,30 +1,101 @@
 .conteiner__disk {
-  background-color: red;
   display: flex;
-  /* align-items: stretch; */
-  height: 100vh;
+  min-height: calc(100vh - var(--height-baner));
+  /* margin: 0px auto; */
+  width: 100%;
 }
 
-.disk__controll {
-  width: 30%;
-  background-color: coral;
-  /* height: 500px; */
+.content__disk__info {
+  width: 25%;
+  background-color: lightblue;
   text-align: center;
+  flex: none;
+  min-height: calc(100vh - var(--height-baner));
 }
 
-.disk__controll__statistika {
+.info__statistika {
   text-align: start;
 }
 
-.disk__field__files {
-  background-color: chocolate;
+.info__size {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
+  padding: 0 20px;
+  margin-top: 20px;
+  font-weight: 700;
 }
 
-.controll__avatar {
-  width: 300px;
-  height: 300px;
+.info__user__avatar {
+  width: 50%;
+}
+
+.content__disk__files {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.files__form {
+  margin-bottom: 15px;
+}
+
+.form__add__input {
+  display: none;
+}
+
+.form__add__btn {
+  padding: 10px 30px 15px;
+  background-color: var(--color-form);
+  border-radius: 10px;
+  border: 1px solid black;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.form__add__btn:hover {
+  background-color: var(--color-btn-hover);
+}
+
+.files__field {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: scroll;
+  margin: 20px;
+}
+
+.files__field::-webkit-scrollbar { width: 0 !important }
+.files__field { -ms-overflow-style: none; }
+.files__field { overflow: -moz-scrollbars-none; }
+
+.conteiner__file__item {
+  border: 1px solid black;
+  width: 250px;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.files__item__img {
+  width: 100px;
+  max-height: 100px;
+  /* background-color: aqua; */
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.file__item__info {
+  word-break: break-all;
+  text-align: start;
+}
+
+.item__info__title {
+  font-weight: 700;
+}
+
+.item__info__title > span {
+  font-weight: 400;
 }
