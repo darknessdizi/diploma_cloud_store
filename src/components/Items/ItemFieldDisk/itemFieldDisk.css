@@ -1,16 +1,35 @@
 .conteiner__disk {
   display: flex;
   min-height: calc(100vh - var(--height-baner));
-  /* margin: 0px auto; */
   width: 100%;
 }
 
 .content__disk__info {
-  width: 25%;
+  width: 20%;
   background-color: lightblue;
   text-align: center;
   flex: none;
   min-height: calc(100vh - var(--height-baner));
+}
+
+.disk__info__user {
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.disk__info__user > h3 {
+  margin: 5px;
+}
+
+.info__user__email {
+  font-weight: 700;
+}
+
+.info__user__email > span {
+  font-weight: 400;
+  word-break: break-all;
 }
 
 .info__statistika {
@@ -61,19 +80,19 @@
 .files__field {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
-  overflow: scroll;
+  overflow-y: scroll;
   margin: 20px;
 }
 
-.files__field::-webkit-scrollbar { width: 0 !important }
+/* .files__field::-webkit-scrollbar { width: 0 !important }
 .files__field { -ms-overflow-style: none; }
-.files__field { overflow: -moz-scrollbars-none; }
+.files__field { overflow: -moz-scrollbars-none; } */
 
 .conteiner__file__item {
   border: 1px solid black;
-  width: 250px;
+  width: 260px;
   margin: 5px;
   padding: 5px;
   border-radius: 10px;
@@ -82,7 +101,6 @@
 .files__item__img {
   width: 100px;
   max-height: 100px;
-  /* background-color: aqua; */
   margin-right: 10px;
   margin-bottom: 10px;
 }
@@ -98,4 +116,43 @@
 
 .item__info__title > span {
   font-weight: 400;
+}
+
+.file__item__controll {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.item__controll__item {
+  width: 30px;
+  height: 30px;
+  margin-left: 15px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.controll__item__edit {
+  background-image: url('../../../img/icons_btn/pencil.svg');
+}
+
+.controll__item__download {
+  background-image: url('../../../img/icons_btn/download.svg');
+}
+
+.controll__item__delete {
+  background-image: url('../../../img/icons_btn/delete.svg');
+}
+
+.controll__item__edit:hover {
+  background-image: url('../../../img/icons_btn/pencil-hover.svg');
+}
+
+.controll__item__download:hover {
+  background-image: url('../../../img/icons_btn/download-hover.svg');
+}
+
+.controll__item__delete:hover {
+  background-image: url('../../../img/icons_btn/delete-hover.svg');
 }
