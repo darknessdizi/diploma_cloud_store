@@ -1,12 +1,17 @@
+import { useAppDispatch, useAppSelector } from "../../../hooks/index";
+import { selectedFile } from "../../../redux/slices/diskSlice";
 import { formatBytes, handleName } from "../ItemFieldDisk/utils"
 
 export const ItemFile = ({ file, onClickDelete }) => {
+  const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
+
   const clickDelete = () => {
+    dispatch(selectedFile(file));
     onClickDelete(file);
   }
 
   return (
-    <div className="conteiner__file__item" id={file.id}>
+    <div className="conteiner__file__item">
       <div className="file__item__controll">
         <div className="item__controll__item controll__item__edit"></div>
         <div className="item__controll__item controll__item__download"></div>

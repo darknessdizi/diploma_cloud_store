@@ -1,4 +1,3 @@
-import './App.css';
 import { LoginPage } from './components/Pages/LoginPage/LoginPage';
 import { useAppSelector } from "./hooks/index"; // получаем хуки для работы с глобальным store
 import { Page404 } from './components/Pages/ErrorsPages/Page404/Page404';
@@ -6,12 +5,15 @@ import { Routes, Route } from 'react-router-dom';
 import { HomePage } from './components/Pages/HomePage/HomePage';
 import { ItemLink } from './components/Items/ItemLink/ItemLink';
 import { RegistrationPage } from './components/Pages/RegistrationPage/RegistrationPage';
-import { ModalPage } from './components/Pages/ModalPage/ModalPage';
 import { DiskPage } from './components/Pages/DiskPage/DiskPage';
 import { useEffect } from 'react';
+import { ItemModal } from './components/Items/ItemModal/ItemModal';
+import './App.css';
 
 function App() {
-  const { error, auth, modal } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  const { modal } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
+
   useEffect(() => {
     fetch('http://127.0.0.1:8000/csrf/')
   }, []);
@@ -45,8 +47,7 @@ function App() {
         <Route path="*" element={<Page404 />} />
       </Routes>
 
-      { error.status ? <ModalPage message={error.message} /> : '' }
-      { modal ? <ModalPage /> : '' }
+      { modal ? <ItemModal /> : '' }
 
     </div>
   )

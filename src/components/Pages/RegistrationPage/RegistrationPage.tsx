@@ -1,10 +1,13 @@
 import { useAppDispatch, useAppSelector } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-import { clearOccupied, registrationUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
+import { clearOccupied, addLoginOccupied, succesAuth } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
-import "./registrationPage.css";
 import { useState } from 'react';
 import { checkEmail, checkLogin, checkPassword, checkValueInput } from "./utils";
+import { baseFetch } from "../../../utils/index";
+import { URL_SERVER } from "../../../const/index";
+import { runModal } from "../../../redux/slices/modalSlice";
+import "./registrationPage.css";
 
 // начальное состояние локального хранилища компонента
 const initialState = {
@@ -24,7 +27,7 @@ export const RegistrationPage = () => {
   const [statePage, setStatePage] = useState(initialState); // создание локального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
-  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     // Обрабатываем отправку формы регистрации
     event.preventDefault();
     dispatch(clearOccupied());
@@ -45,7 +48,17 @@ export const RegistrationPage = () => {
         email: statePage.email,
         password: statePage.password,
       }
-      dispatch(registrationUser(user));
+
+      try {
+        const response = await baseFetch({ url: `${URL_SERVER}/registration/`, method: "POST", body: JSON.stringify(user) });
+        if (response.status === 205) {
+          return dispatch(addLoginOccupied());
+        }
+        dispatch(succesAuth(response));
+        dispatch(runModal({ type: 'registration', message: 'Вы успешно зарегистрированы!' }));
+      } catch (e: any) {
+        dispatch(runModal({ error: e.message}));
+      }
     }
   }
 

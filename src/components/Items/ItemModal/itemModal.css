@@ -41,6 +41,22 @@
   font-size: 1.2em;
 }
 
+.content__title {
+  /* overflow-wrap: break-word;
+  hyphens: auto; */
+  word-break: break-all;
+}
+
+.content__controll {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.content__controll a:first-child {
+  margin-right: 100px;
+}
+
 .content__link {
   width: 50%;
   padding: 10px;
@@ -57,3 +73,4 @@
 .content__link:hover {
   background-color: var(--color-btn-hover);
 }
+

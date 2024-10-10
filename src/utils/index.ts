@@ -1,9 +1,4 @@
-interface IFetchParams {
-  url: string,
-  headers?: {},
-  method?: string,
-  body?: string | FormData,
-}
+import { IFetchParams } from "../models/index";
 
 export async function baseFetch({ url, headers, method="GET", body }: IFetchParams) {
   try {
@@ -13,12 +8,13 @@ export async function baseFetch({ url, headers, method="GET", body }: IFetchPara
       body: body,
     });
 
-    if (method === "DELETE") {
+    console.log('ответ на fetch (src/utils/index/baseFetch)', response);
+    if ((response.status === 205) || (method === "DELETE")) {
       return response;
     }
 
     return await response.json();
-  } catch(err) {
+  } catch (err: any) {
     throw new Error(err.message);
   }
 }

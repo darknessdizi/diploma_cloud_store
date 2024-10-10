@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-import { loginUser } from "../../../redux/slices/identificationSlice";
 import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import { checkLogin, checkPassword, checkValueInput } from "../RegistrationPage/utils";
 import { useNavigate } from "react-router-dom";
+import { URL_SERVER } from "../../../const/index";
+import { baseFetch } from "../../../utils/index";
+import { runModal } from "../../../redux/slices/modalSlice";
+import { succesAuth } from "../../../redux/slices/identificationSlice";
 
 // начальное состояние локального хранилища компонента
 const initialState = {
@@ -15,7 +18,7 @@ const initialState = {
 }
 
 export const LoginPage = () => {
-  const { loginNotFound, auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
   const [statePage, setStatePage] = useState(initialState); // создание локального хранилища
   const navigate = useNavigate();
@@ -26,7 +29,8 @@ export const LoginPage = () => {
     }
   }, [auth]);
 
-  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
+    // отправка формы авторизации пользователя (вход в систему)
     event.preventDefault();
     const { login, password } = event.target;
     const errors = {
@@ -41,7 +45,15 @@ export const LoginPage = () => {
         login: statePage.login,
         password: statePage.password,
       }
-      dispatch(loginUser(user));
+      try {
+        const response = await baseFetch({ url: `${URL_SERVER}/login/`, method: "POST", body: JSON.stringify(user) });
+        if (response.status === 205) {
+          throw new Error('Не верно указаны логин или пароль. Попробуйте повторить ввод или нажмите на кнопку регистрация.');
+        }
+        dispatch(succesAuth(response));
+      } catch (e: any) {
+        dispatch(runModal({ type: 'error', message: e.message }));
+      }
     }
   }
 
@@ -51,23 +63,18 @@ export const LoginPage = () => {
     setStatePage({ ...statePage, ...value });
   }
 
-  const propsLogin = {
-    title: "Логин", 
-    type: "text",
-    name: "login",
-    value: statePage.login,
-    changeInput: changeInput,
-    message: statePage.errorLogin.message,
-    error: statePage.errorLogin.status,
-  }
-
   return (
     <div className="conteiner__form__background">
       <ItemForm submit={handleSubmit}>
-        { loginNotFound.status ?
-          <ItemLabel {...propsLogin} message={loginNotFound.message} error={loginNotFound.status} /> :
-          <ItemLabel {...propsLogin} />
-        }
+        <ItemLabel 
+          title={"Логин"} 
+          type={"text"} 
+          name={"login"} 
+          value={statePage.login}
+          changeInput={changeInput}
+          message={statePage.errorLogin.message} 
+          error={statePage.errorLogin.status}
+        /> :
         <ItemLabel 
           title={"Пароль"} 
           type={"password"} 

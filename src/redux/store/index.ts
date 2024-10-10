@@ -1,10 +1,12 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import identificationReducer from "../slices/identificationSlice";
 import diskReducer from "../slices/diskSlice";
+import modalReducer from "../slices/modalSlice";
 
 const rootReducer = combineReducers({ // создаем наш редъюсер
   identification: identificationReducer, // создаем перечень редьюсеров
   disk: diskReducer,
+  modal: modalReducer,
 });
 
 // создаем наше хранилище
