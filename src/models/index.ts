@@ -37,4 +37,5 @@ export interface IFetchParams {
   headers?: {},
   method?: string,
   body?: string | FormData,
+  blob: boolean,
 }

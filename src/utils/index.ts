@@ -1,6 +1,6 @@
 import { IFetchParams } from "../models/index";
 
-export async function baseFetch({ url, headers, method="GET", body }: IFetchParams) {
+export async function baseFetch({ url, headers, method="GET", body, blob=false }: IFetchParams) {
   try {
     const response = await fetch(url, {
       method: method,
@@ -11,6 +11,10 @@ export async function baseFetch({ url, headers, method="GET", body }: IFetchPara
     console.log('ответ на fetch (src/utils/index/baseFetch)', response);
     if ((response.status === 205) || (method === "DELETE")) {
       return response;
+    }
+
+    if (blob) {
+      return await response.blob();
     }
 
     return await response.json();

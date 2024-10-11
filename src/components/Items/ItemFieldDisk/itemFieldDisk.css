@@ -124,7 +124,7 @@
   margin-bottom: 5px;
 }
 
-.item__controll__item {
+.controll__item {
   width: 30px;
   height: 30px;
   margin-left: 15px;
@@ -139,6 +139,11 @@
 
 .controll__item__download {
   background-image: url('../../../img/icons_btn/download.svg');
+}
+
+.active__download {
+  background-image: url('../../../img/load.gif');
+  pointer-events: none;
 }
 
 .controll__item__delete {

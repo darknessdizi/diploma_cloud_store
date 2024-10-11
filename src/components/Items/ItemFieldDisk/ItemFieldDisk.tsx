@@ -7,7 +7,6 @@ import { countSizeFiles, formatBytes } from './utils';
 import { ItemFile } from '../ItemFile/ItemFile';
 import { ItemModal } from '../ItemModal/ItemModal';
 import './itemFieldDisk.css';
-import { runModal } from '../../../redux/slices/modalSlice';
 
 export const ItemFieldDisk = ({ user }) => {
   const inputRef = useRef(null); // ссылка на поле input
@@ -41,20 +40,10 @@ export const ItemFieldDisk = ({ user }) => {
   }
 
   useEffect(() => { // срабатывает после первой отрисовки компонента
-    baseFetch({ url: `${URL_SERVER}/file/${user.id}/` }).then((res) => {
+    baseFetch({ url: `${URL_SERVER}/getfiles/${user.id}/` }).then((res) => {
       dispatch(getAllFiles(res));
     })
   }, []);
-
-  const handleDelete = (file) => {
-    console.log('нажали удалить', file)
-    const message = `Файл "${file.title}" будет удален безвозратно. Удалить файл?`
-    dispatch(runModal({ type: 'deleteFile', message }));
-    // const response = await baseFetch({ url: `${URL_SERVER}/file/${file.id}/`, method: "DELETE" });
-    // if (response.ok) {
-    //   console.log('файл удален', file.id);
-    // }
-  }
 
   return (
     <>
@@ -95,7 +84,7 @@ export const ItemFieldDisk = ({ user }) => {
 
           <div className="files__field">
             { cloudFiles.map((file, index) => {
-              return <ItemFile file={file} key={index} onClickDelete={handleDelete} />
+              return <ItemFile file={file} key={index} />
             }) }
           </div>
 
