@@ -3,6 +3,7 @@ export interface IUserState {
   login: string | null,
   fullName: string | null,
   email: string | null,
+  sex: string | null,
 }
 
 export interface IIdentification {
@@ -37,5 +38,5 @@ export interface IFetchParams {
   headers?: {},
   method?: string,
   body?: string | FormData,
-  blob: boolean,
+  blob?: boolean,
 }

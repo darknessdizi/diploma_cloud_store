@@ -82,13 +82,9 @@
   justify-content: flex-start;
   align-items: stretch;
   flex-wrap: wrap;
-  overflow-y: scroll;
+  overflow: auto;
   margin: 20px;
 }
-
-/* .files__field::-webkit-scrollbar { width: 0 !important }
-.files__field { -ms-overflow-style: none; }
-.files__field { overflow: -moz-scrollbars-none; } */
 
 .conteiner__file__item {
   border: 1px solid black;
@@ -116,6 +112,11 @@
 
 .item__info__title > span {
   font-weight: 400;
+}
+
+.title__date {
+  font-weight: 400;
+  display: inline-block;
 }
 
 .file__item__controll {

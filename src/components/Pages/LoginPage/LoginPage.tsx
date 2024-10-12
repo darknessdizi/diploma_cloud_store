@@ -74,7 +74,7 @@ export const LoginPage = () => {
           changeInput={changeInput}
           message={statePage.errorLogin.message} 
           error={statePage.errorLogin.status}
-        /> :
+        />
         <ItemLabel 
           title={"Пароль"} 
           type={"password"} 

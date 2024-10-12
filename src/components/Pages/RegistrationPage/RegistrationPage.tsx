@@ -15,11 +15,13 @@ const initialState = {
   errorPassword: { status: false, message: '' },
   errorRepeat: { status: false, message: '' },
   errorEmail: { status: false, message: '' },
+  errorSex: { status: false, message: '' },
   login: 'lizochka',
   password: '12QWer+',
   repeat: '12QWer+',
   email: 'lizka@mail.ru ',
   fullName: 'Лизочка Клевая',
+  sex: '',
 }
 
 export const RegistrationPage = () => {
@@ -37,16 +39,24 @@ export const RegistrationPage = () => {
       errorPassword: checkPassword(password.value),
       errorRepeat: (repeat.value === password.value) ? initialState.errorRepeat : { status: true, message: 'Ошибка в пароле' },
       errorEmail: checkEmail(email.value),
+      errorSex: (statePage.sex === '') ? { status: true, message: 'Укажите Ваш пол' } : initialState.errorSex,
     }
 
     setStatePage({ ...statePage, ...errors });
 
-    if ((!errors.errorLogin.status) && (!errors.errorPassword.status) && (!errors.errorRepeat.status) && (!errors.errorEmail.status)) {
+    if (
+      (!errors.errorLogin.status) &&
+      (!errors.errorPassword.status) &&
+      (!errors.errorRepeat.status) &&
+      (!errors.errorEmail.status) &&
+      (!errors.errorSex.status)
+    ) {
       const user = {
         login: statePage.login,
         fullName: statePage.fullName,
         email: statePage.email,
         password: statePage.password,
+        sex: statePage.sex,
       }
 
       try {
@@ -66,6 +76,12 @@ export const RegistrationPage = () => {
     // Обрабатываем изменение в поле input
     const value = checkValueInput(event, ['fullName', 'login', 'password', 'email', 'repeat']);
     setStatePage({ ...statePage, ...value });
+  }
+
+  const changeRadio = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // Обрабатываем изменения радиокнопки
+    event.target.checked = true;
+    statePage.sex = event.target.value;
   }
 
   const propsLogin = {
@@ -113,6 +129,21 @@ export const RegistrationPage = () => {
           value={statePage.fullName} 
           changeInput={changeInput} 
         />
+
+        <div className="form__content__sex">
+          <label className="content__label__sex">
+            <span className="input__label__title">Мужчина</span>
+            <input className="input__radio" type="radio" name="sex" value="man" onChange={changeRadio}></input>
+          </label>
+          <label className="content__label__sex">
+            <span className="input__label__title">Женщина</span>
+            <input  className="input__radio" type="radio" name="sex" value="woman" onChange={changeRadio}></input>
+          </label>
+        </div>
+        <div className="input__message__error">
+            { statePage.errorSex.status ? <span className="message__active">{statePage.errorSex.message}</span> : "" }
+        </div>
+
         <ItemLabel 
           title={"Электронная почта"} 
           type={"email"} 

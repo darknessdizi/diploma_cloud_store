@@ -1,12 +1,33 @@
 import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch } from "../../../hooks/index";
-import { selectedFile } from "../../../redux/slices/diskSlice";
+import { selectedFile, updateFile } from "../../../redux/slices/diskSlice";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { baseFetch } from "../../../utils/index";
-import { formatBytes, handleName } from "../ItemFieldDisk/utils"
+import { formatBytes, handleName } from "../ItemFieldDisk/utils";
+
+function _addZero(number) {
+  // делает число двухзначным
+  let result = number;
+  if (result < 10) {
+    result = `0${result}`;
+  }
+  return result;
+}
 
 export const ItemFile = ({ file }) => {
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
+
+  let dateString = '-';
+  if (file.last_download) {
+    const date = new Date(file.last_download);
+    console.log('date', date)
+    const year = date.getFullYear();
+    const month = _addZero(date.getMonth() + 1);
+    const day = _addZero(date.getDate());
+    const hours = _addZero(date.getHours());
+    const minutes = _addZero(date.getMinutes());
+    dateString = `${hours}:${minutes} ${day}.${month}.${year}`;
+  }
 
   const clickDelete = () => {
     // Нажатие кнопки удаления файла
@@ -27,6 +48,8 @@ export const ItemFile = ({ file }) => {
     linkFile.click();
     window.URL.revokeObjectURL(objectURL);
     event.target.classList.remove('active__download');
+    const response = await baseFetch({ url: `${URL_SERVER}/filedata/${id}/` });
+    dispatch(updateFile(response));
   }
 
   return (
@@ -41,7 +64,7 @@ export const ItemFile = ({ file }) => {
       <div className="file__item__info">
         <div className="item__info__title">Название: <span>{file.title}</span></div>
         <div className="item__info__title">Коментарий: <span>{file.comment}</span></div>
-        <div className="item__info__title">Последняя загрузка: <span>{file.last_download}</span></div>
+        <div className="item__info__title">Последняя загрузка: <span className="title__date">{dateString}</span></div>
         <div className="item__info__title">Размер: <span>{formatBytes(file.size)}</span></div>
       </div>
     </div>

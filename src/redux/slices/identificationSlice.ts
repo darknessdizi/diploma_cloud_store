@@ -11,6 +11,7 @@ const initialState = { // начальное состояние хранилищ
     login: null,
     fullName: null,
     email: null,
+    sex: null,
   },
 } as IIdentification; // создаем наш state и типизируем его
 

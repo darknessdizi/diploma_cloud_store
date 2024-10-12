@@ -26,9 +26,18 @@ export const diskSlice = createSlice({ // для создания slice пере
       state.cloudFiles = state.cloudFiles.filter((item) => item.id != state.currentFile?.id);
       state.currentFile = null;
     },
+
+    updateFile: (state: IDiskState, action: PayloadAction<File>) => {
+      state.cloudFiles = state.cloudFiles.map((item) => {
+        if (item.id === action.payload.id) {
+          item.last_download = action.payload.last_download;
+        }
+        return item;
+      });
+    },
   },
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { getAllFiles, addFiles, deleteFile, selectedFile } = diskSlice.actions;
+export const { getAllFiles, addFiles, deleteFile, selectedFile, updateFile } = diskSlice.actions;
 export default diskSlice.reducer; // дефолтное поведение (возвращает редьюсер)

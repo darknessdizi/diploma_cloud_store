@@ -13,3 +13,21 @@
   margin-bottom: 0;
   font-weight: 700;
 }
+
+.form__content__sex {
+  text-align: center;
+  display: flex;
+}
+
+.content__label__sex:nth-child(n+2) {
+  margin-left: 20px;
+}
+
+.content__label__sex > span {
+  margin-left: 0;
+}
+
+.input__radio {
+  transform:scale(1.5);
+  margin-left: 10px;
+}
