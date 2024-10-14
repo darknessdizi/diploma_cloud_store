@@ -12,6 +12,7 @@ export const ItemFieldDisk = ({ user }) => {
   const inputRef = useRef(null); // ссылка на поле input
   const { cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const { modal } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
+  const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
   console.log('files:', cloudFiles)
@@ -40,10 +41,13 @@ export const ItemFieldDisk = ({ user }) => {
   }
 
   useEffect(() => { // срабатывает после первой отрисовки компонента
-    baseFetch({ url: `${URL_SERVER}/getfiles/${user.id}/` }).then((res) => {
-      dispatch(getAllFiles(res));
-    })
-  }, []);
+    if (user.id) {
+      console.log('диск ушел за файлами', user)
+      baseFetch({ url: `${URL_SERVER}/getfiles/${user.id}/` }).then((res) => {
+        dispatch(getAllFiles(res));
+      })
+    }
+  }, [user]);
 
   return (
     <>
@@ -83,9 +87,7 @@ export const ItemFieldDisk = ({ user }) => {
             </form>        
 
           <div className="files__field">
-            { cloudFiles.map((file, index) => {
-              return <ItemFile file={file} key={index} />
-            }) }
+            { cloudFiles.map((file, index) => <ItemFile file={file} key={index} />) }
           </div>
 
         </div>

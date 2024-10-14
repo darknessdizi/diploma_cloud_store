@@ -1,13 +1,14 @@
 import { useAppDispatch, useAppSelector } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-import { clearOccupied, addLoginOccupied, succesAuth } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
+import { clearLoginOccupied, addLoginOccupied, succesAuth } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { checkEmail, checkLogin, checkPassword, checkValueInput } from "./utils";
 import { baseFetch } from "../../../utils/index";
 import { URL_SERVER } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
 import "./registrationPage.css";
+import { useNavigate } from "react-router-dom";
 
 // начальное состояние локального хранилища компонента
 const initialState = {
@@ -17,22 +18,29 @@ const initialState = {
   errorEmail: { status: false, message: '' },
   errorSex: { status: false, message: '' },
   login: 'lizochka',
-  password: '12QWer+',
-  repeat: '12QWer+',
+  password: '12QWER+',
+  repeat: '12QWER+',
   email: 'lizka@mail.ru ',
   fullName: 'Лизочка Клевая',
   sex: '',
 }
 
 export const RegistrationPage = () => {
-  const { loginOccupied } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  const { loginOccupied, auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const [statePage, setStatePage] = useState(initialState); // создание локального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
+  const navigate = useNavigate();
+
+  useEffect(() => { // срабатывает при изменении параметра auth
+    if (auth) {
+      navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
+    }
+  }, [auth]);
 
   const handleSubmit = async (event: React.ChangeEvent<HTMLFormElement>) => {
     // Обрабатываем отправку формы регистрации
     event.preventDefault();
-    dispatch(clearOccupied());
+    dispatch(clearLoginOccupied());
     const { login, password, repeat, email } = event.target;
     const errors = {
       errorLogin: checkLogin(login.value),
@@ -67,7 +75,7 @@ export const RegistrationPage = () => {
         dispatch(succesAuth(response));
         dispatch(runModal({ type: 'registration', message: 'Вы успешно зарегистрированы!' }));
       } catch (e: any) {
-        dispatch(runModal({ error: e.message}));
+        dispatch(runModal({ type: 'error', message: e.message }));
       }
     }
   }

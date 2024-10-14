@@ -14,7 +14,7 @@ const initialState = {
   errorLogin: { status: false, message: '' },
   errorPassword: { status: false, message: '' },
   login: 'lizochka',
-  password: '12QWer+',
+  password: '12QWER+',
 }
 
 export const LoginPage = () => {
@@ -24,6 +24,7 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => { // срабатывает при изменении параметра auth
+    console.log('memo', auth)
     if (auth) {
       navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
     }
@@ -47,9 +48,6 @@ export const LoginPage = () => {
       }
       try {
         const response = await baseFetch({ url: `${URL_SERVER}/login/`, method: "POST", body: JSON.stringify(user) });
-        if (response.status === 205) {
-          throw new Error('Не верно указаны логин или пароль. Попробуйте повторить ввод или нажмите на кнопку регистрация.');
-        }
         dispatch(succesAuth(response));
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));

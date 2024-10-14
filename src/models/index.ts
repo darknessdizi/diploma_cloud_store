@@ -4,6 +4,7 @@ export interface IUserState {
   fullName: string | null,
   email: string | null,
   sex: string | null,
+  token?: string,
 }
 
 export interface IIdentification {

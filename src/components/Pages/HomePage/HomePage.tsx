@@ -1,5 +1,5 @@
-import { useAppSelector, useAppDispatch } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-// import { login, logout } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
+import { useAppDispatch, useAppSelector } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
+import { logoutUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import './homePage.css';
 import { ItemLink } from "../../Items/ItemLink/ItemLink";
 import { ItemContentBlock } from "../../Items/ItemContentBlock/ItemContentBlock";
@@ -7,15 +7,12 @@ import { ItemImgBlock } from "../../Items/ItemImgBlock/ItemImgBlock";
 import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescriptionBlock";
 
 export const HomePage = () => {
-  // const value = useAppSelector((state) => state.identification.status); // хук useAppSelector принимает callback
-  // // state.counter.value: здесь слово counter это поле name в нашем slice
-  // const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
-
-  // const clickLogin = () => {
-  //   dispatch(login()); // при данном событии активируем инструкцию для редьюсера
-  // };
-
   const { auth } = useAppSelector((state) => state.identification); // хук useAppSelector принимает callback
+  const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
+
+  const onLogout = () => {
+    dispatch(logoutUser());
+  }
 
   return (
     <>
@@ -48,7 +45,7 @@ export const HomePage = () => {
             { auth ?
               <>
                 <ItemLink link={"/disk"} label={"Диск"} />
-                <ItemLink link={"/logout"} label={"Выход"} />
+                <ItemLink link={"/login"} label={"Выход"} logout={onLogout} />
               </> :
               <>
                 <ItemLink link={"/login"} label={"Вход"} />

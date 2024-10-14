@@ -28,17 +28,33 @@ export const identificationSlice = createSliceWithThunk({ // при создан
       state.loginOccupied = true;
     },
 
-    clearOccupied: (state: IIdentification) => { // очистка флага "логин занят"
+    clearLoginOccupied: (state: IIdentification) => { // очистка флага "логин занят"
       state.loginOccupied = false;
     },
 
     succesAuth: (state: IIdentification, action: PayloadAction<IUserState>) => { // добавление флага успешной авторизации/регистрации
+      const { token, ...user } = action.payload;
+      localStorage.setItem('sessionToken', token!);
+      state.user = user;
+      // state.auth = true;
+    },
+
+    logoutUser: (state: IIdentification) => { // добавление флага успешной авторизации/регистрации
+      localStorage.removeItem('sessionToken');
+      state.user = initialState.user;
+      state.auth = false;
+    },
+
+    setAuthTrue: (state: IIdentification) => { // ручная установка успешной регистрации (после перезапуска страницы не было выхода пользователем)
       state.auth = true;
-      state.user = action.payload;
+    },
+
+    setAuthFalse: (state: IIdentification) => { // ручная установка успешной регистрации (после перезапуска страницы не было выхода пользователем)
+      state.auth = false;
     },
   }
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { addLoginOccupied, succesAuth, clearOccupied } = identificationSlice.actions;
+export const { addLoginOccupied, succesAuth, clearLoginOccupied, logoutUser, setAuthTrue, setAuthFalse } = identificationSlice.actions;
 export default identificationSlice.reducer; // дефолтное поведение (возвращает редьюсер)
