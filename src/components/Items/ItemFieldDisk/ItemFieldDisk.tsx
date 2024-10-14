@@ -12,14 +12,14 @@ export const ItemFieldDisk = ({ user }) => {
   const inputRef = useRef(null); // ссылка на поле input
   const { cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const { modal } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
-  const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
+  // const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
-  console.log('files:', cloudFiles)
+  console.log('render DiskPage, сейчас files:', cloudFiles)
   // console.log('user:', user, countSizeFiles(cloudFiles))
   const size = countSizeFiles(cloudFiles);
   const bytes = formatBytes(size);
-  console.log('size:', size, bytes )
+  // console.log('size:', size, bytes )
 
   const handleChange = async (event) => {
     const formData = new FormData();
@@ -47,7 +47,7 @@ export const ItemFieldDisk = ({ user }) => {
         dispatch(getAllFiles(res));
       })
     }
-  }, [user]);
+  }, []);
 
   return (
     <>

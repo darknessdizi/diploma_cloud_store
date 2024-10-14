@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { URL_SERVER } from "../../../const/index";
 import { baseFetch } from "../../../utils/index";
 import { runModal } from "../../../redux/slices/modalSlice";
-import { succesAuth } from "../../../redux/slices/identificationSlice";
+import { setAuthTrue, succesAuth } from "../../../redux/slices/identificationSlice";
 
 // начальное состояние локального хранилища компонента
 const initialState = {
@@ -24,7 +24,7 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => { // срабатывает при изменении параметра auth
-    console.log('memo', auth)
+    console.log('login page, auth=', auth)
     if (auth) {
       navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
     }
@@ -49,6 +49,7 @@ export const LoginPage = () => {
       try {
         const response = await baseFetch({ url: `${URL_SERVER}/login/`, method: "POST", body: JSON.stringify(user) });
         dispatch(succesAuth(response));
+        dispatch(setAuthTrue());
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));
       }

@@ -18,12 +18,13 @@ function App() {
   const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const { modal } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
-  const token = localStorage.getItem('sessionToken');
-  console.log('token', token, auth)
+  // const token = localStorage.getItem('sessionToken');
+  console.log('app render, auth=', auth)
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    console.log('одноразовый хук', 'auth=', auth)
+    const token = localStorage.getItem('sessionToken');
+    console.log('одноразовый хук', 'auth=', auth, 'token=', token)
     if ((token !== 'undefined') && (token !== null)) {
       dispatch(setAuthTrue());
       const response = baseFetch({ url: `${URL_SERVER}/recovery-session/`, headers: { 'Authorization': token } });
@@ -35,52 +36,14 @@ function App() {
     setChecked(true);
   }, []);
 
-  // useEffect(() => {
-  //   // fetch('http://127.0.0.1:8000/csrf/')
-  //   // const token = localStorage.getItem('sessionToken');
-  //   console.log('запуск хук', auth)
-  //   if ((token !== 'undefined') && (token !== null)) {
-  //     // console.log('app', auth)
-  //     dispatch(setAuthTrue());
-  //     // console.log('app', auth)
-  //     const response = baseFetch({ url: `${URL_SERVER}/recovery-session/`, headers: { 'Authorization': token } });
-  //     response.then(
-  //       (res) => {
-  //         dispatch(succesAuth(res));
-  //         setChecked(true);
-  //       },
-  //       (err) => {
-  //         dispatch(runModal({ type: 'error', message: err.message }));
-  //         setChecked(true);
-  //       }
-  //     )
-  //   } else {
-  //     setChecked(true);
-  //   }
-  // }, [auth]);
-
   const onLogout = async () => {
     dispatch(setAuthFalse());
+    const token = localStorage.getItem('sessionToken');
     const response = await baseFetch({ url: `${URL_SERVER}/logout/`, headers: { 'Authorization': token } });
     if (response.status) {
       dispatch(logoutUser());
     }
   }
-
-  // useEffect(() => {
-  //   // fetch('http://127.0.0.1:8000/csrf/')
-  //   // const token = localStorage.getItem('sessionToken');
-  //   if ((token !== 'undefined') && (token !== null)) {
-  //     console.log('app', auth)
-  //     dispatch(setAuthTrue());
-  //     console.log('app', auth)
-  //     const response = baseFetch({ url: `${URL_SERVER}/recovery-session/`, headers: { 'Authorization': token } });
-  //     response.then(
-  //       (res) => dispatch(succesAuth(res)),
-  //       (err) => dispatch(runModal({ type: 'error', message: err.message }))
-  //     )
-  //   }
-  // }, []);
 
   if (!checked) return null;
 
