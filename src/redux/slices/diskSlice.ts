@@ -30,7 +30,11 @@ export const diskSlice = createSlice({ // для создания slice пере
     updateFile: (state: IDiskState, action: PayloadAction<File>) => {
       state.cloudFiles = state.cloudFiles.map((item) => {
         if (item.id === action.payload.id) {
+          item.title = action.payload.title;
+          item.comment = action.payload.comment;
+          item.created = action.payload.created;
           item.last_download = action.payload.last_download;
+          item.size = action.payload.size;
         }
         return item;
       });

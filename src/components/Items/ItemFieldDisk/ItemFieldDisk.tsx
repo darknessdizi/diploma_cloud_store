@@ -7,19 +7,17 @@ import { countSizeFiles, formatBytes } from './utils';
 import { ItemFile } from '../ItemFile/ItemFile';
 import { ItemModal } from '../ItemModal/ItemModal';
 import './itemFieldDisk.css';
+import { runModal } from '../../../redux/slices/modalSlice';
 
 export const ItemFieldDisk = ({ user }) => {
   const inputRef = useRef(null); // ссылка на поле input
   const { cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const { modal } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
-  // const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
   console.log('render DiskPage, сейчас files:', cloudFiles)
-  // console.log('user:', user, countSizeFiles(cloudFiles))
   const size = countSizeFiles(cloudFiles);
   const bytes = formatBytes(size);
-  // console.log('size:', size, bytes )
 
   const handleChange = async (event) => {
     const formData = new FormData();
@@ -35,19 +33,24 @@ export const ItemFieldDisk = ({ user }) => {
       formData.append('user_id', user.id);
     }
 
-    const response = await baseFetch({ url: `${URL_SERVER}/file/`, method: "POST", body: formData, });
-    dispatch(addFiles(response.files));
-    event.target.value = '';
+    try {
+      const response = await baseFetch({ url: `${URL_SERVER}/file/`, method: "POST", body: formData, });
+      dispatch(addFiles(response.files));
+      event.target.value = '';
+    } catch (e: any) {
+      dispatch(runModal({ type: 'error', message: e.message }));
+    }
   }
 
-  useEffect(() => { // срабатывает после первой отрисовки компонента
+  useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user
     if (user.id) {
       console.log('диск ушел за файлами', user)
-      baseFetch({ url: `${URL_SERVER}/getfiles/${user.id}/` }).then((res) => {
-        dispatch(getAllFiles(res));
-      })
+      baseFetch({ url: `${URL_SERVER}/getfiles/` }).then(
+        (res) => dispatch(getAllFiles(res)),
+        (err) => dispatch(runModal({ type: 'error', message: err.message }))
+      )
     }
-  }, []);
+  }, [user]);
 
   return (
     <>

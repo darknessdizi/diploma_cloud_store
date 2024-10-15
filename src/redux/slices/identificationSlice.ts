@@ -36,13 +36,11 @@ export const identificationSlice = createSliceWithThunk({ // при создан
       const { token, ...user } = action.payload;
       localStorage.setItem('sessionToken', token!);
       state.user = user;
-      // state.auth = true;
     },
 
     logoutUser: (state: IIdentification) => { // добавление флага успешной авторизации/регистрации
       localStorage.removeItem('sessionToken');
       state.user = initialState.user;
-      state.auth = false;
     },
 
     setAuthTrue: (state: IIdentification) => { // ручная установка успешной регистрации (после перезапуска страницы не было выхода пользователем)

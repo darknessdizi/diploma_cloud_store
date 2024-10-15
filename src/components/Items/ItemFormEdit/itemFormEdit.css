@@ -1,0 +1,54 @@
+.content__file {
+  margin-bottom: 30px;
+}
+
+.content__file > div:nth-of-type(n+2) {
+  margin-top: 10px;
+}
+
+.file__title > span,
+.file__comment > span {
+  font-weight: 700;
+  margin-right: 20px;
+  font-size: 1.5em;
+}
+
+.file__comment,
+.file__title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.file__comment {
+  align-items: flex-start;
+}
+
+.file__title__input,
+.file__comment__input {
+  flex-grow: 1;
+}
+
+.file__title__input {
+  font-size: 1.2em;
+  line-height: 1.8;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.file__comment__input {
+  resize: none;
+  padding: 5px;
+  font-size: 1.5em;
+}
+
+.form__edit__file {
+  width: 100%;
+}
+
+form > .content__controll {
+  width: 100%;
+}
+
+form .content__link {
+  width: 35%;
+}

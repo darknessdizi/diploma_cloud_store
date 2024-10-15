@@ -21,6 +21,10 @@
   align-items: center;
 }
 
+.modal__page__content > div:nth-of-type(n+2) {
+  margin-top: 30px;
+}
+
 .content__info {
   display: flex;
   flex-direction: column;
@@ -28,7 +32,6 @@
   align-items: center;
   overflow: hidden;
   overflow-y: scroll;
-  margin-bottom: 30px;
 }
 
 .content__info::-webkit-scrollbar { width: 0 !important }
@@ -73,4 +76,3 @@
 .content__link:hover {
   background-color: var(--color-btn-hover);
 }
-

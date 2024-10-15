@@ -27,7 +27,7 @@ function App() {
     console.log('одноразовый хук', 'auth=', auth, 'token=', token)
     if ((token !== 'undefined') && (token !== null)) {
       dispatch(setAuthTrue());
-      const response = baseFetch({ url: `${URL_SERVER}/recovery-session/`, headers: { 'Authorization': token } });
+      const response = baseFetch({ url: `${URL_SERVER}/recovery-session/` });
       response.then(
         (res) => dispatch(succesAuth(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
@@ -38,8 +38,8 @@ function App() {
 
   const onLogout = async () => {
     dispatch(setAuthFalse());
-    const token = localStorage.getItem('sessionToken');
-    const response = await baseFetch({ url: `${URL_SERVER}/logout/`, headers: { 'Authorization': token } });
+    // const token = localStorage.getItem('sessionToken');
+    const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
     if (response.status) {
       dispatch(logoutUser());
     }

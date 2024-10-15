@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { deleteFile } from '../../../redux/slices/diskSlice';
+import { setAuthTrue } from '../../../redux/slices/identificationSlice';
 import { clearModal, runModal } from '../../../redux/slices/modalSlice';
 import { baseFetch } from '../../../utils/index';
+import { ItemFormEdit } from '../ItemFormEdit/ItemFormEdit';
 import './itemModal.css';
 
 export const ItemModal = () => {
@@ -16,6 +18,10 @@ export const ItemModal = () => {
     // Обработчик нажатия кнопки в модальном окне
     const { name } = event.target;
     dispatch(clearModal())
+
+    if (event.target.pathname === "/disk") {
+      dispatch(setAuthTrue());
+    }
 
     if (name === 'delete') {
       // нажатие кнопки удалить файл
@@ -53,6 +59,9 @@ export const ItemModal = () => {
               <Link to={url} className="content__link" onClick={handleClick} name="delete">Да</Link>
               <Link to={url} className="content__link" onClick={handleClick} name="return">Нет</Link>
             </div>
+          : (modalType === 'editFile')
+          ? 
+            <ItemFormEdit />
           : <Link to={url} className="content__link" onClick={handleClick}  name="return">Ок</Link>
         }
 

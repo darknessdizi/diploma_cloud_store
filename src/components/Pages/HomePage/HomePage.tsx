@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
 import { logoutUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
-import './homePage.css';
 import { ItemLink } from "../../Items/ItemLink/ItemLink";
 import { ItemContentBlock } from "../../Items/ItemContentBlock/ItemContentBlock";
 import { ItemImgBlock } from "../../Items/ItemImgBlock/ItemImgBlock";
 import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescriptionBlock";
+import './homePage.css';
 
 export const HomePage = () => {
   const { auth } = useAppSelector((state) => state.identification); // хук useAppSelector принимает callback
