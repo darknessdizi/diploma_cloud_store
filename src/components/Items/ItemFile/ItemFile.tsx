@@ -64,6 +64,7 @@ export const ItemFile = ({ file }) => {
   return (
     <div className="conteiner__file__item">
       <div className="file__item__controll">
+        <div className="controll__item controll__item__copylink" onClick={clickEdit}></div>
         <div className="controll__item controll__item__edit" onClick={clickEdit}></div>
         <div className="controll__item controll__item__download" data-id={file.id} onClick={clickDownload}></div>
         {/* <div className="item__controll__item controll__item__link"></div> */}
@@ -72,7 +73,7 @@ export const ItemFile = ({ file }) => {
       <img src={handleName(file.title)} alt="" className="files__item__img" />
       <div className="file__item__info">
         <div className="item__info__title">Название: <span>{file.title}</span></div>
-        <div className="item__info__title">Коментарий: <span>{file.comment}</span></div>
+        <div className="item__info__title">Комментарий: <span>{file.comment}</span></div>
         <div className="item__info__title">Последняя загрузка: <span className="title__date">{dateString}</span></div>
         <div className="item__info__title">Размер: <span>{formatBytes(file.size)}</span></div>
       </div>

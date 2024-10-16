@@ -135,11 +135,17 @@
 }
 
 .controll__item__edit {
-  background-image: url('../../../img/icons_btn/pencil.svg');
+  background-image: url('../../../img/icons_btn/pencil.png');
+  background-size: 90%;
 }
 
 .controll__item__download {
-  background-image: url('../../../img/icons_btn/download.svg');
+  background-image: url('../../../img/icons_btn/download.png');
+}
+
+.controll__item__copylink {
+  background-image: url('../../../img/icons_btn/copylink.png');
+  background-size: 90%;
 }
 
 .active__download {
@@ -152,13 +158,17 @@
 }
 
 .controll__item__edit:hover {
-  background-image: url('../../../img/icons_btn/pencil-hover.svg');
+  background-image: url('../../../img/icons_btn/pencil-hover.png');
 }
 
 .controll__item__download:hover {
-  background-image: url('../../../img/icons_btn/download-hover.svg');
+  background-image: url('../../../img/icons_btn/download-hover.png');
 }
 
 .controll__item__delete:hover {
   background-image: url('../../../img/icons_btn/delete-hover.svg');
+}
+
+.controll__item__copylink:hover {
+  background-image: url('../../../img/icons_btn/copylink-hover.png');
 }
