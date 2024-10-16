@@ -26,6 +26,7 @@ export interface IFile {
 export interface IDiskState {
   cloudFiles: IFile[],
   currentFile: IFile | null,
+  link: string,
 }
 
 export interface IModalState {

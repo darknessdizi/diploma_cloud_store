@@ -1,0 +1,26 @@
+.content__copy__text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.copy__text__link {
+  flex-grow: 1;
+  background-color: var(--color-form);
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 5px;
+  font-size: 2em;
+  overflow-x: scroll;
+}
+
+.controll__item__copyText {
+  background-image: url('../../../img/icons_btn/copy-text.png');
+  width: 50px;
+  height: 50px;
+}
+
+.controll__item__copyText:hover {
+  background-image: url('../../../img/icons_btn/copy-text-hover.png');
+}

@@ -38,14 +38,9 @@ export const ItemFormEdit = () => {
     let title = currentFile.title.match(/\.[^.]+$/i)[0];
     title = `${formData.get('title')}${title}`;
     formData.set('title', title)
-    console.log('title', formData.get('title'))
     try {
       const response = await baseFetch({ url: `${URL_SERVER}/file/${currentFile.id}/`, method: "PATCH", body: formData });
-      console.log('успех', response)
       dispatch(updateFile(response));
-      // dispatch(succesAuth(response));
-      // dispatch(setAuthTrue());
-      // console.log('успех')
     } catch (e: any) {
       dispatch(runModal({ type: 'error', message: e.message }));
     }
@@ -74,7 +69,7 @@ export const ItemFormEdit = () => {
       </div>
       <div className="content__controll">
         <button type="submit" className="content__link">Сохранить</button>
-        <Link to={'#'} className="content__link" onClick={handleClick} name="return">Отмена</Link>
+        <Link to="#" className="content__link" onClick={handleClick} name="return">Отмена</Link>
       </div>
     </form>
   )

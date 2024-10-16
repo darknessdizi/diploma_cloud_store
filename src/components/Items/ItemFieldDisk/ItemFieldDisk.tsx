@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { addFiles, getAllFiles } from '../../../redux/slices/diskSlice';
@@ -10,7 +10,6 @@ import './itemFieldDisk.css';
 import { runModal } from '../../../redux/slices/modalSlice';
 
 export const ItemFieldDisk = ({ user }) => {
-  const inputRef = useRef(null); // ссылка на поле input
   const { cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const { modal } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
@@ -82,7 +81,7 @@ export const ItemFieldDisk = ({ user }) => {
         <div className="content__disk__files">
           
           <h1>Добро пожаловать в Cloud Store</h1>
-            <form id={user.id} ref={inputRef} className="files__form" >
+            <form id={user.id} className="files__form" >
               <label className="form__add__btn">
                 <input type="file" className="form__add__input" multiple name="file" onChange={handleChange} />
                 Добавить файлы

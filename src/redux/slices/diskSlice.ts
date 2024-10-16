@@ -4,6 +4,7 @@ import { IDiskState, IFile } from "../../models/index";
 const initialState = {
   cloudFiles: [],
   currentFile: null,
+  link: '',
 } as IDiskState;
 
 export const diskSlice = createSlice({ // для создания slice передаем в него объект
@@ -20,6 +21,14 @@ export const diskSlice = createSlice({ // для создания slice пере
 
     selectedFile: (state: IDiskState, action: PayloadAction<File>) => {
       state.currentFile = action.payload;
+    },
+
+    addLink: (state: IDiskState, action: PayloadAction<string>) => {
+      state.link = action.payload;
+    },
+
+    deleteLink: (state: IDiskState) => {
+      state.link = '';
     },
 
     deleteFile: (state: IDiskState) => {
@@ -43,5 +52,5 @@ export const diskSlice = createSlice({ // для создания slice пере
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { getAllFiles, addFiles, deleteFile, selectedFile, updateFile } = diskSlice.actions;
+export const { getAllFiles, addFiles, deleteFile, selectedFile, updateFile, addLink, deleteLink } = diskSlice.actions;
 export default diskSlice.reducer; // дефолтное поведение (возвращает редьюсер)

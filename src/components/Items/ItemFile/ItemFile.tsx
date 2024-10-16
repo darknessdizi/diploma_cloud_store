@@ -1,9 +1,10 @@
 import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch } from "../../../hooks/index";
-import { selectedFile, updateFile } from "../../../redux/slices/diskSlice";
+import { addLink, selectedFile, updateFile } from "../../../redux/slices/diskSlice";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { baseFetch } from "../../../utils/index";
 import { formatBytes, handleName } from "../ItemFieldDisk/utils";
+import "./itemFile.css";
 
 function _addZero(number: number) {
   // делает число двухзначным
@@ -26,13 +27,6 @@ export const ItemFile = ({ file }) => {
     const hours = _addZero(date.getHours());
     const minutes = _addZero(date.getMinutes());
     dateString = `${hours}:${minutes} ${day}.${month}.${year}`;
-  }
-
-  const clickDelete = () => {
-    // Нажатие кнопки удаления файла
-    dispatch(selectedFile(file));
-    const message = `Файл "${file.title}" будет удален безвозратно. Удалить файл?`
-    dispatch(runModal({ type: 'deleteFile', message }));
   }
 
   const clickDownload = async (event: React.ChangeEvent<HTMLDivElement>) => {
@@ -61,10 +55,29 @@ export const ItemFile = ({ file }) => {
     dispatch(runModal({ type: 'editFile', message: 'Редактирование файла' }));
   }
 
+  const clickDelete = () => {
+    // Нажатие кнопки удаления файла
+    dispatch(selectedFile(file));
+    const message = `Файл "${file.title}" будет удален безвозратно. Удалить файл?`
+    dispatch(runModal({ type: 'deleteFile', message }));
+  }
+
+  const clickCopyLink = async () => {
+    // Нажатие кнопки копирования ссылки на файл
+    try {
+      const response = await baseFetch({ url: `${URL_SERVER}/getlink/${file.id}/` });
+      console.log('++++++', response.url)
+      dispatch(addLink(response.url));
+      dispatch(runModal({ type: 'copyLink', message: 'Ссылка для скачивания' }));
+    } catch (e: any) {
+      dispatch(runModal({ type: 'error', message: e.message }));
+    }
+  }
+
   return (
     <div className="conteiner__file__item">
       <div className="file__item__controll">
-        <div className="controll__item controll__item__copylink" onClick={clickEdit}></div>
+        <div className="controll__item controll__item__copylink" onClick={clickCopyLink}></div>
         <div className="controll__item controll__item__edit" onClick={clickEdit}></div>
         <div className="controll__item controll__item__download" data-id={file.id} onClick={clickDownload}></div>
         {/* <div className="item__controll__item controll__item__link"></div> */}

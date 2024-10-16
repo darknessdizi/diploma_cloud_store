@@ -56,8 +56,12 @@
   justify-content: space-around;
 }
 
+.content__controll a:not(:only-of-type) {
+  margin-left: 100px;
+}
+
 .content__controll a:first-child {
-  margin-right: 100px;
+  margin-left: 0px;
 }
 
 .content__link {
