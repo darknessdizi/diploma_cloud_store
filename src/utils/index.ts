@@ -1,5 +1,6 @@
 import { IFetchParams } from "../models/index";
 
+// Основа для функции fetch 
 export async function baseFetch({ url, headers, method="GET", body, blob=false }: IFetchParams) {
   try {
     const token = localStorage.getItem('sessionToken');
@@ -38,4 +39,24 @@ export async function baseFetch({ url, headers, method="GET", body, blob=false }
     }
     throw new Error(err.message);
   }
+}
+
+function _addZero(number: number) {
+  // делает число двухзначным
+  let result: string | number = number;
+  if (result < 10) {
+    result = `0${result}`;
+  }
+  return result;
+}
+
+export function getDate(timestamp: string) {
+  // Возвращает строку с датой
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = _addZero(date.getMonth() + 1);
+  const day = _addZero(date.getDate());
+  const hours = _addZero(date.getHours());
+  const minutes = _addZero(date.getMinutes());
+  return `${hours}:${minutes} ${day}.${month}.${year}`;
 }

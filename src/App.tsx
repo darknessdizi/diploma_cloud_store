@@ -13,6 +13,7 @@ import { logoutUser, setAuthFalse, setAuthTrue, succesAuth } from './redux/slice
 import { baseFetch } from './utils/index';
 import { URL_SERVER } from './const/index';
 import { runModal } from './redux/slices/modalSlice';
+import { clearDisk } from './redux/slices/diskSlice';
 
 function App() {
   const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
@@ -38,10 +39,10 @@ function App() {
 
   const onLogout = async () => {
     dispatch(setAuthFalse());
-    // const token = localStorage.getItem('sessionToken');
     const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
     if (response.status) {
       dispatch(logoutUser());
+      dispatch(clearDisk());
     }
   }
 

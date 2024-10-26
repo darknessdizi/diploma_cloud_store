@@ -1,0 +1,29 @@
+.disk__admin__table {
+  border: 1px solid black;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 10px;
+  /* pointer-events: none; */
+  /* padding: 5px;
+  border-spacing: 0; */
+}
+
+/* .admin__table__header {
+  border-bottom: 1px solid black;
+} */
+
+.item__status {
+  width: 10%;
+}
+
+/* .table__body__row {
+  background-color: aquamarine;
+} */
+
+.row__admin {
+  background-color: aquamarine;
+}
+
+.input__checkbox {
+  transform: scale(1.5);
+}

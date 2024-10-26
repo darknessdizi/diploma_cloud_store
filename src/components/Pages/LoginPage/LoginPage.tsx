@@ -13,8 +13,10 @@ import { setAuthTrue, succesAuth } from "../../../redux/slices/identificationSli
 const initialState = {
   errorLogin: { status: false, message: '' },
   errorPassword: { status: false, message: '' },
-  login: 'lizochka',
-  password: '12QWER+',
+  // login: 'lizochka',
+  // password: '12QWER+',
+  login: 'admin',
+  password: '12QWer+',
 }
 
 export const LoginPage = () => {

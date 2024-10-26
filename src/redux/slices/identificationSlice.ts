@@ -1,6 +1,6 @@
 import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
 import { PayloadAction } from "../../../node_modules/@reduxjs/toolkit/dist/index";
-import { IIdentification, IUserState } from "../../models/index";
+import { IIdentification, IResponseUser } from "../../models/index";
 
 const initialState = { // начальное состояние хранилища
   auth: false,
@@ -11,7 +11,8 @@ const initialState = { // начальное состояние хранилищ
     login: null,
     fullName: null,
     email: null,
-    sex: null,
+    avatar: null,
+    statusAdmin: false
   },
 } as IIdentification; // создаем наш state и типизируем его
 
@@ -32,10 +33,17 @@ export const identificationSlice = createSliceWithThunk({ // при создан
       state.loginOccupied = false;
     },
 
-    succesAuth: (state: IIdentification, action: PayloadAction<IUserState>) => { // добавление флага успешной авторизации/регистрации
+    succesAuth: (state: IIdentification, action: PayloadAction<IResponseUser>) => { // добавление флага успешной авторизации/регистрации
       const { token, ...user } = action.payload;
       localStorage.setItem('sessionToken', token!);
-      state.user = user;
+      state.user = {
+        id: user.id,
+        login: user.login,
+        fullName: user.full_name,
+        email: user.email,
+        avatar: user.avatar,
+        statusAdmin: user.status_admin,
+      };
     },
 
     logoutUser: (state: IIdentification) => { // добавление флага успешной авторизации/регистрации

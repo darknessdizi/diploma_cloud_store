@@ -2,31 +2,16 @@ import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch } from "../../../hooks/index";
 import { addLink, selectedFile, updateFile } from "../../../redux/slices/diskSlice";
 import { runModal } from "../../../redux/slices/modalSlice";
-import { baseFetch } from "../../../utils/index";
-import { formatBytes, handleName } from "../ItemFieldDisk/utils";
+import { baseFetch, getDate } from "../../../utils/index";
+import { formatBytes, handleName } from "../ItemFieldUserDisk/utils";
 import "./itemFile.css";
-
-function _addZero(number: number) {
-  // делает число двухзначным
-  let result: string | number = number;
-  if (result < 10) {
-    result = `0${result}`;
-  }
-  return result;
-}
 
 export const ItemFile = ({ file }) => {
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
   let dateString = '-';
   if (file.last_download) {
-    const date = new Date(file.last_download);
-    const year = date.getFullYear();
-    const month = _addZero(date.getMonth() + 1);
-    const day = _addZero(date.getDate());
-    const hours = _addZero(date.getHours());
-    const minutes = _addZero(date.getMinutes());
-    dateString = `${hours}:${minutes} ${day}.${month}.${year}`;
+    dateString = getDate(file.last_download);
   }
 
   const clickDownload = async (event: React.ChangeEvent<HTMLDivElement>) => {
@@ -75,20 +60,19 @@ export const ItemFile = ({ file }) => {
   }
 
   return (
-    <div className="conteiner__file__item">
-      <div className="file__item__controll">
+    <div className="conteiner__file">
+      <div className="file__controll">
         <div className="controll__item controll__item__copylink" onClick={clickCopyLink}></div>
         <div className="controll__item controll__item__edit" onClick={clickEdit}></div>
         <div className="controll__item controll__item__download" data-id={file.id} onClick={clickDownload}></div>
-        {/* <div className="item__controll__item controll__item__link"></div> */}
         <div className="controll__item controll__item__delete" onClick={clickDelete}></div>
       </div>
-      <img src={handleName(file.title)} alt="" className="files__item__img" />
-      <div className="file__item__info">
-        <div className="item__info__title">Название: <span>{file.title}</span></div>
-        <div className="item__info__title">Комментарий: <span>{file.comment}</span></div>
-        <div className="item__info__title">Последняя загрузка: <span className="title__date">{dateString}</span></div>
-        <div className="item__info__title">Размер: <span>{formatBytes(file.size)}</span></div>
+      <img src={handleName(file.title)} alt="" className="file__img" />
+      <div className="file__info">
+        <div className="info__item">Название: <span>{file.title}</span></div>
+        <div className="info__item item__comment">Комментарий: <span>{file.comment}</span></div>
+        <div className="info__item">Последняя загрузка: <span className="title__date">{dateString}</span></div>
+        <div className="info__item">Размер: <span>{formatBytes(file.size)}</span></div>
       </div>
     </div>
   )

@@ -1,17 +1,25 @@
 import { useAppDispatch, useAppSelector } from "../../../hooks/index"; // получаем хуки для работы с глобальным store
-import { logoutUser } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
+import { logoutUser, setAuthFalse } from "../../../redux/slices/identificationSlice"; // получаем инструкции для изменений store
 import { ItemLink } from "../../Items/ItemLink/ItemLink";
 import { ItemContentBlock } from "../../Items/ItemContentBlock/ItemContentBlock";
 import { ItemImgBlock } from "../../Items/ItemImgBlock/ItemImgBlock";
 import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescriptionBlock";
 import './homePage.css';
+import { clearDisk } from "../../../redux/slices/diskSlice";
+import { baseFetch } from "../../../utils/index";
+import { URL_SERVER } from "../../../const/index";
 
 export const HomePage = () => {
   const { auth } = useAppSelector((state) => state.identification); // хук useAppSelector принимает callback
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
-  const onLogout = () => {
-    dispatch(logoutUser());
+  const onLogout = async () => {
+    dispatch(setAuthFalse());
+    const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
+    if (response.status) {
+      dispatch(logoutUser());
+      dispatch(clearDisk());
+    }
   }
 
   return (

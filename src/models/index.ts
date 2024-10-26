@@ -3,8 +3,20 @@ export interface IUserState {
   login: string | null,
   fullName: string | null,
   email: string | null,
-  sex: string | null,
-  token?: string,
+  avatar: string | null,
+  statusAdmin: boolean,
+}
+
+export interface IResponseUser {
+  id: number,
+  login: string,
+  full_name: string,
+  email: string,
+  avatar: string,
+  created: string,
+  last_visit: string,
+  status_admin: boolean,
+  token: string,
 }
 
 export interface IIdentification {
@@ -15,16 +27,27 @@ export interface IIdentification {
 }
 
 export interface IFile {
-  id: number | null,
-  title: string | null,
-  comment: string | null,
-  size: number | null,
-  created: string | null,
-  last_download: string | null,
+  id: number,
+  title: string,
+  comment: string,
+  size: number,
+  created: string,
+  last_download: string,
+}
+
+export interface IItemUser {
+  id: number,
+  fullName: string,
+  avatar: string,
+  email: string,
+  statusAdmin: boolean,
+  created: string,
+  lastVisit: string,
 }
 
 export interface IDiskState {
   cloudFiles: IFile[],
+  cloudUsers: IItemUser[],
   currentFile: IFile | null,
   link: string,
 }
