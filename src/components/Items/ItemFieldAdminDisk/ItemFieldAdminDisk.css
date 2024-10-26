@@ -3,22 +3,19 @@
   margin-left: 5px;
   margin-right: 5px;
   border-radius: 10px;
-  /* pointer-events: none; */
-  /* padding: 5px;
-  border-spacing: 0; */
+  padding: 0px 5px 5px;
+  display: block;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  margin-bottom: 10px;
 }
 
-/* .admin__table__header {
-  border-bottom: 1px solid black;
-} */
+.disk__admin__table::-webkit-scrollbar { width: 0 !important }
 
 .item__status {
   width: 10%;
 }
-
-/* .table__body__row {
-  background-color: aquamarine;
-} */
 
 .row__admin {
   background-color: aquamarine;

@@ -16,7 +16,7 @@ export const ItemFieldAdminDisk = ({ user }) => {
   useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user
     if (user.id) {
       console.log('диск ушел за пользователями', user)
-      baseFetch({ url: `${URL_SERVER}/get-users/` }).then(
+      baseFetch({ url: `${URL_SERVER}/admin/get-users/` }).then(
         (res) => dispatch(addUsers(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
       )
