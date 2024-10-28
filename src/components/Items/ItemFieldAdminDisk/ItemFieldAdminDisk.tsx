@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import { addUsers } from '../../../redux/slices/diskSlice';
+import { addUsers, getAllFiles } from '../../../redux/slices/diskSlice';
 import { baseFetch } from '../../../utils/index';
 import './ItemFieldAdminDisk.css';
 import { runModal } from '../../../redux/slices/modalSlice';
@@ -17,7 +17,10 @@ export const ItemFieldAdminDisk = ({ user }) => {
     if (user.id) {
       console.log('диск ушел за пользователями', user)
       baseFetch({ url: `${URL_SERVER}/admin/get-users/` }).then(
-        (res) => dispatch(addUsers(res)),
+        (res) => {
+          dispatch(getAllFiles(res.files))
+          dispatch(addUsers(res.users))
+        },
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
       )
     }
@@ -45,9 +48,9 @@ export const ItemFieldAdminDisk = ({ user }) => {
           <thead className="admin__table__header">
             <tr>
                 <th className="table__header__item item__id">id</th>
+                <th className="table__header__item item__login">Логин</th>
                 <th className="table__header__item item__full-name">Полное имя</th>
                 <th className="table__header__item item__email">E-mail</th>
-                <th className="table__header__item item__avatar">Аватар</th>
                 <th className="table__header__item item__status">Статус администратора</th>
                 <th className="table__header__item item__created">Создан</th>
                 <th className="table__header__item item__lost-visit">Последний<br/>вход</th>

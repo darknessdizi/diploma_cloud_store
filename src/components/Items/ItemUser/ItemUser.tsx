@@ -1,15 +1,35 @@
 import { URL_SERVER } from "../../../const/index";
-import { useAppDispatch } from "../../../hooks/index";
-import { changeUsers } from "../../../redux/slices/diskSlice";
+import { useAppDispatch, useAppSelector } from "../../../hooks/index";
+import { changeUsers, selectedUser } from "../../../redux/slices/diskSlice";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { baseFetch, getDate } from "../../../utils/index";
+import { formatBytes } from "../ItemFieldUserDisk/utils";
 
 export const ItemUser = ({ user }) => {
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
   const lastVisit = getDate(user.lastVisit);
   const created = getDate(user.created);
-  const statusAdmin = user.statusAdmin ? "checked" : "";
-  const classAdmin = user.statusAdmin ? "table__body__row row__admin" : "table__body__row";
+  const statusChecked = user.statusAdmin ? "checked" : "";
+  const setClasses = user.statusAdmin ? "table__body__row row__admin" : "table__body__row";
+  const curentUsers = useAppSelector((state) => state.identification.user); // получение данных из глобального хранилища 
+  const { cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
+
+  let statusDisable = false;
+  if (curentUsers.id === user.id) {
+    statusDisable = true
+  }
+
+  const result = cloudFiles.reduce((counter, item) => {
+    if (item.user_id === user.id) {
+      counter.count += 1;
+      counter.size += Number(item.size);
+      return counter;
+    }
+    return counter;
+  }, {count: 0, size: 0});
+
+  const bytes = formatBytes(result.size);
+
 
   const changeRadio = async (event: React.ChangeEvent<HTMLInputElement>) => {
     // Обрабатываем изменения кнопки-флажок
@@ -28,17 +48,39 @@ export const ItemUser = ({ user }) => {
     }
   }
 
+  const clickDelete = () => {
+    // Нажатие кнопки удаления пользователя
+    dispatch(selectedUser(user));
+    const message = `Пользователь "${user.login}" будет удален безвозратно. Удалить пользователя?`
+    dispatch(runModal({ type: 'deleteUser', message }));
+  }
+
   return (
-    <tr className={classAdmin}>
-      <td className="table__body__item">{user.id}</td>
-      <td className="table__body__item">{user.fullName}</td>
-      <td className="table__body__item">{user.email}</td>
-      <td className="table__body__item">{user.avatar}</td>
-      <td className="table__body__item">
-        <input className="input__checkbox" type="checkbox" name="admin" onChange={changeRadio} checked={statusAdmin}></input>
-      </td>
-      <td className="table__body__item">{created}</td>
-      <td className="table__body__item">{lastVisit}</td>
-    </tr>
+    <>
+      <tr className={setClasses}>
+        <td className="table__body__item">{user.id}</td>
+        <td className="table__body__item">{user.login}</td>
+        <td className="table__body__item">{user.fullName}</td>
+        <td className="table__body__item">{user.email}</td>
+        <td className="table__body__item">
+          <input className="input__checkbox" type="checkbox" name="admin" onChange={changeRadio} checked={statusChecked} disabled={statusDisable} />
+        </td>
+        <td className="table__body__item">{created}</td>
+        <td className="table__body__item">{lastVisit}</td>
+        <td className="table__body__item item__actions">
+          {
+            statusDisable ? "" : <div className="controll__item controll__item__delete" onClick={clickDelete}></div>
+          }
+        </td>
+      </tr>
+      <tr className="table__body__row__info">
+        <td colSpan="2"></td>
+        <td align="left" colSpan="2">Всего файлов: {result.count}</td>
+        <td align="left" colSpan="3">Общий размер хранилища: {bytes} </td>
+        <td className="table__body__item item__actions">
+          <div className="controll__item controll__item__eye" onClick={clickDelete}></div>
+        </td>
+      </tr>
+    </>
   )
 }

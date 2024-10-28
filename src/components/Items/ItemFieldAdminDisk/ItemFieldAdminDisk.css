@@ -1,14 +1,12 @@
 .disk__admin__table {
   border: 1px solid black;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin: 0px 5px 10px;
   border-radius: 10px;
   padding: 0px 5px 5px;
   display: block;
   overflow-x: auto;
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
-  margin-bottom: 10px;
 }
 
 .disk__admin__table::-webkit-scrollbar { width: 0 !important }
@@ -23,4 +21,38 @@
 
 .input__checkbox {
   transform: scale(1.5);
+}
+
+.item__actions > div {
+  margin: 0;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+}
+
+td.item__actions {
+  line-height: 0;
+}
+
+table tr:nth-child(odd) td {
+  border-top: thin solid; 
+}
+
+.table__body__row__info td:nth-child(n+2) {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.table__body__row__info td:last-child {
+  border-width: 0px;
+  padding-left: 0px;
+}
+
+.controll__item__eye {
+  background-image: url('../../../img/icons_btn/eye.png');
+}
+
+.controll__item__eye:hover {
+  background-image: url('../../../img/icons_btn/eye-hover.png');
 }

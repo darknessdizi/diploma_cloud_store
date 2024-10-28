@@ -38,7 +38,7 @@ export interface IFile {
 export interface IItemUser {
   id: number,
   fullName: string,
-  avatar: string,
+  avatar?: string,
   email: string,
   statusAdmin: boolean,
   created: string,
@@ -49,6 +49,7 @@ export interface IDiskState {
   cloudFiles: IFile[],
   cloudUsers: IItemUser[],
   currentFile: IFile | null,
+  currentUser: IUserState | null,
   link: string,
 }
 

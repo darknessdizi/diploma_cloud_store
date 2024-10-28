@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import { deleteFile } from '../../../redux/slices/diskSlice';
+import { deleteFile, deleteUser } from '../../../redux/slices/diskSlice';
 import { setAuthTrue } from '../../../redux/slices/identificationSlice';
 import { clearModal, runModal } from '../../../redux/slices/modalSlice';
 import { baseFetch } from '../../../utils/index';
@@ -11,7 +11,7 @@ import './itemModal.css';
 
 export const ItemModal = () => {
   const { modalType, message } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
-  const { currentFile, link } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
+  const { currentFile, link, currentUser } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
   const handleClick = async (event) => {
@@ -23,11 +23,22 @@ export const ItemModal = () => {
       dispatch(setAuthTrue());
     }
 
-    if (name === 'delete') {
+    if (name === 'deleteFile') {
       // нажатие кнопки удалить файл
       try {
         await baseFetch({ url: `${URL_SERVER}/file/${currentFile.id}/`, method: "DELETE" });
         dispatch(deleteFile());
+      } catch (e: any) {
+        dispatch(runModal({ type: 'error', message: e.message }));
+      }
+    }
+
+    if (name === 'deleteUser') {
+      // нажатие кнопки удалить пользователя
+      try {
+        console.log('+++', currentUser)
+        await baseFetch({ url: `${URL_SERVER}/admin/delete-user/${currentUser.id}/`, method: "DELETE" });
+        dispatch(deleteUser());
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));
       }
@@ -57,17 +68,21 @@ export const ItemModal = () => {
         { (modalType === 'deleteFile')
           ? 
             <div className="content__controll">
-              <Link to={url} className="content__link" onClick={handleClick} name="delete">Да</Link>
+              <Link to={url} className="content__link" onClick={handleClick} name="deleteFile">Да</Link>
               <Link to={url} className="content__link" onClick={handleClick} name="return">Нет</Link>
             </div>
-          : 
-            (modalType === 'editFile')
+          : (modalType === 'editFile')
           ? 
             <ItemFormEdit />
-          : 
-            (modalType === 'copyLink')
+          : (modalType === 'copyLink')
           ? 
             <ItemCopyLink urlLink={link} />
+          : (modalType === 'deleteUser')
+          ? 
+            <div className="content__controll">
+              <Link to={url} className="content__link" onClick={handleClick} name="deleteUser">Да</Link>
+              <Link to={url} className="content__link" onClick={handleClick} name="return">Нет</Link>
+            </div>
           : 
             <Link to={url} className="content__link" onClick={handleClick}  name="return">Ок</Link>
         }
