@@ -42,7 +42,7 @@ export const ItemFieldUserDisk = ({ user }) => {
   useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user
     if (user.id) {
       console.log('диск ушел за файлами', user)
-      baseFetch({ url: `${URL_SERVER}/get-files/` }).then(
+      baseFetch({ url: `${URL_SERVER}/get-files/${user.id}/` }).then(
         (res) => dispatch(getAllFiles(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
       )
@@ -63,13 +63,6 @@ export const ItemFieldUserDisk = ({ user }) => {
             <span>Всего файлов: {cloudFiles.length}</span>
             <span>Общий объём: {bytes}</span>
           </div>
-            {/* <ul className="statistika__total">Из них:
-              <li className="statistika__item">Видео</li>
-              <li className="statistika__item">Аудио</li>
-              <li className="statistika__item">Документы</li>
-              <li className="statistika__item">Изображения</li>
-              <li className="statistika__item">Прочее</li>
-            </ul> */}
         </div>
       </div>
 

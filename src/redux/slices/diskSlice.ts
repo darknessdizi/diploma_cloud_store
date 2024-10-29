@@ -71,6 +71,7 @@ export const diskSlice = createSlice({ // для создания slice пере
       state.cloudFiles = [];
       state.cloudUsers = [];
       state.currentFile = null;
+      state.currentUser = null;
       state.link = '';
     },
 

@@ -55,6 +55,15 @@ export const ItemUser = ({ user }) => {
     dispatch(runModal({ type: 'deleteUser', message }));
   }
 
+  const clickLook = () => {
+    // Нажатие кнопки просмотр пользователя
+    dispatch(selectedUser(user));
+    console.log('заходим на пользователя')
+    // const currentUser = useAppSelector((state) => state.identification.user); // получение данных из глобального хранилища
+    // const message = `Пользователь "${user.login}" будет удален безвозратно. Удалить пользователя?`
+    // dispatch(runModal({ type: 'deleteUser', message }));
+  }
+
   return (
     <>
       <tr className={setClasses}>
@@ -78,7 +87,7 @@ export const ItemUser = ({ user }) => {
         <td align="left" colSpan="2">Всего файлов: {result.count}</td>
         <td align="left" colSpan="3">Общий размер хранилища: {bytes} </td>
         <td className="table__body__item item__actions">
-          <div className="controll__item controll__item__eye" onClick={clickDelete}></div>
+          <div className="controll__item controll__item__eye" onClick={clickLook}></div>
         </td>
       </tr>
     </>
