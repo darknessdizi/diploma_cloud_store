@@ -12,17 +12,30 @@ export const ItemFieldUserDisk = () => {
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
   const handleChange = async (event) => {
+    // Нажатие кнопки добавить файлы в хранилище
     const formData = new FormData();
     for (const file of event.target.files) {
       formData.append('file', file);
-      // Проверка дублирования имен файлов
-      if (cloudFiles.map((el) => el.title).includes(file.name)) {
-        formData.append('title', file.name.replace(/^([^.]+)$|(\.[^.]+)$/i, '$1_copy_$2'))
-      } else {
-        formData.append('title', file.name);
-      }
       formData.append('size', file.size);
       formData.append('user_id', user.id);
+
+      let flagExit = true;
+      let number = 2;
+      let fileName = file.name;
+      while (flagExit) {
+        // Проверка дублирования имен файлов
+        if (cloudFiles.map((el) => el.title).includes(fileName)) {
+          if (/ \(\d+\)(\.[^.]+)$/.test(fileName)) {
+            fileName = fileName.replace(/ \(\d+\)(\.[^.]+)$/i, ` (${number})$1`)
+          } else {
+            fileName = fileName.replace(/^([^.]+)$|(\.[^.]+)$/i, `$1 (${number})$2`)
+          }
+          number += 1;
+        } else {
+          flagExit = false;
+        }
+      }
+      formData.append('title', fileName);
     }
 
     try {
