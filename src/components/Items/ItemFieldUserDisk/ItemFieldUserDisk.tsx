@@ -1,20 +1,15 @@
 import { useEffect } from 'react';
 import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
-import { addFiles, getAllFiles } from '../../../redux/slices/diskSlice';
+import { addFiles, cancelUser, getAllFiles } from '../../../redux/slices/diskSlice';
 import { baseFetch } from '../../../utils/index';
-import { countSizeFiles, formatBytes } from './utils';
 import { ItemFile } from '../ItemFile/ItemFile';
-import './itemFieldDisk.css';
 import { runModal } from '../../../redux/slices/modalSlice';
 
-export const ItemFieldUserDisk = ({ user }) => {
-  const { cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
+export const ItemFieldUserDisk = () => {
+  const { currentUser, cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
+  const { user } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
-
-  console.log('render DiskPage, сейчас files:', cloudFiles)
-  const size = countSizeFiles(cloudFiles);
-  const bytes = formatBytes(size);
 
   const handleChange = async (event) => {
     const formData = new FormData();
@@ -39,8 +34,12 @@ export const ItemFieldUserDisk = ({ user }) => {
     }
   }
 
+  const handleClick = (event) => {
+    dispatch(cancelUser());
+  }
+
   useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user
-    if (user.id) {
+    if ((user.id) && (!currentUser)) {
       console.log('диск ушел за файлами', user)
       baseFetch({ url: `${URL_SERVER}/get-files/${user.id}/` }).then(
         (res) => dispatch(getAllFiles(res)),
@@ -51,34 +50,54 @@ export const ItemFieldUserDisk = ({ user }) => {
 
   return (
     <>
-      <div className="content__disk__info">
-        <div className="disk__info__user">
-          <h3>{user.fullName}</h3>
-          <img src={user.avatar} alt="" className="info__user__avatar" />
-          <div className="info__user__email">Email: <span>{user.email}</span></div>
-        </div>
-        <span>Статус: пользователь</span>
-        <div className="info__statistika">
-          <div className="info__size">
-            <span>Всего файлов: {cloudFiles.length}</span>
-            <span>Общий объём: {bytes}</span>
-          </div>
-        </div>
-      </div>
-
       <div className="content__disk__files">
-          
-        <h1>Добро пожаловать в Cloud Store</h1>
-        <form id={user.id} className="files__form" >
-          <label className="form__add__btn">
-            <input type="file" className="form__add__input" multiple name="file" onChange={handleChange} />
-            Добавить файлы
-          </label>
-        </form>        
+        
+        { 
+          currentUser 
+          ? 
+            <>
+              <h1>Файлы пользователя "{currentUser.login}"</h1>
+              <div className="content__disk__controll">
+                { (currentUser.id === user.id) 
+                  ? 
+                  <>
+                    <form id={user.id} className="files__form" style={{marginRight: 50 + 'px'}}>
+                      <label className="form__add__btn">
+                        <input type="file" className="form__add__input" multiple name="file" onChange={handleChange} />
+                        Добавить файлы
+                      </label>
+                    </form>
+                  </>
+                  : "" }
+                <button type="button" className="disk__btn__back" onClick={handleClick}>Назад</button>
+              </div>
+            </> 
+          : 
+            <>
+              <h1>Добро пожаловать в Cloud Store</h1>
+              <div className="content__disk__controll">
+                <form id={user.id} className="files__form" >
+                  <label className="form__add__btn">
+                    <input type="file" className="form__add__input" multiple name="file" onChange={handleChange} />
+                    Добавить файлы
+                  </label>
+                </form>
+              </div>
+            </>
+        }
 
         <div className="files__field">
-          { cloudFiles.map((file, index) => <ItemFile file={file} key={index} />) }
-        </div>
+          { cloudFiles.map((file, index) => {
+              if (currentUser) {
+                if (file.user_id === currentUser.id) {
+                  return <ItemFile file={file} key={index} />;
+                }
+              } else {
+                return <ItemFile file={file} key={index} />;
+              }
+            }) 
+          }
+        </div>    
 
       </div>
     </>

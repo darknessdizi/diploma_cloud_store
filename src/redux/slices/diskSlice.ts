@@ -6,6 +6,7 @@ const initialState = {
   cloudUsers: [],
   currentFile: null,
   currentUser: null,
+  flagLookUser: false,
   link: '',
 } as IDiskState;
 
@@ -22,6 +23,7 @@ export const diskSlice = createSlice({ // для создания slice пере
     },
 
     addUsers: (state: IDiskState, action: PayloadAction<IResponseUser[]>) => {
+      state.cloudUsers = [];
       for (const item of action.payload) {
         const obj = {
           id: item.id,
@@ -49,6 +51,15 @@ export const diskSlice = createSlice({ // для создания slice пере
       state.currentUser = action.payload;
     },
 
+    changeFlag: (state: IDiskState) => {
+      state.flagLookUser = true;
+    },
+
+    cancelUser: (state: IDiskState) => {
+      state.currentUser = null;
+      state.flagLookUser = false;
+    },
+
     deleteUser: (state: IDiskState) => {
       state.cloudUsers = state.cloudUsers.filter((item) => item.id != state.currentUser?.id);
       state.currentUser = null;
@@ -72,6 +83,7 @@ export const diskSlice = createSlice({ // для создания slice пере
       state.cloudUsers = [];
       state.currentFile = null;
       state.currentUser = null;
+      state.flagLookUser = false;
       state.link = '';
     },
 
@@ -91,5 +103,5 @@ export const diskSlice = createSlice({ // для создания slice пере
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { getAllFiles, addFiles, deleteFile, selectedFile, updateFile, addLink, deleteLink, deleteUser, addUsers, clearDisk, changeUsers, selectedUser } = diskSlice.actions;
+export const { getAllFiles, addFiles, deleteFile, selectedFile, updateFile, addLink, deleteLink, deleteUser, addUsers, clearDisk, changeFlag, cancelUser, changeUsers, selectedUser } = diskSlice.actions;
 export default diskSlice.reducer; // дефолтное поведение (возвращает редьюсер)

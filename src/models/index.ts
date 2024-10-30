@@ -50,6 +50,7 @@ export interface IDiskState {
   cloudUsers: IItemUser[],
   currentFile: IFile | null,
   currentUser: IUserState | null,
+  flagLookUser: boolean,
   link: string,
 }
 

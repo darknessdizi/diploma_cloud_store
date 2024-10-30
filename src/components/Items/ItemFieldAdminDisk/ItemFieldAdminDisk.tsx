@@ -28,21 +28,9 @@ export const ItemFieldAdminDisk = ({ user }) => {
 
   return (
     <>
-      <div className="content__disk__info">
-        <div className="disk__info__user">
-          <h3>{user.fullName}</h3>
-          <img src={user.avatar} alt="" className="info__user__avatar" />
-          <div className="info__user__email">Email: <span>{user.email}</span></div>
-        </div>
-        <span>Статус: админ</span>
-        <div className="info__statistika">
-    
-        </div>
-      </div>
-
       <div className="content__disk__files">
           
-        <h1>Панель администратора</h1>
+        <h1>Панель администратора "{user.login}"</h1>
 
         <table className="disk__admin__table">
           <thead className="admin__table__header">

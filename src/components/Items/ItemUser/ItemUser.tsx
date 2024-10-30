@@ -1,6 +1,6 @@
 import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch, useAppSelector } from "../../../hooks/index";
-import { changeUsers, selectedUser } from "../../../redux/slices/diskSlice";
+import { changeFlag, changeUsers, selectedUser } from "../../../redux/slices/diskSlice";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { baseFetch, getDate } from "../../../utils/index";
 import { formatBytes } from "../ItemFieldUserDisk/utils";
@@ -58,10 +58,8 @@ export const ItemUser = ({ user }) => {
   const clickLook = () => {
     // Нажатие кнопки просмотр пользователя
     dispatch(selectedUser(user));
+    dispatch(changeFlag())
     console.log('заходим на пользователя')
-    // const currentUser = useAppSelector((state) => state.identification.user); // получение данных из глобального хранилища
-    // const message = `Пользователь "${user.login}" будет удален безвозратно. Удалить пользователя?`
-    // dispatch(runModal({ type: 'deleteUser', message }));
   }
 
   return (

@@ -56,8 +56,10 @@
   text-align: center;
 }
 
-.files__form {
-  margin-bottom: 15px;
+.content__disk__controll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .form__add__input {
@@ -65,12 +67,13 @@
 }
 
 .form__add__btn {
-  padding: 10px 30px 15px;
+  padding: 10px 30px;
   background-color: var(--color-form);
   border-radius: 10px;
   border: 1px solid black;
   font-weight: 700;
-  margin-bottom: 15px;
+  display: block;
+  line-height: 1.2;
 }
 
 .form__add__btn:hover {
@@ -126,3 +129,19 @@
 }
 
 .item__comment::-webkit-scrollbar { width: 0 !important }
+
+.disk__btn__back {
+  width: 196px;
+  padding: 10px;
+  /* margin: 0px auto; */
+  border-radius: 10px;
+  background-color: var(--color-form);
+  font-size: 1em;
+  font-weight: 700;
+  border: 1px solid black;
+  line-height: 1.2;
+}
+
+.disk__btn__back:hover {
+  background-color: var(--color-btn-hover);
+}
