@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { deleteFile, deleteUser } from '../../../redux/slices/diskSlice';
@@ -13,41 +14,42 @@ export const ItemModal = () => {
   const { modalType, message } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
   const { currentFile, link, currentUser } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
+  const navigate = useNavigate();
 
-  const handleClick = async (event) => {
+  const handleClick = async (event: React.MouseEvent<HTMLDivElement>) => {
     // Обработчик нажатия кнопки в модальном окне
-    const { name } = event.target;
+    const target = event.target as HTMLDivElement;
+    const { name } = target.dataset;
     dispatch(clearModal())
 
-    if (event.target.pathname === "/disk") {
+    if (name === "registration") {
       dispatch(setAuthTrue());
+      navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
+      return;
     }
 
     if (name === 'deleteFile') {
       // нажатие кнопки удалить файл
       try {
-        await baseFetch({ url: `${URL_SERVER}/file/${currentFile.id}/`, method: "DELETE" });
+        await baseFetch({ url: `${URL_SERVER}/file/${currentFile?.id}/`, method: "DELETE" });
         dispatch(deleteFile());
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));
       }
+      return;
     }
 
     if (name === 'deleteUser') {
       // нажатие кнопки удалить пользователя
       try {
-        console.log('+++', currentUser)
-        await baseFetch({ url: `${URL_SERVER}/admin/delete-user/${currentUser.id}/`, method: "DELETE" });
+        await baseFetch({ url: `${URL_SERVER}/admin/delete-user/${currentUser?.id}/`, method: "DELETE" });
         dispatch(deleteUser());
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));
       }
+      return;
     }
   }
-
-  const url = (modalType === 'error') ? "#"
-    : (modalType === 'registration') ? "/disk"
-    : "#";
   
   return (
     <div className="modal__page">
@@ -60,32 +62,24 @@ export const ItemModal = () => {
                 <h1 className="content__title">Ошибка!</h1>
                 <p className="content__message">{message}</p>
               </> 
-            : <h1 className="content__title">{message}</h1>
+            : 
+              <h1 className="content__title">{message}</h1>
           }
           
         </div>
 
-        { (modalType === 'deleteFile')
-          ? 
-            <div className="content__controll">
-              <Link to={url} className="content__link" onClick={handleClick} name="deleteFile">Да</Link>
-              <Link to={url} className="content__link" onClick={handleClick} name="return">Нет</Link>
-            </div>
-          : (modalType === 'editFile')
-          ? 
-            <ItemFormEdit />
-          : (modalType === 'copyLink')
-          ? 
-            <ItemCopyLink urlLink={link} />
-          : (modalType === 'deleteUser')
-          ? 
-            <div className="content__controll">
-              <Link to={url} className="content__link" onClick={handleClick} name="deleteUser">Да</Link>
-              <Link to={url} className="content__link" onClick={handleClick} name="return">Нет</Link>
-            </div>
-          : 
-            <Link to={url} className="content__link" onClick={handleClick}  name="return">Ок</Link>
+        { (modalType === 'editFile') ? <ItemFormEdit /> : "" }
+        { (modalType === 'copyLink') ? <ItemCopyLink urlLink={link} /> : "" }
+
+        { ((modalType === 'deleteFile') || (modalType === 'deleteUser')) ?
+          <div className="content__controll"> 
+            <div className="content__btn" onClick={handleClick} data-name={modalType}>Да</div>
+            <div className="content__btn" onClick={handleClick} data-name="return">Нет</div>
+          </div> : ""
         }
+
+        { (modalType === 'registration') ? <div className="content__btn" onClick={handleClick} data-name={modalType}>Ок</div> : "" }
+        { (modalType === 'error') ? <div className="content__btn" onClick={handleClick} data-name={modalType}>Ок</div> : "" }
 
       </div>
     </div>

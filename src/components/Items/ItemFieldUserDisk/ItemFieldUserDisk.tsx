@@ -11,12 +11,14 @@ export const ItemFieldUserDisk = () => {
   const { user } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
-  const handleChange = async (event) => {
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     // Нажатие кнопки добавить файлы в хранилище
+    const files = event.target.files;
+    if (files === null) return;
     const formData = new FormData();
-    for (const file of event.target.files) {
+    for (const file of files) {
       formData.append('file', file);
-      formData.append('size', file.size);
+      formData.append('size', String(file.size));
       formData.append('user_id', user.id);
 
       let flagExit = true;
@@ -47,14 +49,15 @@ export const ItemFieldUserDisk = () => {
     }
   }
 
-  const handleClick = (event) => {
+  const handleClick = () => {
+    // нажатие кнопки "назад"
     dispatch(cancelUser());
   }
 
-  useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user
-    if ((user.id) && (!currentUser)) {
-      console.log('диск ушел за файлами', user)
-      baseFetch({ url: `${URL_SERVER}/get-files/${user.id}/` }).then(
+  useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user (диск ушел за файлами)
+    if (user.id) {
+      const targetId = (currentUser) ? currentUser.id: user.id;
+      baseFetch({ url: `${URL_SERVER}/get-files/${targetId}/` }).then(
         (res) => dispatch(getAllFiles(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
       )
@@ -100,16 +103,7 @@ export const ItemFieldUserDisk = () => {
         }
 
         <div className="files__field">
-          { cloudFiles.map((file, index) => {
-              if (currentUser) {
-                if (file.user_id === currentUser.id) {
-                  return <ItemFile file={file} key={index} />;
-                }
-              } else {
-                return <ItemFile file={file} key={index} />;
-              }
-            }) 
-          }
+          { cloudFiles.map((file, index) => <ItemFile file={file} key={index}/>) }
         </div>    
 
       </div>

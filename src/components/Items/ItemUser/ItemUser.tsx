@@ -1,15 +1,16 @@
 import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch, useAppSelector } from "../../../hooks/index";
+import { IItemUser } from "../../../models";
 import { changeFlag, changeUsers, selectedUser } from "../../../redux/slices/diskSlice";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { baseFetch, getDate } from "../../../utils/index";
 import { formatBytes } from "../ItemFieldUserDisk/utils";
 
-export const ItemUser = ({ user }) => {
+export const ItemUser = ({ user }: {user: IItemUser}) => {
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
   const lastVisit = getDate(user.lastVisit);
   const created = getDate(user.created);
-  const statusChecked = user.statusAdmin ? "checked" : "";
+  const statusChecked = user.statusAdmin ? true : false;
   const setClasses = user.statusAdmin ? "table__body__row row__admin" : "table__body__row";
   const curentUsers = useAppSelector((state) => state.identification.user); // получение данных из глобального хранилища 
   const { cloudFiles } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
@@ -20,7 +21,7 @@ export const ItemUser = ({ user }) => {
   }
 
   const result = cloudFiles.reduce((counter, item) => {
-    if (item.user_id === user.id) {
+    if (item.userId === user.id) {
       counter.count += 1;
       counter.size += Number(item.size);
       return counter;
@@ -59,7 +60,6 @@ export const ItemUser = ({ user }) => {
     // Нажатие кнопки просмотр пользователя
     dispatch(selectedUser(user));
     dispatch(changeFlag())
-    console.log('заходим на пользователя')
   }
 
   return (
@@ -81,9 +81,9 @@ export const ItemUser = ({ user }) => {
         </td>
       </tr>
       <tr className="table__body__row__info">
-        <td colSpan="2"></td>
-        <td align="left" colSpan="2">Всего файлов: {result.count}</td>
-        <td align="left" colSpan="3">Общий размер хранилища: {bytes} </td>
+        <td colSpan={2}></td>
+        <td align="left" colSpan={2}>Всего файлов: {result.count}</td>
+        <td align="left" colSpan={3}>Общий размер хранилища: {bytes} </td>
         <td className="table__body__item item__actions">
           <div className="controll__item controll__item__eye" onClick={clickLook}></div>
         </td>

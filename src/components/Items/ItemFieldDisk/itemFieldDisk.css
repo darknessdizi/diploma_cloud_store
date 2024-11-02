@@ -133,7 +133,6 @@
 .disk__btn__back {
   width: 196px;
   padding: 10px;
-  /* margin: 0px auto; */
   border-radius: 10px;
   background-color: var(--color-form);
   font-size: 1em;

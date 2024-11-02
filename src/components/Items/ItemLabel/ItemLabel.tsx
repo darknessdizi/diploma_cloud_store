@@ -1,6 +1,7 @@
+import { IItemLabel } from '../../../models';
 import './ItemLabel.css';
 
-export const ItemLabel = ({ title, type, name, changeInput, value, message, error=false }) => {
+export const ItemLabel = ({ title, type, name, changeInput, value, message, error=false }: IItemLabel) => {
   return (
     <label className="form__label">
       <span className="input__label__title">{title}</span>

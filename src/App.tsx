@@ -8,24 +8,21 @@ import { RegistrationPage } from './components/Pages/RegistrationPage/Registrati
 import { DiskPage } from './components/Pages/DiskPage/DiskPage';
 import { useEffect, useState } from 'react';
 import { ItemModal } from './components/Items/ItemModal/ItemModal';
-import './App.css';
 import { logoutUser, setAuthFalse, setAuthTrue, succesAuth } from './redux/slices/identificationSlice';
 import { baseFetch } from './utils/index';
 import { URL_SERVER } from './const/index';
 import { runModal } from './redux/slices/modalSlice';
 import { clearDisk } from './redux/slices/diskSlice';
+import './App.css';
 
 function App() {
   const { auth } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
   const { modal } = useAppSelector((state) => state.modal); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
-  // const token = localStorage.getItem('sessionToken');
-  console.log('app render, auth=', auth)
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('sessionToken');
-    console.log('одноразовый хук', 'auth=', auth, 'token=', token)
     if ((token !== 'undefined') && (token !== null)) {
       dispatch(setAuthTrue());
       const response = baseFetch({ url: `${URL_SERVER}/recovery-session/` });

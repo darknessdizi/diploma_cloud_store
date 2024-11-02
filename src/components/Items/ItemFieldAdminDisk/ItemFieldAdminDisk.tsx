@@ -3,19 +3,17 @@ import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { addUsers, getAllFiles } from '../../../redux/slices/diskSlice';
 import { baseFetch } from '../../../utils/index';
-import './ItemFieldAdminDisk.css';
 import { runModal } from '../../../redux/slices/modalSlice';
 import { ItemUser } from '../ItemUser/ItemUser';
+import { IUserState } from '../../../models';
+import './ItemFieldAdminDisk.css';
 
-export const ItemFieldAdminDisk = ({ user }) => {
+export const ItemFieldAdminDisk = ({ user }: {user: IUserState}) => {
   const { cloudUsers } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
-  console.log('render DiskPage, сейчас cloudUsers:', cloudUsers)
-
-  useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user
+  useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user (диск ушел за пользователями)
     if (user.id) {
-      console.log('диск ушел за пользователями', user)
       baseFetch({ url: `${URL_SERVER}/admin/get-users/` }).then(
         (res) => {
           dispatch(getAllFiles(res.files))

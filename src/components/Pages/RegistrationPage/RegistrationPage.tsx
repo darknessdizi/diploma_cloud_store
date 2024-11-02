@@ -7,8 +7,8 @@ import { checkEmail, checkLogin, checkPassword, checkValueInput } from "./utils"
 import { baseFetch } from "../../../utils/index";
 import { URL_SERVER } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
-import "./registrationPage.css";
 import { useNavigate } from "react-router-dom";
+import "./registrationPage.css";
 
 // начальное состояние локального хранилища компонента
 const initialState = {

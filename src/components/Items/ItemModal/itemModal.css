@@ -10,7 +10,6 @@
 
 .modal__page__content {
   width: 60%;
-  /* height: 50%; */
   background-color: white;
   border-radius: 15px;
   border: 1px solid black;
@@ -45,8 +44,6 @@
 }
 
 .content__title {
-  /* overflow-wrap: break-word;
-  hyphens: auto; */
   word-break: break-all;
 }
 
@@ -56,15 +53,16 @@
   justify-content: space-around;
 }
 
-.content__controll a:not(:only-of-type) {
+.content__controll div:not(:only-of-type) {
   margin-left: 100px;
 }
 
-.content__controll a:first-child {
+.content__controll div:first-child {
   margin-left: 0px;
 }
 
-.content__link {
+.content__link,
+.content__btn {
   width: 50%;
   padding: 10px;
   font-size: 1.2em;
@@ -77,6 +75,7 @@
   color: black;
 }
 
+.content__btn:hover,
 .content__link:hover {
   background-color: var(--color-btn-hover);
 }

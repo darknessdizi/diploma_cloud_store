@@ -1,24 +1,26 @@
 import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch } from "../../../hooks/index";
+import { IFile } from "../../../models";
 import { addLink, selectedFile, updateFile } from "../../../redux/slices/diskSlice";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { baseFetch, getDate } from "../../../utils/index";
 import { formatBytes, handleName } from "../ItemFieldUserDisk/utils";
 import "./itemFile.css";
 
-export const ItemFile = ({ file }) => {
+export const ItemFile = ({ file }: {file: IFile}) => {
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
   let dateString = '-';
-  if (file.last_download) {
-    dateString = getDate(file.last_download);
+  if (file.lastDownload) {
+    dateString = getDate(file.lastDownload);
   }
 
-  const clickDownload = async (event: React.ChangeEvent<HTMLDivElement>) => {
+  const clickDownload = async (event: React.MouseEvent<HTMLDivElement>) => {
     // Нажатие кнопки скачать файл с сервера
     try {
-      const { id } = event.target.dataset;
-      event.target.classList.add('active__download');
+      const target = event.target as HTMLDivElement;
+      const { id } = target.dataset;
+      target.classList.add('active__download');
       const blob = await baseFetch({ url: `${URL_SERVER}/file/${id}/`, blob: true });
       const objectURL = URL.createObjectURL(blob);
       const linkFile = document.createElement('a');
@@ -26,7 +28,7 @@ export const ItemFile = ({ file }) => {
       linkFile.setAttribute('download', file.title);
       linkFile.click();
       window.URL.revokeObjectURL(objectURL);
-      event.target.classList.remove('active__download');
+      target.classList.remove('active__download');
       const response = await baseFetch({ url: `${URL_SERVER}/filedata/${id}/` }); // обновляем данные по текущему файлу (изменилось поле последняя загрузка)
       dispatch(updateFile(response));
     } catch (e: any) {
@@ -51,7 +53,6 @@ export const ItemFile = ({ file }) => {
     // Нажатие кнопки копирования ссылки на файл
     try {
       const response = await baseFetch({ url: `${URL_SERVER}/getlink/${file.id}/` });
-      console.log('++++++', response.url)
       dispatch(addLink(response.url));
       dispatch(runModal({ type: 'copyLink', message: 'Ссылка для скачивания' }));
     } catch (e: any) {

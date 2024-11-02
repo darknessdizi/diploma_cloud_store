@@ -7,11 +7,11 @@ const initialState = { // начальное состояние хранилищ
   loginOccupied: false,
   loginNotFound: { status: false, message: '' },
   user: {
-    id: null,
+    id: '',
     login: null,
     fullName: null,
     email: null,
-    avatar: null,
+    avatar: '',
     statusAdmin: false
   },
 } as IIdentification; // создаем наш state и типизируем его
@@ -62,5 +62,12 @@ export const identificationSlice = createSliceWithThunk({ // при создан
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { addLoginOccupied, succesAuth, clearLoginOccupied, logoutUser, setAuthTrue, setAuthFalse } = identificationSlice.actions;
+export const { 
+  addLoginOccupied, 
+  succesAuth, 
+  clearLoginOccupied, 
+  logoutUser, 
+  setAuthTrue, 
+  setAuthFalse 
+} = identificationSlice.actions;
 export default identificationSlice.reducer; // дефолтное поведение (возвращает редьюсер)

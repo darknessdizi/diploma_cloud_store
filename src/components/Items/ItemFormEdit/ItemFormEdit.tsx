@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch, useAppSelector } from "../../../hooks/index";
 import { updateFile } from "../../../redux/slices/diskSlice";
@@ -19,7 +18,7 @@ export const ItemFormEdit = () => {
   const { currentFile } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
   
-  const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const changeInput = (event: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>) => {
     // Обрабатываем изменение в поле input
     const { name, value } = event.target;
     setStatePage({ ...statePage, [name]: value });
@@ -35,18 +34,19 @@ export const ItemFormEdit = () => {
     event.preventDefault();
     dispatch(clearModal());
     const formData = new FormData(event.target);
-    let title = currentFile.title.match(/\.[^.]+$/i)[0];
+    let title = currentFile?.title;
+    title = (title?.match(/\.[^.]+$/i) || '')[0];
     title = `${formData.get('title')}${title}`;
     formData.set('title', title)
     try {
-      const response = await baseFetch({ url: `${URL_SERVER}/file/${currentFile.id}/`, method: "PATCH", body: formData });
+      const response = await baseFetch({ url: `${URL_SERVER}/file/${currentFile?.id}/`, method: "PATCH", body: formData });
       dispatch(updateFile(response));
     } catch (e: any) {
       dispatch(runModal({ type: 'error', message: e.message }));
     }
   }
 
-  if (statePage.checked) {
+  if ((statePage.checked) && (currentFile)){
     setStatePage({ 
       ...statePage,
       ['title']: currentFile.title.replace(/^([^.]+)$|(\.[^.]+)$/i, '$1'),
@@ -64,12 +64,12 @@ export const ItemFormEdit = () => {
         </div>
         <div className="file__comment">
           <span>Комментарий: </span>
-          <textarea type="text" value={statePage.comment} className="file__comment__input" name="comment" onChange={changeInput} rows="8" />
+          <textarea value={statePage.comment} className="file__comment__input" name="comment" onChange={changeInput} rows={8} />
         </div>
       </div>
       <div className="content__controll">
-        <button type="submit" className="content__link">Сохранить</button>
-        <Link to="#" className="content__link" onClick={handleClick} name="return">Отмена</Link>
+        <button type="submit" className="content__btn">Сохранить</button>
+        <div className="content__btn" onClick={handleClick}>Отмена</div>
       </div>
     </form>
   )

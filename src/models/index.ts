@@ -1,14 +1,25 @@
+export interface ILinkProps {
+  link: string,
+  label: string,
+  logout?: () => {}
+}
+
+export interface IModal {
+  type: string,
+  message: string,
+}
+
 export interface IUserState {
-  id: number | null,
+  id: string,
   login: string | null,
   fullName: string | null,
   email: string | null,
-  avatar: string | null,
+  avatar: string,
   statusAdmin: boolean,
 }
 
 export interface IResponseUser {
-  id: number,
+  id: string,
   login: string,
   full_name: string,
   email: string,
@@ -26,17 +37,31 @@ export interface IIdentification {
   user: IUserState,
 }
 
-export interface IFile {
+export interface IFileServer {
   id: number,
   title: string,
+  file: string,
   comment: string,
   size: number,
   created: string,
   last_download: string,
+  user_id: string,
+}
+
+export interface IFile {
+  id: number,
+  title: string,
+  file: string,
+  comment: string,
+  size: number,
+  created: string,
+  lastDownload: string,
+  userId: string,
 }
 
 export interface IItemUser {
-  id: number,
+  id: string,
+  login: string,
   fullName: string,
   avatar?: string,
   email: string,
@@ -49,7 +74,7 @@ export interface IDiskState {
   cloudFiles: IFile[],
   cloudUsers: IItemUser[],
   currentFile: IFile | null,
-  currentUser: IUserState | null,
+  currentUser: IItemUser | null,
   flagLookUser: boolean,
   link: string,
 }
@@ -66,4 +91,14 @@ export interface IFetchParams {
   method?: string,
   body?: string | FormData,
   blob?: boolean,
+}
+
+export interface IItemLabel {
+  title: string,
+  type: string, 
+  name: string, 
+  changeInput: (event: React.ChangeEvent<HTMLInputElement>) => void, 
+  value: string, 
+  message?: string, 
+  error?: boolean,
 }

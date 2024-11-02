@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDiskState, IFile, IResponseUser, IUserState } from "../../models/index";
+import { IDiskState, IFile, IFileServer, IItemUser, IResponseUser } from "../../models/index";
 
 const initialState = {
   cloudFiles: [],
@@ -14,12 +14,38 @@ export const diskSlice = createSlice({ // для создания slice пере
   name: "disk", // имя slice (нужно для обращения в store к нужному slice, например state.counter.value здесь слово counter)
   initialState, // создаем начальное значение для slice
   reducers: { // reducers - обязательное поле для slice
-    getAllFiles: (state: IDiskState, action: PayloadAction<IFile[]>) => {
-      state.cloudFiles = action.payload;
+    getAllFiles: (state: IDiskState, action: PayloadAction<IFileServer[]>) => {
+      const array = [];
+      for (const item of action.payload) {
+        const obj = {
+          id: item.id,
+          title: item.title,
+          file: item.file,
+          comment: item.comment,
+          size: item.size,
+          created: item.created,
+          lastDownload: item.last_download,
+          userId: item.user_id,
+        }
+        array.push(obj);
+      }
+      state.cloudFiles = array;
     },
 
-    addFiles: (state: IDiskState, action: PayloadAction<IFile>) => {
-      state.cloudFiles.push(...action.payload);
+    addFiles: (state: IDiskState, action: PayloadAction<IFileServer[]>) => {
+      for (const item of action.payload) {
+        const obj = {
+          id: item.id,
+          title: item.title,
+          file: item.file,
+          comment: item.comment,
+          size: item.size,
+          created: item.created,
+          lastDownload: item.last_download,
+          userId: item.user_id,
+        }
+        state.cloudFiles.push(obj);
+      }
     },
 
     addUsers: (state: IDiskState, action: PayloadAction<IResponseUser[]>) => {
@@ -38,21 +64,22 @@ export const diskSlice = createSlice({ // для создания slice пере
       }
     },
 
-    changeUsers: (state: IDiskState, action: PayloadAction<{id: number, status: string}>) => {
+    changeUsers: (state: IDiskState, action: PayloadAction<{id: string, status: boolean}>) => {
       const index = state.cloudUsers.findIndex((item) => item.id === action.payload.id)
       state.cloudUsers[index].statusAdmin = action.payload.status
     },
 
-    selectedFile: (state: IDiskState, action: PayloadAction<File>) => {
+    selectedFile: (state: IDiskState, action: PayloadAction<IFile>) => {
       state.currentFile = action.payload;
     },
 
-    selectedUser: (state: IDiskState, action: PayloadAction<IUserState>) => {
+    selectedUser: (state: IDiskState, action: PayloadAction<IItemUser>) => {
       state.currentUser = action.payload;
     },
 
     changeFlag: (state: IDiskState) => {
       state.flagLookUser = true;
+      state.cloudFiles = [];
     },
 
     cancelUser: (state: IDiskState) => {
@@ -62,6 +89,7 @@ export const diskSlice = createSlice({ // для создания slice пере
 
     deleteUser: (state: IDiskState) => {
       state.cloudUsers = state.cloudUsers.filter((item) => item.id != state.currentUser?.id);
+      state.cloudFiles = state.cloudFiles.filter((item) => item.userId != state.currentUser?.id);
       state.currentUser = null;
     },
 
@@ -87,13 +115,13 @@ export const diskSlice = createSlice({ // для создания slice пере
       state.link = '';
     },
 
-    updateFile: (state: IDiskState, action: PayloadAction<File>) => {
+    updateFile: (state: IDiskState, action: PayloadAction<IFileServer>) => {
       state.cloudFiles = state.cloudFiles.map((item) => {
         if (item.id === action.payload.id) {
           item.title = action.payload.title;
           item.comment = action.payload.comment;
           item.created = action.payload.created;
-          item.last_download = action.payload.last_download;
+          item.lastDownload = action.payload.last_download;
           item.size = action.payload.size;
         }
         return item;
@@ -103,5 +131,20 @@ export const diskSlice = createSlice({ // для создания slice пере
 });
 
 // экспортируем наши действия для slice (наши инструкции)
-export const { getAllFiles, addFiles, deleteFile, selectedFile, updateFile, addLink, deleteLink, deleteUser, addUsers, clearDisk, changeFlag, cancelUser, changeUsers, selectedUser } = diskSlice.actions;
+export const { 
+  getAllFiles, 
+  addFiles, 
+  deleteFile, 
+  selectedFile, 
+  updateFile, 
+  addLink, 
+  deleteLink, 
+  deleteUser, 
+  addUsers, 
+  clearDisk, 
+  changeFlag, 
+  cancelUser, 
+  changeUsers, 
+  selectedUser 
+} = diskSlice.actions;
 export default diskSlice.reducer; // дефолтное поведение (возвращает редьюсер)

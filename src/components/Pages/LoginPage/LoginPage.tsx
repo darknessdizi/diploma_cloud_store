@@ -14,7 +14,7 @@ const initialState = {
   errorLogin: { status: false, message: '' },
   errorPassword: { status: false, message: '' },
   // login: 'lizochka',
-  // password: '12QWER+',
+  // password: '12QWer+',
   login: 'admin',
   password: '12QWer+',
 }
@@ -26,7 +26,6 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => { // срабатывает при изменении параметра auth
-    console.log('login page, auth=', auth)
     if (auth) {
       navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
     }

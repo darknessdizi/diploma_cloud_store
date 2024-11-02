@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../hooks/index";
 import { deleteLink } from "../../../redux/slices/diskSlice";
 import { clearModal } from "../../../redux/slices/modalSlice";
@@ -17,7 +16,7 @@ export const ItemCopyLink = ({ urlLink }: { urlLink: string }) => {
   }
 
   const selectedText = () => {
-    // Нажатие на поле input с сылкой
+    // Нажатие на поле с текстом ссылки
     inputRef.current?.select();
   }
 
@@ -36,7 +35,7 @@ export const ItemCopyLink = ({ urlLink }: { urlLink: string }) => {
         <div className="controll__item controll__item__copyText" onClick={clickCopyText}></div>
       </div>
       <div className="content__controll">
-        <Link to="#" className="content__link" onClick={handleClick}  name="return">Ок</Link>
+        <div className="content__btn" onClick={handleClick}>Ок</div>
       </div>
     </>
   )

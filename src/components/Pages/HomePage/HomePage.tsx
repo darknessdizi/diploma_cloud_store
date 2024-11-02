@@ -4,10 +4,10 @@ import { ItemLink } from "../../Items/ItemLink/ItemLink";
 import { ItemContentBlock } from "../../Items/ItemContentBlock/ItemContentBlock";
 import { ItemImgBlock } from "../../Items/ItemImgBlock/ItemImgBlock";
 import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescriptionBlock";
-import './homePage.css';
 import { clearDisk } from "../../../redux/slices/diskSlice";
 import { baseFetch } from "../../../utils/index";
 import { URL_SERVER } from "../../../const/index";
+import './homePage.css';
 
 export const HomePage = () => {
   const { auth } = useAppSelector((state) => state.identification); // хук useAppSelector принимает callback

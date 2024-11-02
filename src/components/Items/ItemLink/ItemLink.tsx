@@ -1,7 +1,9 @@
 import { NavLink } from "react-router-dom";
+import { ILinkProps } from "../../../models";
 import "./itemLink.css";
 
-export const ItemLink = ({ link, label, logout }) => {
+export const ItemLink = (props: ILinkProps) => {
+  const { link, label, logout } = props;
   const active = ({ isActive }: { isActive: boolean }) => isActive ? "item_link-active" : "";
   
   return (

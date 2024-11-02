@@ -1,12 +1,14 @@
-export function countSizeFiles(array) {
+import { IFile } from "../../../models";
+
+export function countSizeFiles(array: IFile[]) {
   // Подсчитывает общий размер всех файлов
-  const result = array.reduce((sum, item) => {
+  const result = array.reduce((sum: number, item) => {
     return sum += Number(item.size);
   }, 0);
   return result;
 }
 
-export function formatBytes(bytes, decimals = 2) {
+export function formatBytes(bytes: number, decimals=2) {
   // Переводит байты в другие единицы
   if (!+bytes) return '0 Bytes';
   const k = 1024;
@@ -16,15 +18,7 @@ export function formatBytes(bytes, decimals = 2) {
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
-export function countTypeFiles(array) {
-  // Подсчитывает файлов по типам
-  const result = array.reduce((sum, item) => {
-    return sum += Number(item.size);
-  }, 0);
-  return result;
-}
-
-export function handleName(fileName) {
+export function handleName(fileName: string) {
   // Подборка иконки файла
   const extension = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2);
   if (extension === "") {

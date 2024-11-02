@@ -7,7 +7,6 @@ import './itemFieldDisk.css';
 export const ItemFieldDisk = () => {
   const { cloudFiles, flagLookUser } = useAppSelector((state) => state.disk); // получение данных из глобального хранилища
   const { user } = useAppSelector((state) => state.identification); // получение данных из глобального хранилища
-  console.log('отрисовка диска', cloudFiles)
 
   const size = countSizeFiles(cloudFiles);
   const bytes = formatBytes(size);

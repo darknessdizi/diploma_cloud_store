@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFile, IModalState } from "../../models/index";
+import { IModal, IModalState } from "../../models/index";
 
 const initialState = {
   modal: false,
@@ -11,7 +11,7 @@ export const diskSlice = createSlice({ // для создания slice пере
   name: "modal", // имя slice (нужно для обращения в store к нужному slice, например state.counter.value здесь слово counter)
   initialState, // создаем начальное значение для slice
   reducers: { // reducers - обязательное поле для slice
-    runModal: (state: IModalState, action: PayloadAction<IFile>) => { // запуск модального окна с ошибкой
+    runModal: (state: IModalState, action: PayloadAction<IModal>) => { // запуск модального окна с ошибкой
       state.modal = true;
       state.modalType = action.payload.type;
       state.message = action.payload.message as string;
