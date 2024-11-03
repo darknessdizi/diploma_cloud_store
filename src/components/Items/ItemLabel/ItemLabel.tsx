@@ -1,5 +1,5 @@
 import { IItemLabel } from '../../../models';
-import './ItemLabel.css';
+import './itemLabel.css';
 
 export const ItemLabel = ({ title, type, name, changeInput, value, message, error=false }: IItemLabel) => {
   return (
