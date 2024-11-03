@@ -6,12 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build --base=./",
-    "push": "push-dir --dir=build --branch=gh-pages --force",
     "preview": "vite preview"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
-    "push-dir": "^0.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",
