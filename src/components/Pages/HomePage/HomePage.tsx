@@ -36,7 +36,7 @@ export const HomePage = () => {
         </ItemContentBlock>
 
         <ItemContentBlock>
-          <ItemImgBlock imgPath="./2.png" />
+          <ItemImgBlock imgPath="img1.png" />
           <ItemDescriptionBlock>
             <h1 className="block_discription_title">Cloud Store <span> - загружайте, просматривайте, редактируйте и скачивайте ваши файлы с любых устройств</span></h1>
           </ItemDescriptionBlock>
@@ -46,7 +46,7 @@ export const HomePage = () => {
           <ItemDescriptionBlock>
             <h1 className="block_discription_title text_left">Cloud Store <span> - вы всегда будете иметь доступ к вашим файлам будь вы дома, на работе или в движении</span></h1>
           </ItemDescriptionBlock>
-          <ItemImgBlock imgPath="./4.jpg" />
+          <ItemImgBlock imgPath="img2.jpg" />
         </ItemContentBlock>
 
       </main>
