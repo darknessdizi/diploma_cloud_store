@@ -35,11 +35,15 @@ function App() {
   }, []);
 
   const onLogout = async () => {
-    dispatch(setAuthFalse());
-    const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
-    if (response.status) {
-      dispatch(logoutUser());
-      dispatch(clearDisk());
+    try {
+      dispatch(setAuthFalse());
+      const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
+      if (response.status) {
+        dispatch(logoutUser());
+        dispatch(clearDisk());
+      }
+    } catch (e: any) {
+      dispatch(runModal({ type: 'error', message: e.message }));
     }
   }
 

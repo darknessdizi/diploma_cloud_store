@@ -7,6 +7,7 @@ import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescr
 import { clearDisk } from "../../../redux/slices/diskSlice";
 import { baseFetch } from "../../../utils/index";
 import { URL_SERVER } from "../../../const/index";
+import { runModal } from "../../../redux/slices/modalSlice";
 import './homePage.css';
 
 export const HomePage = () => {
@@ -14,11 +15,15 @@ export const HomePage = () => {
   const dispatch = useAppDispatch(); // dispatch это словно диспетчер - он доставляет action для нашего редьюсера
 
   const onLogout = async () => {
-    dispatch(setAuthFalse());
-    const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
-    if (response.status) {
-      dispatch(logoutUser());
-      dispatch(clearDisk());
+    try {
+      dispatch(setAuthFalse());
+      const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
+      if (response.status) {
+        dispatch(logoutUser());
+        dispatch(clearDisk());
+      }
+    } catch (e: any) {
+      dispatch(runModal({ type: 'error', message: e.message }));
     }
   }
 
