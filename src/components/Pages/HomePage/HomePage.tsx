@@ -8,6 +8,8 @@ import { clearDisk } from "../../../redux/slices/diskSlice";
 import { baseFetch } from "../../../utils/index";
 import { URL_SERVER } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
+import img1 from "../../../img/img1.png";
+import img2 from "../../../img/img2.jpg";
 import './homePage.css';
 
 export const HomePage = () => {
@@ -36,7 +38,7 @@ export const HomePage = () => {
         </ItemContentBlock>
 
         <ItemContentBlock>
-          <ItemImgBlock imgPath="img1.png" />
+          <ItemImgBlock imgPath={img1} />
           <ItemDescriptionBlock>
             <h1 className="block_discription_title">Cloud Store <span> - загружайте, просматривайте, редактируйте и скачивайте ваши файлы с любых устройств</span></h1>
           </ItemDescriptionBlock>
@@ -46,7 +48,7 @@ export const HomePage = () => {
           <ItemDescriptionBlock>
             <h1 className="block_discription_title text_left">Cloud Store <span> - вы всегда будете иметь доступ к вашим файлам будь вы дома, на работе или в движении</span></h1>
           </ItemDescriptionBlock>
-          <ItemImgBlock imgPath="img2.jpg" />
+          <ItemImgBlock imgPath={img2} />
         </ItemContentBlock>
 
       </main>
