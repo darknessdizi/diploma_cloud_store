@@ -6,7 +6,7 @@ import { store } from "./redux/store/"; // наше хранилище
 import {BrowserRouter} from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
+  <BrowserRouter basename='/diploma_cloud_store'>
     <Provider store={store}>
       <App />
     </Provider>
