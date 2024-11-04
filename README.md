@@ -3,5 +3,7 @@
 
 ## Fronted
 
-*Ссылка на git-hub репозиторий (backend):* https://github.com/darknessdizi/cloud-store-fronted.git
+*Ссылка на страницу:* https://darknessdizi.github.io/diploma_cloud_store/
+
+*Ссылка на страницу:* https://darknessdizi.github.io/
 
