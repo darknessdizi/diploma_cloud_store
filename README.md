@@ -3,7 +3,6 @@
 
 ## Fronted
 
-*Ссылка на страницу:* https://darknessdizi.github.io/diploma_cloud_store/
+Чтобы просмотреть работу клиентской части перейдите по ссылке ниже.
 
-*Ссылка на страницу:* https://darknessdizi.github.io/
-
+*Ссылка на страницу:* https://darknessdizi.github.io/diploma_cloud_store/home
