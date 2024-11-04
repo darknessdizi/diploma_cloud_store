@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { URL_SERVER } from '../../../const/index';
+import { MY_PATH, URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { deleteFile, deleteUser } from '../../../redux/slices/diskSlice';
 import { setAuthTrue } from '../../../redux/slices/identificationSlice';
@@ -24,7 +24,7 @@ export const ItemModal = () => {
 
     if (name === "registration") {
       dispatch(setAuthTrue());
-      navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
+      navigate(MY_PATH.disk, { replace: true }) // перевод на другую страницу без её перезапуска
       return;
     }
 

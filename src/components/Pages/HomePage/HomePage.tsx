@@ -6,7 +6,7 @@ import { ItemImgBlock } from "../../Items/ItemImgBlock/ItemImgBlock";
 import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescriptionBlock";
 import { clearDisk } from "../../../redux/slices/diskSlice";
 import { baseFetch } from "../../../utils/index";
-import { URL_SERVER } from "../../../const/index";
+import { MY_PATH, URL_SERVER } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
 import img1 from "../../../img/img1.png";
 import img2 from "../../../img/img2.jpg";
@@ -56,15 +56,15 @@ export const HomePage = () => {
       <footer>
         <div className="navigation footer_navigation">
           <ul className="navigation header_navigation">
-            <ItemLink link={"/"} label={"Главная"} />
+          <ItemLink link={MY_PATH.root} label={"Главная"} />
             { auth ?
               <>
-                <ItemLink link={"/disk"} label={"Диск"} />
-                <ItemLink link={"/login"} label={"Выход"} logout={onLogout} />
+                <ItemLink link={MY_PATH.disk} label={"Диск"} />
+                <ItemLink link={MY_PATH.login} label={"Выход"} logout={onLogout} />
               </> :
               <>
-                <ItemLink link={"/login"} label={"Вход"} />
-                <ItemLink link={"/registration"} label={"Регистрация"} />
+                <ItemLink link={MY_PATH.login} label={"Вход"} />
+                <ItemLink link={MY_PATH.registration} label={"Регистрация"} />
               </>
             }
           </ul>

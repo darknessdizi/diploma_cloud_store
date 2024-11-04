@@ -4,7 +4,7 @@ import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import { checkLogin, checkPassword, checkValueInput } from "../RegistrationPage/utils";
 import { useNavigate } from "react-router-dom";
-import { URL_SERVER } from "../../../const/index";
+import { MY_PATH, URL_SERVER } from "../../../const/index";
 import { baseFetch } from "../../../utils/index";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { setAuthTrue, succesAuth } from "../../../redux/slices/identificationSlice";
@@ -27,7 +27,7 @@ export const LoginPage = () => {
 
   useEffect(() => { // срабатывает при изменении параметра auth
     if (auth) {
-      navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
+      navigate(MY_PATH.disk, { replace: true }) // перевод на другую страницу без её перезапуска
     }
   }, [auth]);
 

@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { ItemModal } from './components/Items/ItemModal/ItemModal';
 import { logoutUser, setAuthFalse, setAuthTrue, succesAuth } from './redux/slices/identificationSlice';
 import { baseFetch } from './utils/index';
-import { URL_SERVER } from './const/index';
+import { MY_PATH, URL_SERVER } from './const/index';
 import { runModal } from './redux/slices/modalSlice';
 import { clearDisk } from './redux/slices/diskSlice';
 import './App.css';
@@ -55,15 +55,15 @@ function App() {
       <header>
         <div className="header_baner">
           <ul className="navigation header_navigation">
-            <ItemLink link={"/"} label={"Главная"} />
+            <ItemLink link={MY_PATH.root} label={"Главная"} />
             { auth ?
               <>
-                <ItemLink link={"/disk"} label={"Диск"} />
-                <ItemLink link={"/login"} label={"Выход"} logout={onLogout} />
+                <ItemLink link={MY_PATH.disk} label={"Диск"} />
+                <ItemLink link={MY_PATH.login} label={"Выход"} logout={onLogout} />
               </> :
               <>
-                <ItemLink link={"/login"} label={"Вход"} />
-                <ItemLink link={"/registration"} label={"Регистрация"} />
+                <ItemLink link={MY_PATH.login} label={"Вход"} />
+                <ItemLink link={MY_PATH.registration} label={"Регистрация"} />
               </>
             }
           </ul>
@@ -71,11 +71,11 @@ function App() {
       </header>
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/disk" element={<DiskPage />} />
-        <Route path="*" element={<Page404 />} />
+        <Route path={MY_PATH.root} element={<HomePage />} />
+        <Route path={MY_PATH.login} element={<LoginPage />} />
+        <Route path={MY_PATH.registration} element={<RegistrationPage />} />
+        <Route path={MY_PATH.disk} element={<DiskPage />} />
+        <Route path={MY_PATH.all} element={<Page404 />} />
       </Routes>
 
       { modal ? <ItemModal /> : '' }

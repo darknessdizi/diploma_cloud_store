@@ -5,7 +5,7 @@ import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import { useEffect, useState } from 'react';
 import { checkEmail, checkLogin, checkPassword, checkValueInput } from "./utils";
 import { baseFetch } from "../../../utils/index";
-import { URL_SERVER } from "../../../const/index";
+import { MY_PATH, URL_SERVER } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { useNavigate } from "react-router-dom";
 import "./registrationPage.css";
@@ -33,7 +33,7 @@ export const RegistrationPage = () => {
 
   useEffect(() => { // срабатывает при изменении параметра auth
     if (auth) {
-      navigate('/disk', { replace: true }) // перевод на другую страницу без её перезапуска
+      navigate(MY_PATH.disk, { replace: true }) // перевод на другую страницу без её перезапуска
     }
   }, [auth]);
 

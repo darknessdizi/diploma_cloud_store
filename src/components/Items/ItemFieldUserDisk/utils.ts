@@ -22,12 +22,12 @@ export function handleName(fileName: string) {
   // Подборка иконки файла
   const extension = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2);
   if (extension === "") {
-    return ('./file_icons/file.png');
+    return ('/file_icons/file.png');
   }
   if (types.includes(extension)) {
-    return (`./file_icons/${extension}.png`);
+    return (`/file_icons/${extension}.png`);
   }
-  return ('./file_icons/unknown.png');
+  return ('/file_icons/unknown.png');
 }
 
 const types = [
