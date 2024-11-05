@@ -17,11 +17,11 @@ const initialState = {
   errorRepeat: { status: false, message: '' },
   errorEmail: { status: false, message: '' },
   errorSex: { status: false, message: '' },
-  login: 'lizochka',
-  password: '12QWer+',
-  repeat: '12QWer+',
-  email: 'lizka@mail.ru ',
-  fullName: 'Лизочка Клевая',
+  login: '',
+  password: '',
+  repeat: '',
+  email: '',
+  fullName: '',
   sex: '',
 }
 
