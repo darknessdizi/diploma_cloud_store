@@ -1,4 +1,4 @@
-export const URL_SERVER = 'https://91.197.96.56:8000';
+export const URL_SERVER = 'http://127.0.0.1:8000';
 
 export const MY_PATH = {
   root: '/',
