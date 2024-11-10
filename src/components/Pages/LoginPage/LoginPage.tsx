@@ -46,7 +46,7 @@ export const LoginPage = () => {
         password: statePage.password,
       }
       try {
-        const response = await baseFetch({ url: `${URL_SERVER}/login/`, method: "POST", body: JSON.stringify(user) });
+        const response = await baseFetch({ url: `${URL_SERVER}/api/login/`, method: "POST", body: JSON.stringify(user) });
         dispatch(succesAuth(response));
         dispatch(setAuthTrue());
       } catch (e: any) {

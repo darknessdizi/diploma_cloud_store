@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MY_PATH, URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
@@ -31,7 +30,7 @@ export const ItemModal = () => {
     if (name === 'deleteFile') {
       // нажатие кнопки удалить файл
       try {
-        await baseFetch({ url: `${URL_SERVER}/file/${currentFile?.id}/`, method: "DELETE" });
+        await baseFetch({ url: `${URL_SERVER}/api/file/${currentFile?.id}/`, method: "DELETE" });
         dispatch(deleteFile());
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));

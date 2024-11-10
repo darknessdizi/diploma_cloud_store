@@ -8,8 +8,6 @@ import { clearDisk } from "../../../redux/slices/diskSlice";
 import { baseFetch } from "../../../utils/index";
 import { MY_PATH, URL_SERVER } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
-// import img1 from "../../../img/img1.png";
-// import img2 from "../../../img/img2.jpg";
 import './homePage.css';
 
 export const HomePage = () => {
@@ -19,7 +17,7 @@ export const HomePage = () => {
   const onLogout = async () => {
     try {
       dispatch(setAuthFalse());
-      const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
+      const response = await baseFetch({ url: `${URL_SERVER}/api/logout/` });
       if (response.status) {
         dispatch(logoutUser());
         dispatch(clearDisk());

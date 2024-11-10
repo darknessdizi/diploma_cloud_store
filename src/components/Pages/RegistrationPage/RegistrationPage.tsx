@@ -68,7 +68,7 @@ export const RegistrationPage = () => {
       }
 
       try {
-        const response = await baseFetch({ url: `${URL_SERVER}/registration/`, method: "POST", body: JSON.stringify(user) });
+        const response = await baseFetch({ url: `${URL_SERVER}/api/registration/`, method: "POST", body: JSON.stringify(user) });
         if (response.status === 205) {
           return dispatch(addLoginOccupied());
         }

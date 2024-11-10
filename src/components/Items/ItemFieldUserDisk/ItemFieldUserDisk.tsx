@@ -41,7 +41,7 @@ export const ItemFieldUserDisk = () => {
     }
 
     try {
-      const response = await baseFetch({ url: `${URL_SERVER}/file/`, method: "POST", body: formData, });
+      const response = await baseFetch({ url: `${URL_SERVER}/api/file/`, method: "POST", body: formData, });
       dispatch(addFiles(response.files));
       event.target.value = '';
     } catch (e: any) {
@@ -57,7 +57,7 @@ export const ItemFieldUserDisk = () => {
   useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user (диск ушел за файлами)
     if (user.id) {
       const targetId = (currentUser) ? currentUser.id: user.id;
-      baseFetch({ url: `${URL_SERVER}/get-files/${targetId}/` }).then(
+      baseFetch({ url: `${URL_SERVER}/api/get-files/${targetId}/` }).then(
         (res) => dispatch(getAllFiles(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
       )
