@@ -5,7 +5,7 @@ import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import { useEffect, useState } from 'react';
 import { checkEmail, checkLogin, checkPassword, checkValueInput } from "./utils";
 import { baseFetch } from "../../../utils/index";
-import { MY_PATH, URL_SERVER } from "../../../const/index";
+import { MY_PATH } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { useNavigate } from "react-router-dom";
 import "./registrationPage.css";
@@ -68,7 +68,11 @@ export const RegistrationPage = () => {
       }
 
       try {
-        const response = await baseFetch({ url: `${URL_SERVER}/api/registration/`, method: "POST", body: JSON.stringify(user) });
+        const response = await baseFetch({
+          url: `${import.meta.env.VITE_BACKEND_URL}/api/registration/`,
+          method: "POST",
+          body: JSON.stringify(user)
+        });
         if (response.status === 205) {
           return dispatch(addLoginOccupied());
         }

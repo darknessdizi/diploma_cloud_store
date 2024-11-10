@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import { ItemModal } from './components/Items/ItemModal/ItemModal';
 import { logoutUser, setAuthFalse, setAuthTrue, succesAuth } from './redux/slices/identificationSlice';
 import { baseFetch } from './utils/index';
-import { MY_PATH, URL_SERVER } from './const/index';
+import { MY_PATH } from './const/index';
 import { runModal } from './redux/slices/modalSlice';
 import { clearDisk } from './redux/slices/diskSlice';
 import './App.css';
@@ -25,7 +25,7 @@ function App() {
     const token = localStorage.getItem('sessionToken');
     if ((token !== 'undefined') && (token !== null)) {
       dispatch(setAuthTrue());
-      const response = baseFetch({ url: `${URL_SERVER}/api/recovery-session/` });
+      const response = baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/recovery-session/` });
       response.then(
         (res) => dispatch(succesAuth(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
@@ -37,7 +37,7 @@ function App() {
   const onLogout = async () => {
     try {
       dispatch(setAuthFalse());
-      const response = await baseFetch({ url: `${URL_SERVER}/api/logout/` });
+      const response = await baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/logout/` });
       if (response.status) {
         dispatch(logoutUser());
         dispatch(clearDisk());

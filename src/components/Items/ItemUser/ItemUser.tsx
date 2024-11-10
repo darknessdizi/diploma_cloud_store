@@ -1,4 +1,3 @@
-import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch, useAppSelector } from "../../../hooks/index";
 import { IItemUser } from "../../../models";
 import { changeFlag, changeUsers, selectedUser } from "../../../redux/slices/diskSlice";
@@ -40,7 +39,11 @@ export const ItemUser = ({ user }: {user: IItemUser}) => {
         id: user.id,
         status: value,
       }
-      const response = await baseFetch({ url: `${URL_SERVER}/admin/change-status/`, method: "PATCH", body: JSON.stringify(obj) });
+      const response = await baseFetch({
+        url: `${import.meta.env.VITE_BACKEND_URL}/admin/change-status/`,
+        method: "PATCH",
+        body: JSON.stringify(obj)
+      });
       if (response.status) {
         dispatch(changeUsers(obj));
       }

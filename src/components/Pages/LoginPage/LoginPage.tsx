@@ -4,7 +4,7 @@ import { ItemForm } from "../../Items/ItemForm/ItemForm";
 import { ItemLabel } from "../../Items/ItemLabel/ItemLabel";
 import { checkLogin, checkPassword, checkValueInput } from "../RegistrationPage/utils";
 import { useNavigate } from "react-router-dom";
-import { MY_PATH, URL_SERVER } from "../../../const/index";
+import { MY_PATH } from "../../../const/index";
 import { baseFetch } from "../../../utils/index";
 import { runModal } from "../../../redux/slices/modalSlice";
 import { setAuthTrue, succesAuth } from "../../../redux/slices/identificationSlice";
@@ -46,7 +46,11 @@ export const LoginPage = () => {
         password: statePage.password,
       }
       try {
-        const response = await baseFetch({ url: `${URL_SERVER}/api/login/`, method: "POST", body: JSON.stringify(user) });
+        const response = await baseFetch({
+          url: `${import.meta.env.VITE_BACKEND_URL}/api/login/`,
+          method: "POST",
+          body: JSON.stringify(user)
+        });
         dispatch(succesAuth(response));
         dispatch(setAuthTrue());
       } catch (e: any) {

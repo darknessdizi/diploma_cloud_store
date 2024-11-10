@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { addUsers, getAllFiles } from '../../../redux/slices/diskSlice';
 import { baseFetch } from '../../../utils/index';
@@ -14,7 +13,7 @@ export const ItemFieldAdminDisk = ({ user }: {user: IUserState}) => {
 
   useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user (диск ушел за пользователями)
     if (user.id) {
-      baseFetch({ url: `${URL_SERVER}/admin/get-users/` }).then(
+      baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/admin/get-users/` }).then(
         (res) => {
           dispatch(getAllFiles(res.files))
           dispatch(addUsers(res.users))

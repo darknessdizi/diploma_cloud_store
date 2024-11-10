@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { MY_PATH, URL_SERVER } from '../../../const/index';
+import { MY_PATH } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { deleteFile, deleteUser } from '../../../redux/slices/diskSlice';
 import { setAuthTrue } from '../../../redux/slices/identificationSlice';
@@ -30,7 +30,10 @@ export const ItemModal = () => {
     if (name === 'deleteFile') {
       // нажатие кнопки удалить файл
       try {
-        await baseFetch({ url: `${URL_SERVER}/api/file/${currentFile?.id}/`, method: "DELETE" });
+        await baseFetch({
+          url: `${import.meta.env.VITE_BACKEND_URL}/api/file/${currentFile?.id}/`,
+          method: "DELETE"
+        });
         dispatch(deleteFile());
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));
@@ -41,7 +44,10 @@ export const ItemModal = () => {
     if (name === 'deleteUser') {
       // нажатие кнопки удалить пользователя
       try {
-        await baseFetch({ url: `${URL_SERVER}/admin/delete-user/${currentUser?.id}/`, method: "DELETE" });
+        await baseFetch({
+          url: `${import.meta.env.VITE_BACKEND_URL}/admin/delete-user/${currentUser?.id}/`,
+          method: "DELETE"
+        });
         dispatch(deleteUser());
       } catch (e: any) {
         dispatch(runModal({ type: 'error', message: e.message }));

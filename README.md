@@ -13,14 +13,9 @@
 git clone https://github.com/darknessdizi/diploma_cloud_store.git frontend
 ```
 
-Зайдти в папку frontend/src/const, введя команду:
+В корне проекта откройте файл `.env.production` и поменяйте значение константы `VITE_BACKEND_URL`:
 ```bash
-cd frontend/src/const
-```
-
-Откройте файл `index.ts` и измените в нем константу:
-```bash
-URL_SERVER = 'http://91.197.96.56:8000';
+VITE_BACKEND_URL='http://91.197.96.56:8000'
 ```
  Вместо `91.197.96.56` пропишите IP адресс Вашего сервера.
 

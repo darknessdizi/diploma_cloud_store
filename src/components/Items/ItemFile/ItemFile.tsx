@@ -1,4 +1,3 @@
-import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch } from "../../../hooks/index";
 import { IFile } from "../../../models";
 import { addLink, selectedFile, updateFile } from "../../../redux/slices/diskSlice";
@@ -21,7 +20,7 @@ export const ItemFile = ({ file }: {file: IFile}) => {
       const target = event.target as HTMLDivElement;
       const { id } = target.dataset;
       target.classList.add('active__download');
-      const blob = await baseFetch({ url: `${URL_SERVER}/api/file/${id}/`, blob: true });
+      const blob = await baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/file/${id}/`, blob: true });
       const objectURL = URL.createObjectURL(blob);
       const linkFile = document.createElement('a');
       linkFile.href = objectURL;
@@ -29,7 +28,7 @@ export const ItemFile = ({ file }: {file: IFile}) => {
       linkFile.click();
       window.URL.revokeObjectURL(objectURL);
       target.classList.remove('active__download');
-      const response = await baseFetch({ url: `${URL_SERVER}/api/filedata/${id}/` }); // обновляем данные по текущему файлу (изменилось поле последняя загрузка)
+      const response = await baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/filedata/${id}/` }); // обновляем данные по текущему файлу (изменилось поле последняя загрузка)
       dispatch(updateFile(response));
     } catch (e: any) {
       dispatch(runModal({ type: 'error', message: e.message }));
@@ -52,7 +51,7 @@ export const ItemFile = ({ file }: {file: IFile}) => {
   const clickCopyLink = async () => {
     // Нажатие кнопки копирования ссылки на файл
     try {
-      const response = await baseFetch({ url: `${URL_SERVER}/api/getlink/${file.id}/` });
+      const response = await baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/getlink/${file.id}/` });
       dispatch(addLink(response.url));
       dispatch(runModal({ type: 'copyLink', message: 'Ссылка для скачивания' }));
     } catch (e: any) {

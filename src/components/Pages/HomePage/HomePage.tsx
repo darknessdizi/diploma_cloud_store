@@ -6,7 +6,7 @@ import { ItemImgBlock } from "../../Items/ItemImgBlock/ItemImgBlock";
 import { ItemDescriptionBlock } from "../../Items/ItemDescriptionBlock/ItemDescriptionBlock";
 import { clearDisk } from "../../../redux/slices/diskSlice";
 import { baseFetch } from "../../../utils/index";
-import { MY_PATH, URL_SERVER } from "../../../const/index";
+import { MY_PATH } from "../../../const/index";
 import { runModal } from "../../../redux/slices/modalSlice";
 // import img1 from "../../../../public/img1.png"; // для GitHub только
 // import img2 from "../../../../public/img2.jpg";
@@ -19,7 +19,7 @@ export const HomePage = () => {
   const onLogout = async () => {
     try {
       dispatch(setAuthFalse());
-      const response = await baseFetch({ url: `${URL_SERVER}/api/logout/` });
+      const response = await baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/logout/` });
       if (response.status) {
         dispatch(logoutUser());
         dispatch(clearDisk());

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { URL_SERVER } from "../../../const/index";
 import { useAppDispatch, useAppSelector } from "../../../hooks/index";
 import { updateFile } from "../../../redux/slices/diskSlice";
 import { clearModal, runModal } from "../../../redux/slices/modalSlice";
@@ -38,7 +37,11 @@ export const ItemFormEdit = () => {
     title = `${formData.get('title')}${title}`;
     formData.set('title', title)
     try {
-      const response = await baseFetch({ url: `${URL_SERVER}/api/file/${currentFile?.id}/`, method: "PATCH", body: formData });
+      const response = await baseFetch({
+        url: `${import.meta.env.VITE_BACKEND_URL}/api/file/${currentFile?.id}/`,
+        method: "PATCH",
+        body: formData
+      });
       dispatch(updateFile(response));
     } catch (e: any) {
       dispatch(runModal({ type: 'error', message: e.message }));

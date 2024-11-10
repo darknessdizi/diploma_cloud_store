@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { URL_SERVER } from '../../../const/index';
 import { useAppDispatch, useAppSelector } from '../../../hooks/index';
 import { addFiles, cancelUser, getAllFiles } from '../../../redux/slices/diskSlice';
 import { baseFetch } from '../../../utils/index';
@@ -41,7 +40,11 @@ export const ItemFieldUserDisk = () => {
     }
 
     try {
-      const response = await baseFetch({ url: `${URL_SERVER}/api/file/`, method: "POST", body: formData, });
+      const response = await baseFetch({
+        url: `${import.meta.env.VITE_BACKEND_URL}/api/file/`,
+        method: "POST",
+        body: formData,
+      });
       dispatch(addFiles(response.files));
       event.target.value = '';
     } catch (e: any) {
@@ -57,7 +60,9 @@ export const ItemFieldUserDisk = () => {
   useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user (диск ушел за файлами)
     if (user.id) {
       const targetId = (currentUser) ? currentUser.id: user.id;
-      baseFetch({ url: `${URL_SERVER}/api/get-files/${targetId}/` }).then(
+      baseFetch({
+        url: `${import.meta.env.VITE_BACKEND_URL}/api/get-files/${targetId}/`
+      }).then(
         (res) => dispatch(getAllFiles(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
       )
