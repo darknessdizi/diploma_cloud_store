@@ -25,7 +25,7 @@ function App() {
     const token = localStorage.getItem('sessionToken');
     if ((token !== 'undefined') && (token !== null)) {
       dispatch(setAuthTrue());
-      const response = baseFetch({ url: `${URL_SERVER}/recovery-session/` });
+      const response = baseFetch({ url: `${URL_SERVER}/api/recovery-session/` });
       response.then(
         (res) => dispatch(succesAuth(res)),
         (err) => dispatch(runModal({ type: 'error', message: err.message }))
@@ -37,7 +37,7 @@ function App() {
   const onLogout = async () => {
     try {
       dispatch(setAuthFalse());
-      const response = await baseFetch({ url: `${URL_SERVER}/logout/` });
+      const response = await baseFetch({ url: `${URL_SERVER}/api/logout/` });
       if (response.status) {
         dispatch(logoutUser());
         dispatch(clearDisk());
@@ -54,7 +54,7 @@ function App() {
 
       <header>
         <div className="header_baner">
-          <ul className="navigation header_navigation">
+          <ul className="navigation ul_navigation">
             <ItemLink link={MY_PATH.root} label={"Главная"} />
             { auth ?
               <>

@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from "react-redux"; // достаем провайдер для работы с глобальным хранилищем
 import { store } from "./redux/store/"; // наше хранилище
-// import { HashRouter } from 'react-router-dom';
+// import { HashRouter } from 'react-router-dom'; // только для GitHub
 import {BrowserRouter} from 'react-router-dom';
 import './index.css';
 
