@@ -23,6 +23,8 @@ export const ItemCopyLink = ({ urlLink }: { urlLink: string }) => {
   const clickCopyText = () => {
     // Нажатие кнопки скопировать ссылку
     const link = inputRef.current?.value;
+    console.log('link', link)
+    console.log(inputRef)
     if (link) {
       navigator.clipboard.writeText(link);
     }
