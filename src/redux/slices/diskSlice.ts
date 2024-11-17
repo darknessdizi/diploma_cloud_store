@@ -15,53 +15,15 @@ export const diskSlice = createSlice({ // для создания slice пере
   initialState, // создаем начальное значение для slice
   reducers: { // reducers - обязательное поле для slice
     getAllFiles: (state, { payload }) => {
-      const array = [];
-      for (const item of payload) {
-        const obj = {
-          id: item.id,
-          title: item.title,
-          file: item.file,
-          comment: item.comment,
-          size: item.size,
-          created: item.created,
-          lastDownload: item.last_download,
-          userId: item.user_id,
-        }
-        array.push(obj);
-      }
-      state.cloudFiles = array;
+      state.cloudFiles = payload
     },
 
     addFiles: (state, { payload }) => {
-      for (const item of payload) {
-        const obj = {
-          id: item.id,
-          title: item.title,
-          file: item.file,
-          comment: item.comment,
-          size: item.size,
-          created: item.created,
-          lastDownload: item.last_download,
-          userId: item.user_id,
-        }
-        state.cloudFiles.push(obj);
-      }
+      state.cloudFiles.push(...payload)
     },
 
     addUsers: (state, { payload }) => {
-      state.cloudUsers = [];
-      for (const item of payload) {
-        const obj = {
-          id: item.id,
-          login: item.login,
-          fullName: item.full_name,
-          email: item.email,
-          statusAdmin: item.status_admin,
-          created: item.created,
-          lastVisit: item.last_visit,
-        }
-        state.cloudUsers.push(obj)
-      }
+      state.cloudUsers = payload;
     },
 
     changeUsers: (state, { payload }) => {

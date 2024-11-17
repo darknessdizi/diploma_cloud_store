@@ -15,7 +15,7 @@ export async function baseFetch({ url, headers, method="GET", body, blob=false }
       throw new Error(json.error);
     }
 
-    if ((response.status === 205) || (method === "DELETE")) {
+    if ((response.status === 205) || (method === 'DELETE')) {
       return response;
     }
 

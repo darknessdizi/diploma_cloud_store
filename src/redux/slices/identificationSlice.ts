@@ -33,15 +33,7 @@ export const identificationSlice = createSliceWithThunk({ // при создан
     },
 
     succesAuth: (state, { payload }) => { // добавление флага успешной авторизации/регистрации
-      const user = payload;
-      state.user = {
-        id: user.id,
-        login: user.login,
-        fullName: user.full_name,
-        email: user.email,
-        avatar: user.avatar,
-        statusAdmin: user.status_admin,
-      };
+      state.user = payload;
     },
 
     logoutUser: (state) => { // добавление флага успешной авторизации/регистрации
