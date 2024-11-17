@@ -3,18 +3,11 @@ import { IFetchParams } from "../models/index";
 // Основа для функции fetch 
 export async function baseFetch({ url, headers, method="GET", body, blob=false }: IFetchParams) {
   try {
-    const token = localStorage.getItem('sessionToken');
-    let fullHeaders = null;
-    if ((token !== 'undefined') && (token !== null)) {
-      fullHeaders = { 'Authorization': token, ...headers }
-    } else {
-      fullHeaders = { ...headers }
-    }
-
     const response = await fetch(url, {
       method: method,
-      headers: { ...fullHeaders },
+      headers: headers,
       body: body,
+      credentials: 'include'
     });
 
     if (response.status >= 400) {

@@ -22,16 +22,17 @@ function App() {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('sessionToken');
-    if ((token !== 'undefined') && (token !== null)) {
-      dispatch(setAuthTrue());
-      const response = baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/recovery-session/` });
-      response.then(
-        (res) => dispatch(succesAuth(res)),
-        (err) => dispatch(runModal({ type: 'error', message: err.message }))
-      )
-    } 
-    setChecked(true);
+    const response = baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/api/recovery-session/` });
+    response.then(
+      (res) => {
+        if (res.status != 205) {
+          dispatch(setAuthTrue());
+          dispatch(succesAuth(res));
+        }
+        setChecked(true);
+      },
+      (err) => dispatch(runModal({ type: 'error', message: err.message }))
+    )
   }, []);
 
   const onLogout = async () => {

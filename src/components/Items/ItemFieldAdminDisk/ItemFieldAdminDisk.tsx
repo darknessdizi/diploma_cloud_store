@@ -13,7 +13,9 @@ export const ItemFieldAdminDisk = ({ user }: {user: IUserState}) => {
 
   useEffect(() => { // срабатывает после первой отрисовки компонента и при изменении user (диск ушел за пользователями)
     if (user.id) {
-      baseFetch({ url: `${import.meta.env.VITE_BACKEND_URL}/admin/get-users/` }).then(
+      baseFetch({ 
+        url: `${import.meta.env.VITE_BACKEND_URL}/admin/get-users/`,
+      }).then(
         (res) => {
           dispatch(getAllFiles(res.files))
           dispatch(addUsers(res.users))

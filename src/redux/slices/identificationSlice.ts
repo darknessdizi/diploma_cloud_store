@@ -34,8 +34,7 @@ export const identificationSlice = createSliceWithThunk({ // при создан
     },
 
     succesAuth: (state: IIdentification, action: PayloadAction<IResponseUser>) => { // добавление флага успешной авторизации/регистрации
-      const { token, ...user } = action.payload;
-      localStorage.setItem('sessionToken', token!);
+      const user = action.payload;
       state.user = {
         id: user.id,
         login: user.login,
@@ -47,7 +46,6 @@ export const identificationSlice = createSliceWithThunk({ // при создан
     },
 
     logoutUser: (state: IIdentification) => { // добавление флага успешной авторизации/регистрации
-      localStorage.removeItem('sessionToken');
       state.user = initialState.user;
     },
 
