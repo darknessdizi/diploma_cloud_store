@@ -14,40 +14,40 @@
 }
 
 .controll__item__edit {
-  background-image: url('../../../img/icons_btn/pencil.png');
+  background-image: url('./icons_btn/pencil.png');
   background-size: 90%;
 }
 
 .controll__item__download {
-  background-image: url('../../../img/icons_btn/download.png');
+  background-image: url('./icons_btn/download.png');
 }
 
 .controll__item__copylink {
-  background-image: url('../../../img/icons_btn/copylink.png');
+  background-image: url('./icons_btn/copylink.png');
   background-size: 90%;
 }
 
 .active__download {
-  background-image: url('../../../img/load.gif');
+  background-image: url('./load.gif');
   pointer-events: none;
 }
 
 .controll__item__delete {
-  background-image: url('../../../img/icons_btn/delete.svg');
+  background-image: url('./icons_btn/delete.svg');
 }
 
 .controll__item__edit:hover {
-  background-image: url('../../../img/icons_btn/pencil-hover.png');
+  background-image: url('./icons_btn/pencil-hover.png');
 }
 
 .controll__item__download:hover {
-  background-image: url('../../../img/icons_btn/download-hover.png');
+  background-image: url('./icons_btn/download-hover.png');
 }
 
 .controll__item__delete:hover {
-  background-image: url('../../../img/icons_btn/delete-hover.svg');
+  background-image: url('./icons_btn/delete-hover.svg');
 }
 
 .controll__item__copylink:hover {
-  background-image: url('../../../img/icons_btn/copylink-hover.png');
+  background-image: url('./icons_btn/copylink-hover.png');
 }

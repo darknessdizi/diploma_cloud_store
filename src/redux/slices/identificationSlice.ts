@@ -1,6 +1,5 @@
 import { buildCreateSlice, asyncThunkCreator } from "@reduxjs/toolkit";
-import { PayloadAction } from "../../../node_modules/@reduxjs/toolkit/dist/index";
-import { IIdentification, IResponseUser } from "../../models/index";
+import { IIdentification } from "../../models/index";
 
 const initialState = { // начальное состояние хранилища
   auth: false,
@@ -25,16 +24,16 @@ export const identificationSlice = createSliceWithThunk({ // при создан
   name: "identification", // имя
   initialState, // начальное состояние
   reducers: {
-    addLoginOccupied: (state: IIdentification) => { // добавление флага "логин занят"
+    addLoginOccupied: (state) => { // добавление флага "логин занят"
       state.loginOccupied = true;
     },
 
-    clearLoginOccupied: (state: IIdentification) => { // очистка флага "логин занят"
+    clearLoginOccupied: (state) => { // очистка флага "логин занят"
       state.loginOccupied = false;
     },
 
-    succesAuth: (state: IIdentification, action: PayloadAction<IResponseUser>) => { // добавление флага успешной авторизации/регистрации
-      const user = action.payload;
+    succesAuth: (state, { payload }) => { // добавление флага успешной авторизации/регистрации
+      const user = payload;
       state.user = {
         id: user.id,
         login: user.login,
@@ -45,15 +44,15 @@ export const identificationSlice = createSliceWithThunk({ // при создан
       };
     },
 
-    logoutUser: (state: IIdentification) => { // добавление флага успешной авторизации/регистрации
+    logoutUser: (state) => { // добавление флага успешной авторизации/регистрации
       state.user = initialState.user;
     },
 
-    setAuthTrue: (state: IIdentification) => { // ручная установка успешной регистрации (после перезапуска страницы не было выхода пользователем)
+    setAuthTrue: (state) => { // ручная установка успешной регистрации (после перезапуска страницы не было выхода пользователем)
       state.auth = true;
     },
 
-    setAuthFalse: (state: IIdentification) => { // ручная установка успешной регистрации (после перезапуска страницы не было выхода пользователем)
+    setAuthFalse: (state) => { // ручная установка успешной регистрации (после перезапуска страницы не было выхода пользователем)
       state.auth = false;
     },
   }

@@ -4,11 +4,6 @@ export interface ILinkProps {
   logout?: () => {}
 }
 
-export interface IModal {
-  type: string,
-  message: string,
-}
-
 export interface IUserState {
   id: string,
   login: string | null,
@@ -18,34 +13,11 @@ export interface IUserState {
   statusAdmin: boolean,
 }
 
-export interface IResponseUser {
-  id: string,
-  login: string,
-  full_name: string,
-  email: string,
-  avatar: string,
-  created: string,
-  last_visit: string,
-  status_admin: boolean,
-  token: string,
-}
-
 export interface IIdentification {
   auth: boolean,
   loginOccupied: boolean,
   loginNotFound: { status: boolean, message: string },
   user: IUserState,
-}
-
-export interface IFileServer {
-  id: number,
-  title: string,
-  file: string,
-  comment: string,
-  size: number,
-  created: string,
-  last_download: string,
-  user_id: string,
 }
 
 export interface IFile {

@@ -4,7 +4,7 @@
   bottom: 0;
   right: 0;
   left: 0;
-  background-image: url('../../../../img/error404.webp');
+  background-image: url('./error404.webp');
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;

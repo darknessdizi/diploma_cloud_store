@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IDiskState, IFile, IFileServer, IItemUser, IResponseUser } from "../../models/index";
+import { createSlice } from "@reduxjs/toolkit";
+import { IDiskState } from "../../models/index";
 
 const initialState = {
   cloudFiles: [],
@@ -14,9 +14,9 @@ export const diskSlice = createSlice({ // для создания slice пере
   name: "disk", // имя slice (нужно для обращения в store к нужному slice, например state.counter.value здесь слово counter)
   initialState, // создаем начальное значение для slice
   reducers: { // reducers - обязательное поле для slice
-    getAllFiles: (state: IDiskState, action: PayloadAction<IFileServer[]>) => {
+    getAllFiles: (state, { payload }) => {
       const array = [];
-      for (const item of action.payload) {
+      for (const item of payload) {
         const obj = {
           id: item.id,
           title: item.title,
@@ -32,8 +32,8 @@ export const diskSlice = createSlice({ // для создания slice пере
       state.cloudFiles = array;
     },
 
-    addFiles: (state: IDiskState, action: PayloadAction<IFileServer[]>) => {
-      for (const item of action.payload) {
+    addFiles: (state, { payload }) => {
+      for (const item of payload) {
         const obj = {
           id: item.id,
           title: item.title,
@@ -48,9 +48,9 @@ export const diskSlice = createSlice({ // для создания slice пере
       }
     },
 
-    addUsers: (state: IDiskState, action: PayloadAction<IResponseUser[]>) => {
+    addUsers: (state, { payload }) => {
       state.cloudUsers = [];
-      for (const item of action.payload) {
+      for (const item of payload) {
         const obj = {
           id: item.id,
           login: item.login,
@@ -64,49 +64,49 @@ export const diskSlice = createSlice({ // для создания slice пере
       }
     },
 
-    changeUsers: (state: IDiskState, action: PayloadAction<{id: string, status: boolean}>) => {
-      const index = state.cloudUsers.findIndex((item) => item.id === action.payload.id)
-      state.cloudUsers[index].statusAdmin = action.payload.status
+    changeUsers: (state, { payload }) => {
+      const index = state.cloudUsers.findIndex((item) => item.id === payload.id)
+      state.cloudUsers[index].statusAdmin = payload.status
     },
 
-    selectedFile: (state: IDiskState, action: PayloadAction<IFile>) => {
-      state.currentFile = action.payload;
+    selectedFile: (state, { payload }) => {
+      state.currentFile = payload;
     },
 
-    selectedUser: (state: IDiskState, action: PayloadAction<IItemUser>) => {
-      state.currentUser = action.payload;
+    selectedUser: (state, { payload }) => {
+      state.currentUser = payload;
     },
 
-    changeFlag: (state: IDiskState) => {
+    changeFlag: (state) => {
       state.flagLookUser = true;
       state.cloudFiles = [];
     },
 
-    cancelUser: (state: IDiskState) => {
+    cancelUser: (state) => {
       state.currentUser = null;
       state.flagLookUser = false;
     },
 
-    deleteUser: (state: IDiskState) => {
+    deleteUser: (state) => {
       state.cloudUsers = state.cloudUsers.filter((item) => item.id != state.currentUser?.id);
       state.cloudFiles = state.cloudFiles.filter((item) => item.userId != state.currentUser?.id);
       state.currentUser = null;
     },
 
-    addLink: (state: IDiskState, action: PayloadAction<string>) => {
-      state.link = action.payload;
+    addLink: (state, { payload }) => {
+      state.link = payload;
     },
 
-    deleteLink: (state: IDiskState) => {
+    deleteLink: (state) => {
       state.link = '';
     },
 
-    deleteFile: (state: IDiskState) => {
+    deleteFile: (state) => {
       state.cloudFiles = state.cloudFiles.filter((item) => item.id != state.currentFile?.id);
       state.currentFile = null;
     },
 
-    clearDisk: (state: IDiskState) => {
+    clearDisk: (state) => {
       state.cloudFiles = [];
       state.cloudUsers = [];
       state.currentFile = null;
@@ -115,14 +115,14 @@ export const diskSlice = createSlice({ // для создания slice пере
       state.link = '';
     },
 
-    updateFile: (state: IDiskState, action: PayloadAction<IFileServer>) => {
+    updateFile: (state, { payload }) => {
       state.cloudFiles = state.cloudFiles.map((item) => {
-        if (item.id === action.payload.id) {
-          item.title = action.payload.title;
-          item.comment = action.payload.comment;
-          item.created = action.payload.created;
-          item.lastDownload = action.payload.last_download;
-          item.size = action.payload.size;
+        if (item.id === payload.id) {
+          item.title = payload.title;
+          item.comment = payload.comment;
+          item.created = payload.created;
+          item.lastDownload = payload.last_download;
+          item.size = payload.size;
         }
         return item;
       });
