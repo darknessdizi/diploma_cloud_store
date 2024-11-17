@@ -16,11 +16,11 @@
 }
 
 .controll__item__copyText {
-  background-image: url('./icons_btn/copy-text.png');
+  background-image: url('/icons_btn/copy-text.png');
   width: 50px;
   height: 50px;
 }
 
 .controll__item__copyText:hover {
-  background-image: url('./icons_btn/copy-text-hover.png');
+  background-image: url('/icons_btn/copy-text-hover.png');
 }
